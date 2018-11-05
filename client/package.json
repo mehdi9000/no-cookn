@@ -23,7 +23,6 @@
     "eject": "react-scripts eject",
     "sass": "sass --watch src/styles/scss:src/styles/css"
   },
-  "proxy": "http://localhost:4001/",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -32,5 +31,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "proxy": "http://localhost:4001/"
 }

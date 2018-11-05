@@ -44,7 +44,7 @@ export const loginUser = userData => dispatch => {
 // Login - Get User Token
 export const VerifyUser = (activationcode, history) => dispatch => {
   axios
-    .get(`api/users/account/activate/${activationcode}`)
+    .get(`http://localhost:4001/api/users/account/activate/${activationcode}`)
     .then(res => {
       console.log('res', res);
       setTimeout(history.push('/login'), 5000);

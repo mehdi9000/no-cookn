@@ -12,7 +12,7 @@ import {
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get('api/profile')
+    .get('http://localhost:4001/api/profile')
     .then(res =>
       dispatch({
         type: GET_PROFILE,
@@ -30,7 +30,7 @@ export const getCurrentProfile = () => dispatch => {
 // Create Profile
 export const createProfile = (profileData, history) => dispatch => {
   axios
-    .post('api/profile', profileData)
+    .post('http://localhost:4001/api/profile', profileData)
     .then(res => {
       console.log(res.data);
       // history.push('/dashboard');
@@ -54,7 +54,7 @@ export const createProfile = (profileData, history) => dispatch => {
 // Create Profile
 export const createAddress = addressData => dispatch => {
   axios
-    .post('api/profile/address', addressData)
+    .post('http://localhost:4001/api/profile/address', addressData)
     .then(res => {
       console.log(res.data);
       swal({
@@ -77,7 +77,7 @@ export const createAddress = addressData => dispatch => {
 export const deleteAddress = id => dispatch => {
   if (window.confirm('Are you sure? This can NOT be undone!')) {
     axios
-      .delete(`api/profile/address/${id}`)
+      .delete(`http://localhost:4001/api/profile/address/${id}`)
       .then(res => {
         dispatch({
           type: GET_PROFILE,
