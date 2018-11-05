@@ -12,7 +12,7 @@
     <h3>Welcome to no-cookn {{name}}.</h3>
     <p>We are glad you have decided to join us on this journey of food discovery. To activate your accout please click
         on the link below.</p>
-    <a href="http://localhost:3000/primary-user/accounts/verification/{{activationcode}}">activation link</a>
+    <a href="https://no-cookn.herokuapp.com/primary-user/accounts/verification/{{activationcode}}">activation link</a>
 </body>
 
 </html>
