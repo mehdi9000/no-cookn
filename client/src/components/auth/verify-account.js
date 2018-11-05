@@ -26,47 +26,48 @@ class Verification extends Component {
   }
   render() {
     const { errors } = this.state;
-    console.log('verification error', errors);
-    if (errors) {
-      console.log('verification errors');
+
+    let content;
+
+    if (Object.keys(errors) > 0) {
+      content = (
+        <div>
+          <img
+            src={error}
+            alt="welcome to no cookn"
+            className="mb-3 img-responsive"
+          />
+          <h3>{errors.errors}</h3>
+          <h5>
+            It seems your account has been activated. you can try to log in. If
+            problem persists, please contact support
+          </h5>
+          <Link to="/login">
+            <button className="btn btn-warning btn-lg">login</button>
+          </Link>
+        </div>
+      );
+    } else {
+      <div>
+        <img
+          src={verify}
+          alt="welcome to no cookn"
+          className="mb-3 img-responsive"
+        />
+        <h3 className="mb-3">Account verification successful!</h3>
+        <h5 className="mb-3">You can now log in to continue.</h5>
+        <Link to="/login">
+          <button className="btn btn-warning btn-lg">login</button>
+        </Link>
+      </div>;
     }
+
     return (
       <div className="welcome-wrapper">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-6">
-              <div className="welcome-info ">
-                {!errors ? (
-                  <div>
-                    <img
-                      src={verify}
-                      alt="welcome to no cookn"
-                      className="mb-3 img-responsive"
-                    />
-                    <h3 className="mb-3">Account verification successful!</h3>
-                    <h5 className="mb-3">You can now log in to continue.</h5>
-                    <Link to="/login">
-                      <button className="btn btn-warning btn-lg">login</button>
-                    </Link>
-                  </div>
-                ) : (
-                  <div>
-                    <img
-                      src={error}
-                      alt="welcome to no cookn"
-                      className="mb-3 img-responsive"
-                    />
-                    <h3>{errors.errors}</h3>
-                    <h5>
-                      It seems your account has been activated. you can try to
-                      log in. If problem persists, please contact support
-                    </h5>
-                    <Link to="/login">
-                      <button className="btn btn-warning btn-lg">login</button>
-                    </Link>
-                  </div>
-                )}
-              </div>
+              <div className="welcome-info ">{content}</div>
             </div>
           </div>
         </div>
