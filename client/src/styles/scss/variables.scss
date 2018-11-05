@@ -1,0 +1,25 @@
+$mobile: '(max-width: 468px)';
+// $mobile-plus: "(max-width: 468px)";
+$tablet: '(min-width: 469px) and (max-width: 920px)';
+$desktop: '(min-width: 921px) and (max-width: 1199px)';
+$shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+$hover-shadow: 0 4px 6px 0 rgba(80, 184, 60, 0.3);
+
+$text-color: #343a40;
+
+$primary-green: rgb(80, 184, 60);
+$primary-red: rgb(222, 54, 24);
+$primary-yellow: rgb(239, 179, 49);
+
+$light-green: rgb(233, 249, 240);
+$light-yellow: rgb(253, 238, 231);
+$light-red: rgb(254, 173, 154);
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,500,600,700');
+
+body,
+html {
+  font-family: 'Nunito', sans-serif !important;
+  padding: 0;
+  margin: 0;
+}

@@ -1,0 +1,32 @@
+{
+  "name": "restaurant",
+  "version": "1.0.0",
+  "description": "Food delivery and restaurant booking service",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "cd ../client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm cd ../client && install && npm cd ../client && run build"
+  },
+  "author": "Folarin Farinto",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^4.0.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "hogan.js": "^3.0.2",
+    "mongoose": "^5.2.16",
+    "nanoid": "^1.2.3",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^10.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}

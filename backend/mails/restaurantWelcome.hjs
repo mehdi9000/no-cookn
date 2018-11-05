@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>Welcome to no-cookn {{name}}.</h3>
+    <p>We are glad you have decided to register your restaurant with us. To activate your accout please click on the
+        link below.</p>
+    <a href="http://localhost:4001/{{activationcode}}">activation link</a>
+</body>
+
+</html>
