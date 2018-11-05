@@ -29,7 +29,7 @@ class Verification extends Component {
 
     let content;
 
-    if (Object.keys(errors) > 0) {
+    if (errors.hasOwnProperty(errors)) {
       content = (
         <div>
           <img
@@ -48,18 +48,20 @@ class Verification extends Component {
         </div>
       );
     } else {
-      <div>
-        <img
-          src={verify}
-          alt="welcome to no cookn"
-          className="mb-3 img-responsive"
-        />
-        <h3 className="mb-3">Account verification successful!</h3>
-        <h5 className="mb-3">You can now log in to continue.</h5>
-        <Link to="/login">
-          <button className="btn btn-warning btn-lg">login</button>
-        </Link>
-      </div>;
+      content = (
+        <div>
+          <img
+            src={verify}
+            alt="welcome to no cookn"
+            className="mb-3 img-responsive"
+          />
+          <h3 className="mb-3">Account verification successful!</h3>
+          <h5 className="mb-3">You can now log in to continue.</h5>
+          <Link to="/login">
+            <button className="btn btn-warning btn-lg">login</button>
+          </Link>
+        </div>
+      );
     }
 
     return (
