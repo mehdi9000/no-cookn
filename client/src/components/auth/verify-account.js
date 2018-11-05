@@ -26,6 +26,7 @@ class Verification extends Component {
   }
   render() {
     const { errors } = this.state;
+    console.log('verification error', errors);
     return (
       <div className="welcome-wrapper">
         <div className="container">

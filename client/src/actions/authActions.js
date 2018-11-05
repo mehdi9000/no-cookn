@@ -46,11 +46,10 @@ export const VerifyUser = (activationcode, history) => dispatch => {
   axios
     .get(`http://localhost:4001/api/users/account/activate/${activationcode}`)
     .then(res => {
-      console.log('res', res);
+      console.log('res', res.data);
       setTimeout(history.push('/login'), 5000);
     })
     .catch(error => {
-      console.log(error.response.data);
       dispatch({
         type: GET_ERRORS,
         payload: error.response.data
