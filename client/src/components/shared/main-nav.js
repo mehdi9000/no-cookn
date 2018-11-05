@@ -61,13 +61,17 @@ class MainNav extends Component {
                     </div>
                   </li>
                   <li>
-                    <button className="btn btn-sm mr-3 login-btn">
-                      Log in
-                    </button>
+                    <Link to="/login">
+                      <button className="btn btn-sm mr-3 login-btn">
+                        Log in
+                      </button>
+                    </Link>
                   </li>
 
                   <li>
-                    <button className="btn btn-sm signup-btn">Sign up</button>
+                    <Link to="/register">
+                      <button className="btn btn-sm signup-btn">Sign up</button>
+                    </Link>
                   </li>
                 </ul>
               </div>
