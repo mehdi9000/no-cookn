@@ -32,7 +32,7 @@ class Login extends Component {
                     <p>
                       Don't have an account?
                       <Link to="/register" className="text-warning">
-                        &nbsp; Register to Continue
+                        &nbsp; Create an Account
                       </Link>
                     </p>
                     <br /> <br />

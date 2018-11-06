@@ -648,7 +648,7 @@ section .section-title {
 }
 .tab-list {
   list-style-type: none;
-  padding: 10px;
+  // padding: 10px;
   display: flex;
   flex: 1;
   justify-content: flex-start;
@@ -719,4 +719,24 @@ section .section-title {
   border: 1px solid rgba($primary-green, 0.5);
   border-radius: 4px;
   padding: 40px;
+}
+
+.restaurant-header {
+  height: 350px;
+  background-color: black;
+
+  .large-header {
+    padding: 60px 0px 60px 0px;
+    .img-box {
+      img {
+        width: 350px;
+      }
+    }
+    .info-box {
+      .rest-disp {
+        padding: 10px;
+        border: 1px solid $primary-yellow;
+      }
+    }
+  }
 }
