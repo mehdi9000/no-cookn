@@ -7,14 +7,11 @@ class Header extends Component {
       <div>
         <section className="jumbotron header-jumb text-center">
           <div className="container justify-items-center">
-            <h2 className="main-header mb-3">
-              Order food now
-              <span>.</span>
-            </h2>
+            <h2 className="main-header mb-3">Order food now.</h2>
             <h4 className="sub-main-header mb-3">
-              thousands of restaurants at your fingertips
+              Thousands of restaurants at your fingertips
             </h4>
-            <h6>grab a bite from restaurants around you!</h6>
+            <h6>Grab a bite from restaurants around you!</h6>
 
             <SearchForm />
           </div>

@@ -18,7 +18,7 @@ class Menu extends Component {
                           <img
                             className="mr-3"
                             src={Dummy}
-                            alt="Generic placeholde"
+                            alt="Generic placeholder"
                             width="80px"
                             height="80px"
                           />

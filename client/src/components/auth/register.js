@@ -25,7 +25,7 @@ class Register extends Component {
                     <p className="text-muted">
                       already have an account?
                       <Link to="/login" className="text-warning">
-                        &nbsp; Log In to Continue
+                        &nbsp; Sign In to Continue
                       </Link>
                     </p>
                     <br /> <br />

@@ -32,14 +32,10 @@ class MainNav extends Component {
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/">
-                      Become a Partner
+                      Restuarants
                     </Link>
                   </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/">
-                      How it works
-                    </Link>
-                  </li>
+
                   <li className="nav-item dropdown">
                     <Link
                       to="/"
@@ -49,7 +45,7 @@ class MainNav extends Component {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Support
+                      Help
                     </Link>
                     <div className="dropdown-menu" aria-labelledby="dropdown07">
                       <Link className="dropdown-item" to="/">
@@ -63,7 +59,7 @@ class MainNav extends Component {
                   <li>
                     <Link to="/login">
                       <button className="btn btn-sm mr-3 login-btn">
-                        Log in
+                        Sign in
                       </button>
                     </Link>
                   </li>
