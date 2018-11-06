@@ -11,12 +11,12 @@ class SearchForm extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="What would you like to eat?"
+                  placeholder="Select Your Area"
                 />
               </div>
 
               <div className="form-group col-md-2">
-                <button className="btn search-btn">grab a bite!</button>
+                <button className="btn search-btn">Show Restaurants</button>
               </div>
             </div>
           </form>

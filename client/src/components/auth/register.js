@@ -12,11 +12,22 @@ class Register extends Component {
               <div className="row justify-content-center">
                 <div className="col-md-6">
                   <div className="form-cont">
+                    <Link to="/">
+                      <span className="float-right text-muted">
+                        <i className="fas fa-times " />
+                        <br />
+                        close
+                      </span>
+                    </Link>
+                    <br />
                     <RegistrationForm />
                     <hr />
-                    <Link to="/login" className="text-warning">
+                    <p className="text-muted">
                       already have an account?
-                    </Link>
+                      <Link to="/login" className="text-warning">
+                        &nbsp; Log In to Continue
+                      </Link>
+                    </p>
                     <br /> <br />
                   </div>
                 </div>

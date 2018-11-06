@@ -47,7 +47,7 @@ class LoginForm extends Component {
           <TextFieldGroup
             type="email"
             name="email"
-            placeholder="Email address"
+            placeholder="Email Address"
             value={this.state.email}
             onChange={this.onChange}
             error={errors.email}
@@ -65,14 +65,14 @@ class LoginForm extends Component {
               className="btn btn-lg submit-btn btn-block mt-3  mb-3"
               disabled
             >
-              checking your account...
+              Checking Your Account...
             </button>
           ) : (
             <button
               className="btn btn-lg submit-btn btn-block mt-3  mb-3"
               type="submit"
             >
-              log in
+              Log In
             </button>
           )}
           <p>{errors.error}</p>

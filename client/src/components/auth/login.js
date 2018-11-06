@@ -20,11 +20,21 @@ class Login extends Component {
               <div className="row justify-content-center">
                 <div className="col-md-6">
                   <div className="form-cont">
+                    <Link to="/">
+                      <span className="float-right text-muted">
+                        <i className="fas fa-times " />
+                        <br />
+                        close
+                      </span>
+                    </Link>
                     <LoginForm />
                     <hr />
-                    <Link to="/register" className="text-warning">
+                    <p>
                       Don't have an account?
-                    </Link>
+                      <Link to="/register" className="text-warning">
+                        &nbsp; Register to Continue
+                      </Link>
+                    </p>
                     <br /> <br />
                   </div>
                 </div>

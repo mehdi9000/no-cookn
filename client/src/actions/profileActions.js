@@ -79,6 +79,7 @@ export const deleteAddress = id => dispatch => {
     axios
       .delete(`http://localhost:4001/api/profile/address/${id}`)
       .then(res => {
+        console.log(res.data);
         dispatch({
           type: GET_PROFILE,
           payload: res.data

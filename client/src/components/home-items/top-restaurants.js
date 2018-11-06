@@ -8,7 +8,7 @@ class TopRestaurants extends Component {
         <div className="restaurants">
           <div className="container">
             <div className="cards">
-              <h3 className="title">Top Retaurants</h3>
+              <h3 className="title">Top Restaurants</h3>
               <hr />
 
               <div className="row">
@@ -34,7 +34,7 @@ class TopRestaurants extends Component {
                       </h5>
                       <p className="card-text text-muted">
                         currently open - closes at
-                        <b className="text-dark">9pm</b>
+                        <b className="text-dark"> 9pm</b>
                       </p>
                       <p className="card-text text-muted">
                         minimum order <b className="text-dark">N500</b>
@@ -82,7 +82,7 @@ class TopRestaurants extends Component {
                       </h5>
                       <p className="card-text text-muted">
                         currently open - closes at
-                        <b className="text-dark">9pm</b>
+                        <b className="text-dark"> 9pm</b>
                       </p>
                       <p className="card-text text-muted">
                         minimum order <b className="text-dark">N500</b>
@@ -130,7 +130,7 @@ class TopRestaurants extends Component {
                       </h5>
                       <p className="card-text text-muted">
                         currently open - closes at
-                        <b className="text-dark">9pm</b>
+                        <b className="text-dark"> 9pm</b>
                       </p>
                       <p className="card-text text-muted">
                         minimum order <b className="text-dark">N500</b>

@@ -23,17 +23,29 @@ span {
   background-size: cover;
   background-repeat: no-repeat;
   background-blend-mode: multiply; }
-  .header-jumb p {
-    color: #efb331;
-    font-size: 28px; }
-  .header-jumb .jumbotron-heading {
-    color: whitesmoke;
-    font-size: 54px; }
-    .header-jumb .jumbotron-heading span {
-      font-family: 'Nunito', sans-serif !important;
-      font-weight: bolder;
-      font-size: 64px;
+  .header-jumb h2 {
+    color: white;
+    font-size: 74px;
+    font-weight: 700; }
+    .header-jumb h2 span {
       color: #efb331; }
+    @media (max-width: 468px) {
+      .header-jumb h2 {
+        font-size: 44px; } }
+  .header-jumb h4 {
+    color: whitesmoke;
+    font-size: 32px;
+    font-weight: lighter !important; }
+    @media (max-width: 468px) {
+      .header-jumb h4 {
+        font-size: 26px; } }
+  .header-jumb h6 {
+    color: white;
+    font-size: 28px;
+    font-weight: lighter !important; }
+    @media (max-width: 468px) {
+      .header-jumb h6 {
+        font-size: 20px; } }
 
 .form-container {
   display: flex;
@@ -208,6 +220,11 @@ span {
     border-radius: 6px;
     height: auto;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18); }
+    .auth-wrapper .form-box .form-cont span {
+      padding: 5px;
+      cursor: pointer; }
+      .auth-wrapper .form-box .form-cont span:hover {
+        color: rgba(239, 179, 49, 0.8); }
     .auth-wrapper .form-box .form-cont .submit-btn {
       background-color: rgba(239, 179, 49, 0.8);
       color: whitesmoke;
@@ -286,6 +303,10 @@ section .section-title {
   padding-bottom: 6px;
   margin-bottom: 20px;
   color: whitesmoke; }
+  @media (max-width: 468px) {
+    #footer h5 {
+      font-size: 24px;
+      color: rgba(239, 179, 49, 0.8); } }
 
 #footer a {
   color: #efb331;
@@ -333,8 +354,7 @@ section .section-title {
 
 @media (max-width: 767px) {
   #footer h5 {
-    padding-left: 0;
-    border-left: transparent;
+    padding-left: 10px;
     padding-bottom: 0px;
     margin-bottom: 10px; } }
 .scale-up-center {

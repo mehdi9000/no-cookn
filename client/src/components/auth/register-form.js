@@ -57,7 +57,7 @@ class RegistrationForm extends Component {
 
           <TextFieldGroup
             type="email"
-            placeholder="Email address"
+            placeholder="Email Address"
             onChange={this.onChange}
             name="email"
             error={errors.email}
@@ -87,14 +87,14 @@ class RegistrationForm extends Component {
               className="btn btn-lg submit-btn btn-block mt-3  mb-3"
               disabled
             >
-              creating your account...
+              Creating Your Account...
             </button>
           ) : (
             <button
               className="btn btn-lg submit-btn btn-block mt-3  mb-3"
               type="submit"
             >
-              create my account
+              Create My Account
             </button>
           )}
         </form>

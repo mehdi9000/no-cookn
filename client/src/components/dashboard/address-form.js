@@ -118,7 +118,7 @@ class AddressForm extends Component {
               id="default"
             />
             <label htmlFor="default" className="form-check-label">
-              Default Address
+              Set as Default Address
             </label>
           </div>
           {this.state.submitting ? (
@@ -126,14 +126,14 @@ class AddressForm extends Component {
               className="btn btn-lg submit-btn btn-block mt-3  mb-3"
               disabled
             >
-              adding address to profile...
+              Adding Address to Profile...
             </button>
           ) : (
             <button
               className="btn btn-lg submit-btn btn-block mt-3  mb-3"
               type="submit"
             >
-              add an address
+              Add an Address
             </button>
           )}
         </form>

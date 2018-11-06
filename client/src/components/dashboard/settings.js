@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getCurrentProfile, deleteAddress } from '../../actions/profileActions';
 import EditPhoneForm from './edit-phone-form';
 import AddressForm from './address-form';
+import Spinner from '../shared/spinner';
 
 class Settings extends Component {
   constructor() {
@@ -21,11 +22,14 @@ class Settings extends Component {
   }
   render() {
     const { displayAddressForm } = this.state;
-    const { profile } = this.props.profile;
+    const { profile, loading } = this.props.profile;
+    // let addresses = profile.address;
 
     let address;
 
-    if (profile) {
+    if (profile === null || loading) {
+      address = <Spinner />;
+    } else {
       address = profile.address.map(address => (
         <div className="col-md-4" key={address._id}>
           <div className="address-card">

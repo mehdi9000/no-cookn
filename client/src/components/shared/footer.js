@@ -7,7 +7,7 @@ class Footer extends Component {
       <div>
         <section id="footer">
           <div className="container">
-            <div className="row text-center text-xs-center text-sm-left text-md-left">
+            <div className="row  text-xs-left text-sm-left text-md-left">
               <div className="col-xs-12 col-sm-4 col-md-4">
                 <h5>Quick links</h5>
                 <ul className="list-unstyled quick-links">
@@ -74,27 +74,23 @@ class Footer extends Component {
                 <ul className="list-unstyled list-inline social text-center">
                   <li className="list-inline-item">
                     <Link to="/">
-                      <i className="fa fa-facebook" />
+                      <i class="fab fa-facebook-square" />
                     </Link>
                   </li>
                   <li className="list-inline-item">
                     <Link to="/">
-                      <i className="fa fa-twitter" />
+                      <i className="fab fa-twitter" />
                     </Link>
                   </li>
                   <li className="list-inline-item">
                     <Link to="/">
-                      <i className="fa fa-instagram" />
+                      <i className="fab fa-instagram" />
                     </Link>
                   </li>
-                  <li className="list-inline-item">
-                    <Link to="/">
-                      <i className="fa fa-google-plus" />
-                    </Link>
-                  </li>
+
                   <li className="list-inline-item">
                     <Link to="/" target="_blank">
-                      <i className="fa fa-envelope" />
+                      <i className="far fa-envelope" />
                     </Link>
                   </li>
                 </ul>
@@ -105,7 +101,7 @@ class Footer extends Component {
               <div className="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
                 <p>
                   <u>
-                    <Link to="/">No-Cookn</Link>
+                    <Link to="/">No-Cookn </Link>
                   </u>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Numquam voluptatibus eos id aspernatur ad odio.

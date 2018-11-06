@@ -24,19 +24,34 @@ span {
   background-repeat: no-repeat;
   background-blend-mode: multiply;
 
-  p {
-    color: $primary-yellow;
-    font-size: 28px;
-  }
-  .jumbotron-heading {
-    color: whitesmoke;
-    font-size: 54px;
-
+  h2 {
+    color: white;
+    font-size: 74px;
+    font-weight: 700;
     span {
-      font-family: 'Nunito', sans-serif !important;
-      font-weight: bolder;
-      font-size: 64px;
       color: $primary-yellow;
+    }
+
+    @media #{$mobile} {
+      font-size: 44px;
+    }
+  }
+  h4 {
+    color: whitesmoke;
+    font-size: 32px;
+    font-weight: lighter !important;
+    @media #{$mobile} {
+      font-size: 26px;
+    }
+  }
+
+  h6 {
+    color: white;
+    font-size: 28px;
+    font-weight: lighter !important;
+
+    @media #{$mobile} {
+      font-size: 20px;
     }
   }
 }
@@ -289,6 +304,14 @@ span {
       height: auto;
       box-shadow: $shadow;
 
+      span {
+        padding: 5px;
+        cursor: pointer;
+        &:hover {
+          color: rgba($primary-yellow, 0.8);
+        }
+      }
+
       .submit-btn {
         background-color: rgba($primary-yellow, 0.8);
         color: whitesmoke;
@@ -387,6 +410,11 @@ section .section-title {
   padding-bottom: 6px;
   margin-bottom: 20px;
   color: whitesmoke;
+
+  @media #{$mobile} {
+    font-size: 24px;
+    color: rgba($primary-yellow, 0.8);
+  }
 }
 
 #footer a {
@@ -445,8 +473,8 @@ section .section-title {
 
 @media (max-width: 767px) {
   #footer h5 {
-    padding-left: 0;
-    border-left: transparent;
+    padding-left: 10px;
+    // border-left: transparent;
     padding-bottom: 0px;
     margin-bottom: 10px;
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createProfile, getCurrentProfile } from '../../actions/profileActions';
+import { createProfile } from '../../actions/profileActions';
 import TextFieldGroup from '../shared/text-field-group';
 import Spinner from '../shared/spinner';
 import { Link } from 'react-router-dom';
@@ -67,6 +67,7 @@ class EditPhoneForm extends Component {
             </h4>
             <hr />
             <div className="form-box">
+              <h5 className="text-muted">Update Your Primary Phone Number</h5>
               <form className="profile-form" onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   type="text"
@@ -81,14 +82,14 @@ class EditPhoneForm extends Component {
                     className="btn btn-lg submit-btn btn-block mt-3  mb-3"
                     disabled
                   >
-                    processing...
+                    Updating...
                   </button>
                 ) : (
                   <button
                     className="btn btn-lg submit-btn btn-block mt-3  mb-3"
                     type="submit"
                   >
-                    update phone number
+                    Update Phone Number
                   </button>
                 )}
                 {errors.error && (
