@@ -21,6 +21,7 @@ import Settings from './components/dashboard/settings';
 import setAuthToken from './utils/setAuthToken';
 import { logOutUser, setCurrentUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
+import RestaurantProfile from './components/public-restaurant/restaurant';
 
 if (localStorage.jwtToken) {
   //set header auth
@@ -58,16 +59,13 @@ class App extends Component {
                 path="/primary-user/accounts/verification/:activationcode"
                 component={Verification}
               />
+              <Route path="/restaurant" component={RestaurantProfile} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute
                 path="/profile/create-profile"
                 component={CreateProfile}
               />
               <PrivateRoute path="/profile/settings" component={Settings} />
-
-              {/*
-              <Route exact path="/get-started" component={Collector} />
-              <Route exact path="/dashboard/profile" component={Profile} /> */}
             </Switch>
           </div>
         </Router>
