@@ -8,11 +8,17 @@ import {
   GET_ERRORS
 } from './types';
 
+var url;
+if (process.env.NODE_ENV === 'production') {
+  url = 'http://no-cookn.herokuapp.com';
+} else {
+  url = 'http://localhost:4001';
+}
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get('api/profile')
+    .get(`${url}/api/profile/me`)
     .then(res =>
       dispatch({
         type: GET_PROFILE,

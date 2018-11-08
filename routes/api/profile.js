@@ -24,7 +24,7 @@ router.get('/test', (req, res) =>
 // @route Get api/profile @desc route the to get currently logged in user from
 // users auth @access PRIVATE
 router.get(
-  '/',
+  '/me',
   passport.authenticate('users', { session: false }),
   (req, res) => {
     const errors = {};
