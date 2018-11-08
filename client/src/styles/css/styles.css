@@ -526,6 +526,11 @@ section .section-title {
 .restaurant-header {
   height: 350px;
   background-color: black; }
+  @media (max-width: 468px) {
+    .restaurant-header {
+      height: auto; }
+      .restaurant-header .info-box {
+        margin-top: 20px; } }
   .restaurant-header .large-header {
     padding: 60px 0px 60px 0px; }
     .restaurant-header .large-header .img-box img {
@@ -533,5 +538,33 @@ section .section-title {
     .restaurant-header .large-header .info-box .rest-disp {
       padding: 10px;
       border: 1px solid #efb331; }
+
+.restinfo .phone-box .title {
+  color: #343a40;
+  font-size: 18px; }
+.restinfo .phone-box .number {
+  color: #50b83c;
+  font-size: 20px; }
+.restinfo .time-box .title {
+  color: #343a40;
+  font-size: 18px; }
+.restinfo .time-box .times .hour {
+  display: flex;
+  justify-content: space-between; }
+  .restinfo .time-box .times .hour b {
+    color: #343a40; }
+  .restinfo .time-box .times .hour span {
+    color: #efb331; }
+.restinfo .feature-box .title {
+  color: #343a40;
+  font-size: 18px; }
+.restinfo .cuisine-box .title {
+  color: #343a40;
+  font-size: 18px; }
+.restinfo .cuisine-box span {
+  color: #50b83c; }
+.restinfo .address-box .title {
+  color: #343a40;
+  font-size: 18px; }
 
 /*# sourceMappingURL=styles.css.map */

@@ -725,6 +725,14 @@ section .section-title {
   height: 350px;
   background-color: black;
 
+  @media #{$mobile} {
+    height: auto;
+
+    .info-box {
+      margin-top: 20px;
+    }
+  }
+
   .large-header {
     padding: 60px 0px 60px 0px;
     .img-box {
@@ -737,6 +745,63 @@ section .section-title {
         padding: 10px;
         border: 1px solid $primary-yellow;
       }
+    }
+  }
+}
+
+.restinfo {
+  .phone-box {
+    .title {
+      color: $text-color;
+      font-size: 18px;
+    }
+    .number {
+      color: $primary-green;
+      font-size: 20px;
+    }
+  }
+  .time-box {
+    .title {
+      color: $text-color;
+      font-size: 18px;
+    }
+    .times {
+      .hour {
+        display: flex;
+        justify-content: space-between;
+        b {
+          color: $text-color;
+        }
+
+        span {
+          color: $primary-yellow;
+        }
+      }
+    }
+  }
+
+  .feature-box {
+    .title {
+      color: $text-color;
+      font-size: 18px;
+    }
+  }
+
+  .cuisine-box {
+    .title {
+      color: $text-color;
+      font-size: 18px;
+    }
+
+    span {
+      color: $primary-green;
+    }
+  }
+
+  .address-box {
+    .title {
+      color: $text-color;
+      font-size: 18px;
     }
   }
 }

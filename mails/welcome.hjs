@@ -10,9 +10,9 @@
 
 <body>
     <h3>Welcome to no-cookn {{name}}.</h3>
-    <p>We are glad you have decided to join us on this journey of food discovery. To activate your accout please click
-        on the link below.</p>
-    <a href="https://no-cookn.herokuapp.com/primary-user/accounts/verification/{{activationcode}}">activation link</a>
-</body>
+    <p>We are glad you have decided to join us on this journey of food discovery. Expolore restaurants around you to
+        find food you love, whenever you want it.</p>
+
+    <a href="http://http://no-cookn.herokuapp.com">Start Here</a>
 
 </html>
