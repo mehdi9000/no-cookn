@@ -21,7 +21,7 @@ const Welcome = () => {
               </h5>
               <Link to="/">
                 <button className="btn btn-warning btn-lg">
-                  back to homepage
+                  Back to Homepage
                 </button>
               </Link>
             </div>

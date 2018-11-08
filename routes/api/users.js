@@ -43,12 +43,12 @@ router.post('/register', (req, res) => {
     } else {
       //generate random hash string
       //store hash in db
-      let activationCode = nanoid(50);
+      // let activationCode = nanoid(50);
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
-        activationcode: activationCode
+        password: req.body.password
+        // activationcode: activationCode
       });
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -62,8 +62,7 @@ router.post('/register', (req, res) => {
                 from: 'maggie@no-cookn.com',
                 subject: 'Welcome to no-cookn',
                 html: compiledWelcomeTemplate.render({
-                  name: user.name,
-                  activationcode: user.activationcode
+                  name: user.name
                 })
               };
               sendgrid.send(msg);
@@ -105,7 +104,7 @@ router.post('/login', (req, res) => {
       });
     }
 
-    if (user.isactive === true) {
+    if (user) {
       //Check if provided password matches saved password
       bcrypt.compare(password, user.password).then(isMatch => {
         if (isMatch) {
@@ -135,11 +134,6 @@ router.post('/login', (req, res) => {
             password: 'Password is incorrect'
           });
         }
-      });
-    } else {
-      return res.status(400).json({
-        error:
-          'Your account is inactive. Please check your e-mail for our welcome mail to activate your account'
       });
     }
   });

@@ -18,13 +18,13 @@ const UserSchema = new Schema({
   avatar: {
     type: String
   },
-  isactive: {
-    type: Boolean,
-    default: false
-  },
-  activationcode: {
-    type: String
-  },
+  // isactive: {
+  //   type: Boolean,
+  //   default: false
+  // },
+  // activationcode: {
+  //   type: String
+  // },
   passwordresetcode: {
     type: String
   },
