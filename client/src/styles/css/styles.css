@@ -5,6 +5,11 @@ html {
   padding: 0;
   margin: 0; }
 
+@media (max-width: 468px) {
+  .login-btn,
+  .signup-btn {
+    margin-bottom: 8px; } }
+
 .dashnav {
   background: #fdeee7 !important; }
   .dashnav .dash {
@@ -31,7 +36,7 @@ span {
       color: #efb331; }
     @media (max-width: 468px) {
       .header-jumb h2 {
-        font-size: 44px; } }
+        font-size: 40px; } }
   .header-jumb h4 {
     color: whitesmoke;
     font-size: 32px;
@@ -56,7 +61,7 @@ span {
     padding: 20px 0 20px 20px; }
     .form-container .landing-form input {
       outline: none;
-      padding: 20px;
+      padding: 15px;
       border: none;
       border-radius: 4px;
       font-size: 19px;
@@ -65,7 +70,7 @@ span {
         outline: none !important;
         box-shadow: none; }
     .form-container .landing-form .search-btn {
-      padding: 20px 35px;
+      padding: 15px 35px;
       border-radius: 4px;
       background: #efb331;
       color: whitesmoke;
@@ -79,7 +84,7 @@ span {
   margin-top: -25px;
   padding: 40px 0 40px 0; }
   .restaurants .title {
-    color: #343a40;
+    color: #253858;
     font-size: 36px; }
   .restaurants .cards .card {
     border: none;
@@ -95,7 +100,7 @@ span {
       color: #50b83c; }
     .restaurants .cards .card .card-body .card-title a {
       font-family: 'Nunito', sans-serif;
-      color: #343a40;
+      color: #253858;
       font-size: 24px;
       font-weight: 500;
       text-decoration: none; }
@@ -120,7 +125,7 @@ span {
   padding: 40px 0 40px 0; }
   .categories .title {
     font-size: 36px;
-    color: #343a40; }
+    color: #253858; }
   .categories .card {
     justify-items: center;
     border-radius: 16px;
@@ -146,7 +151,7 @@ span {
         padding-top: 20px; }
         .categories .card .card-body h4 a {
           text-decoration: none;
-          color: #343a40; }
+          color: #253858; }
 
 .options {
   padding: 40px 0 40px 0; }
@@ -163,11 +168,15 @@ span {
       text-decoration: none; }
 
 .steps {
+  margin-top: -30px;
   background-color: #e9f9f0;
   padding: 40px 0 40px 0; }
   .steps .card {
     border: none;
     border-radius: 16px; }
+    @media (max-width: 468px) {
+      .steps .card {
+        margin-bottom: 20px; } }
     .steps .card .card-body .img-cont {
       display: flex;
       align-content: center;
@@ -175,19 +184,20 @@ span {
       border-radius: 100px;
       width: 80px;
       height: 80px;
+      margin-top: -50px;
       background: #fdeee7;
       box-shadow: 0 4px 6px 0 rgba(80, 184, 60, 0.3); }
       .steps .card .card-body .img-cont img {
         width: 40px; }
     .steps .card .card-body .title {
       font-size: 21px;
-      color: #343a40; }
+      color: #253858; }
 
 .partners {
   padding: 40px 0 40px 0;
   background-color: #fdeee7; }
   .partners a {
-    color: #343a40;
+    color: #253858;
     text-decoration: underline; }
 
 .errorbox {
@@ -238,7 +248,7 @@ span {
       max-width: 400px;
       padding: 15px;
       margin: 0 auto;
-      color: #343a40; }
+      color: #253858; }
     .auth-wrapper .form-box .form-cont .form-signin .form-control {
       position: relative;
       box-sizing: border-box;
@@ -271,23 +281,28 @@ section .section-title {
   text-transform: uppercase; }
 
 .welcome-wrapper {
-  height: 100vh;
-  background-image: url("../../assets/dinner-dish-egg-54455.jpg");
-  background-repeat: no-repeat;
-  background-size: cover; }
+  height: 100vh; }
   .welcome-wrapper .welcome-info {
     padding-top: 25%;
     margin: 0 auto;
     text-align: center;
-    color: rgba(239, 179, 49, 0.8); }
+    color: #253858; }
     .welcome-wrapper .welcome-info img {
-      width: 150px; }
+      opacity: 0.8;
+      width: 350px; }
     .welcome-wrapper .welcome-info h3 {
       font-weight: bolder;
       letter-spacing: 1.5px;
-      font-size: 28px; }
+      font-size: 28px;
+      color: #efb331; }
+      @media (max-width: 468px) {
+        .welcome-wrapper .welcome-info h3 {
+          font-size: 24px; } }
     .welcome-wrapper .welcome-info h5 {
+      font-weight: bold;
       letter-spacing: 1.2px; }
+    .welcome-wrapper .welcome-info .btn {
+      color: whitesmoke; }
 
 #footer {
   background-color: #343a40 !important;
@@ -417,7 +432,7 @@ section .section-title {
       font-weight: bold; }
   .dashboard .dashcontent .no-profile .noprofile-info {
     font-size: 18px;
-    color: #343a40; }
+    color: #253858; }
   .dashboard .dashcontent .no-profile .btn {
     color: #fdeee7; }
   .dashboard .dashcontent .no-profile .btn-info {
@@ -434,7 +449,7 @@ section .section-title {
   padding: 10px;
   margin-top: 20px; }
   .form-box .form-header {
-    color: #343a40 !important; }
+    color: #253858 !important; }
   .form-box .profile-form .submit-btn {
     background-color: rgba(239, 179, 49, 0.8);
     color: whitesmoke;
@@ -483,7 +498,7 @@ section .section-title {
   display: flex;
   padding: 10px 24px;
   cursor: pointer;
-  color: #343a40;
+  color: #253858;
   font-weight: 700;
   font-size: 16px; }
   .tab-list-item:hover {
@@ -540,31 +555,31 @@ section .section-title {
       border: 1px solid #efb331; }
 
 .restinfo .phone-box .title {
-  color: #343a40;
+  color: #253858;
   font-size: 18px; }
 .restinfo .phone-box .number {
   color: #50b83c;
   font-size: 20px; }
 .restinfo .time-box .title {
-  color: #343a40;
+  color: #253858;
   font-size: 18px; }
 .restinfo .time-box .times .hour {
   display: flex;
   justify-content: space-between; }
   .restinfo .time-box .times .hour b {
-    color: #343a40; }
+    color: #253858; }
   .restinfo .time-box .times .hour span {
     color: #efb331; }
 .restinfo .feature-box .title {
-  color: #343a40;
+  color: #253858;
   font-size: 18px; }
 .restinfo .cuisine-box .title {
-  color: #343a40;
+  color: #253858;
   font-size: 18px; }
 .restinfo .cuisine-box span {
   color: #50b83c; }
 .restinfo .address-box .title {
-  color: #343a40;
+  color: #253858;
   font-size: 18px; }
 
 /*# sourceMappingURL=styles.css.map */

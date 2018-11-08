@@ -59,12 +59,15 @@ class EditPhoneForm extends Component {
       if (Object.keys(profile).length > 0) {
         settingContent = (
           <div className="col-md-12">
-            <h4>
+            <div className="setting-header">
               <Link to="/dashboard">
-                <button className="btn btn-info mr-4">back</button>
+                <button className="btn btn-info btn-sm mr-4">
+                  <i className="fas fa-arrow-left" /> back
+                </button>
               </Link>
-              Update Profile Information
-            </h4>
+              <br /> <br />
+              <h5>Update Profile Information</h5>
+            </div>
             <hr />
             <div className="form-box">
               <h5 className="text-muted">Update Your Primary Phone Number</h5>

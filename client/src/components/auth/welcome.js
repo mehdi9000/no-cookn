@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Mail from '../../assets/letter.svg';
+import Success from '../../assets/welcome.svg';
 
 const Welcome = () => {
   return (
@@ -10,19 +10,16 @@ const Welcome = () => {
           <div className="col-md-6">
             <div className="welcome-info ">
               <img
-                src={Mail}
+                src={Success}
                 alt="welcome to no cookn"
-                className="mb-3 img-responsive"
+                className="mb-5 img-responsive"
               />
               <h3 className="mb-3">Your sign up was successful!</h3>
-              <h5 className="mb-3">
-                We have sent a mail to you. Use the button in the mail to
-                activate your account.
+              <h5 className="mb-4">
+                Click the button below to sign in and proceed to your profile.
               </h5>
-              <Link to="/">
-                <button className="btn btn-warning btn-lg">
-                  Back to Homepage
-                </button>
+              <Link to="/login">
+                <button className="btn btn-warning btn-lg">Sign In</button>
               </Link>
             </div>
           </div>

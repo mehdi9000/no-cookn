@@ -29,12 +29,12 @@ class Login extends Component {
                     </Link>
                     <LoginForm />
                     <hr />
-                    <p>
+                    <small>
                       Don't have an account?
                       <Link to="/register" className="text-warning">
-                        &nbsp; Create an Account
+                        &nbsp; <b>Create an Account</b>
                       </Link>
-                    </p>
+                    </small>
                     <br /> <br />
                   </div>
                 </div>

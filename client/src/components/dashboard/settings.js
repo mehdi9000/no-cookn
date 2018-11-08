@@ -67,7 +67,7 @@ class Settings extends Component {
                     }}
                     className="btn btn-info"
                   >
-                    Add a address
+                    Add an address
                   </button>
                 </div>
 

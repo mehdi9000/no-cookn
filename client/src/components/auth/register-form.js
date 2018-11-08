@@ -45,7 +45,7 @@ class RegistrationForm extends Component {
     return (
       <div>
         <form className="form-signin" onSubmit={this.onSubmit}>
-          <h1 className="h3 mb-3 mt-3 font-weight-bold">create an account</h1>
+          <h1 className="h3 mb-3 mt-3 font-weight-bold">Create an Account</h1>
           <TextFieldGroup
             type="text"
             onChange={this.onChange}

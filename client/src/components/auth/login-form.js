@@ -43,7 +43,7 @@ class LoginForm extends Component {
     return (
       <div>
         <form className="form-signin" onSubmit={this.onSubmit}>
-          <h1 className="h3 mb-3 mt-3 font-weight-bold">sign in to continue</h1>
+          <h1 className="h3 mb-3 mt-3 font-weight-bold">Sign In to Continue</h1>
           <TextFieldGroup
             type="email"
             name="email"

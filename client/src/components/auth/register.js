@@ -22,12 +22,12 @@ class Register extends Component {
                     <br />
                     <RegistrationForm />
                     <hr />
-                    <p className="text-muted">
+                    <small className="text-muted">
                       already have an account?
                       <Link to="/login" className="text-warning">
-                        &nbsp; Sign In to Continue
+                        &nbsp; <b>Sign In to Continue</b>
                       </Link>
-                    </p>
+                    </small>
                     <br /> <br />
                   </div>
                 </div>

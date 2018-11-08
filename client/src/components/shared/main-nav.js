@@ -32,11 +32,11 @@ class MainNav extends Component {
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/">
-                      Restuarants
+                      Restaurants
                     </Link>
                   </li>
 
-                  <li className="nav-item dropdown">
+                  <li className="nav-item dropdown mr-3">
                     <Link
                       to="/"
                       className="nav-link dropdown-toggle"
@@ -58,15 +58,15 @@ class MainNav extends Component {
                   </li>
                   <li>
                     <Link to="/login">
-                      <button className="btn btn-sm mr-3 login-btn">
-                        Sign in
+                      <button className="btn btn-sm mr-2 login-btn">
+                        Sign In
                       </button>
                     </Link>
                   </li>
 
                   <li>
                     <Link to="/register">
-                      <button className="btn btn-sm signup-btn">Sign up</button>
+                      <button className="btn btn-sm signup-btn">Sign Up</button>
                     </Link>
                   </li>
                 </ul>

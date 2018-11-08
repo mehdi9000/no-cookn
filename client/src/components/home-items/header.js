@@ -11,8 +11,6 @@ class Header extends Component {
             <h4 className="sub-main-header mb-3">
               Thousands of restaurants at your fingertips
             </h4>
-            <h6>Grab a bite from restaurants around you!</h6>
-
             <SearchForm />
           </div>
         </section>

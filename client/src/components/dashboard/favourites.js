@@ -24,7 +24,7 @@ class Favourites extends Component {
               </h5>
               <Link to="/">
                 <button className="btn btn-success btn-lg">
-                  browse restautants
+                  Browse Restautants
                 </button>
               </Link>
             </div>
