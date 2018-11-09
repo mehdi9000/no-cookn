@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createProfile } from '../../actions/profileActions';
+import { createProfile, getCurrentProfile } from '../../actions/profileActions';
 import TextFieldGroup from '../shared/text-field-group';
 import Spinner from '../shared/spinner';
-import { Link } from 'react-router-dom';
 
 class EditPhoneForm extends Component {
   constructor(props) {
@@ -17,11 +16,6 @@ class EditPhoneForm extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-
-  //   componentDidMount() {
-  //     this.props.getCurrentProfile();
-  //     console.log(this.props.profile);
-  //   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -60,15 +54,13 @@ class EditPhoneForm extends Component {
         settingContent = (
           <div className="col-md-12">
             <div className="setting-header">
-              <Link to="/dashboard">
-                <button className="btn btn-info btn-sm mr-4">
-                  <i className="fas fa-arrow-left" /> back
-                </button>
-              </Link>
-              <br /> <br />
-              <h5>Update Profile Information</h5>
+              <button
+                className="btn btn-info btn-sm mr-4"
+                onClick={this.props.close}
+              >
+                <i className="fas fa-arrow-left" /> back
+              </button>
             </div>
-            <hr />
             <div className="form-box">
               <h5 className="text-muted">Update Your Primary Phone Number</h5>
               <form className="profile-form" onSubmit={this.onSubmit}>
@@ -129,7 +121,6 @@ class EditPhoneForm extends Component {
 }
 EditPhoneForm.propTypes = {
   createProfile: PropTypes.func.isRequired,
-  //   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -141,5 +132,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createProfile }
+  { createProfile, getCurrentProfile }
 )(EditPhoneForm);

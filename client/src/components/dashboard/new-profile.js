@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Mascot from '../../assets/mascot-3.svg';
+import Mascot from '../../assets/mascot.svg';
 import PhoneForm from './phone-form';
 
 class NewProfile extends Component {

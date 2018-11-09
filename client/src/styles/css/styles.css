@@ -396,12 +396,6 @@ section .section-title {
   padding: 20px;
   border-radius: 4px;
   margin-top: 60px; }
-  .dashboard .edit-profile .address-card {
-    border: 1px solid rgba(80, 184, 60, 0.4);
-    padding: 20px;
-    border-radius: 4px; }
-    .dashboard .edit-profile .address-card h4 {
-      font-size: 18px; }
 .dashboard .dash-header {
   height: 250px;
   background-color: #e9f9f0; }
@@ -481,6 +475,17 @@ section .section-title {
     -moz-transition: border 0.5s ease-in; }
 
 /****************DAHSBOARD STYLES***************/
+.address-book .address-card {
+  border: 1px solid rgba(80, 184, 60, 0.4);
+  padding: 20px;
+  border-radius: 4px; }
+  .address-book .address-card h4 {
+    font-size: 18px; }
+  @media (max-width: 468px) {
+    .address-book .address-card {
+      margin-bottom: 20px; } }
+
+/****************ADDRESS STYLES***************/
 .tabs {
   background-color: white;
   border: 1px solid rgba(80, 184, 60, 0.2);
@@ -581,5 +586,68 @@ section .section-title {
 .restinfo .address-box .title {
   color: #253858;
   font-size: 18px; }
+
+.modall {
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); }
+  .modall .modal-main {
+    position: fixed;
+    background: white;
+    width: 50%;
+    max-height: 100vh;
+    border-radius: 4px;
+    overflow-y: scroll;
+    top: 40%;
+    left: 50%;
+    padding: 30px;
+    transform: translate(-50%, -50%); }
+    @media (max-width: 468px) {
+      .modall .modal-main {
+        width: 90%; } }
+    @media (min-width: 469px) and (max-width: 920px) {
+      .modall .modal-main {
+        width: 90%; } }
+
+.display-block {
+  display: flex;
+  flex: 1; }
+
+.display-none {
+  display: none; }
+
+@media (max-width: 468px) {
+  .not-found {
+    padding: 10px; } }
+.not-found .img-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px; }
+  .not-found .img-box img {
+    margin: 0 auto; }
+.not-found .text-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .not-found .text-box h4 {
+    color: #efb331;
+    font-size: 32px; }
+    @media (max-width: 468px) {
+      .not-found .text-box h4 {
+        font-size: 26px; } }
+  .not-found .text-box h5 {
+    color: #253858;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center; }
+    @media (max-width: 468px) {
+      .not-found .text-box h5 {
+        font-size: 18px; } }
 
 /*# sourceMappingURL=styles.css.map */

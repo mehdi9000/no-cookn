@@ -76,7 +76,7 @@ class PhoneForm extends Component {
               className="btn btn-lg submit-btn btn-block mt-3  mb-3"
               type="submit"
             >
-              add a phone number
+              Add a Phone Number
             </button>
           )}
           {errors.error && (

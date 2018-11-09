@@ -22,6 +22,7 @@ import setAuthToken from './utils/setAuthToken';
 import { logOutUser, setCurrentUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
 import RestaurantProfile from './components/public-restaurant/restaurant';
+import NotFound from './components/shared/404';
 
 if (localStorage.jwtToken) {
   //set header auth
@@ -51,14 +52,11 @@ class App extends Component {
           <div className="App">
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/welcome" component={Welcome} />
-              {/* <Route
-                exact
-                path="/primary-user/accounts/verification/:activationcode"
-                component={Verification}
-              /> */}
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <Route path="/welcome" component={Welcome} />
+              <Route component={NotFound} />
+
               <Route path="/restaurant" component={RestaurantProfile} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute
@@ -66,6 +64,11 @@ class App extends Component {
                 component={CreateProfile}
               />
               <PrivateRoute path="/profile/settings" component={Settings} />
+              {/* <Route
+                exact
+                path="/primary-user/accounts/verification/:activationcode"
+                component={Verification}
+              /> */}
             </Switch>
           </div>
         </Router>

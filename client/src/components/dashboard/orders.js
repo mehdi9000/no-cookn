@@ -25,7 +25,7 @@ class Orders extends Component {
               </h5>
               <Link to="/">
                 <button className="btn btn-success btn-lg">
-                  Top Restautants
+                  Top Restaurants
                 </button>
               </Link>
             </div>

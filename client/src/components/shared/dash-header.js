@@ -1,7 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Modal from '../shared/modal';
+import EditPhoneForm from '../dashboard/edit-phone-form';
+import Address from '../dashboard/address';
 
 class DashHeader extends Component {
+  constructor() {
+    super();
+    this.state = {
+      show: false
+    };
+  }
+
+  showModal = () => {
+    this.setState({ show: true });
+  };
+
+  hideModal = () => {
+    this.setState({ show: false });
+  };
+
   render() {
     return (
       <div>
@@ -14,11 +32,13 @@ class DashHeader extends Component {
             </div>
 
             <div className="profile-actions">
-              <Link to="/profile/settings">
-                <button className="btn btn-sm btn-settings">
-                  <i className="fas fa-cogs" /> settings
-                </button>
-              </Link>
+              <button
+                className="btn btn-sm btn-settings"
+                onClick={this.showModal}
+              >
+                <i className="fas fa-cogs" /> settings
+              </button>
+
               <Link to="/">
                 <button className="btn btn-sm btn-home">
                   <i className="fas fa-home " /> homepage
@@ -33,6 +53,11 @@ class DashHeader extends Component {
             </div>
           </div>
         </div>
+        <Modal show={this.state.show}>
+          <EditPhoneForm close={this.hideModal} />
+
+          <Address />
+        </Modal>
       </div>
     );
   }
