@@ -877,7 +877,7 @@ section .section-title {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 50px;
+    padding-top: 30px;
     img {
       margin: 0 auto;
     }
@@ -903,6 +903,9 @@ section .section-title {
       @media #{$mobile} {
         font-size: 18px;
       }
+    }
+    .btn{
+      color: whitesmoke;
     }
   }
 }
