@@ -55,8 +55,6 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               <Route path="/welcome" component={Welcome} />
-              <Route component={NotFound} />
-
               <Route path="/restaurant" component={RestaurantProfile} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute
@@ -64,6 +62,8 @@ class App extends Component {
                 component={CreateProfile}
               />
               <PrivateRoute path="/profile/settings" component={Settings} />
+              <Route component={NotFound} />
+
               {/* <Route
                 exact
                 path="/primary-user/accounts/verification/:activationcode"
