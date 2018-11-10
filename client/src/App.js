@@ -58,7 +58,7 @@ class App extends Component {
               <Route component={NotFound} />
 
               <Route path="/restaurant" component={RestaurantProfile} />
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute
                 path="/profile/create-profile"
                 component={CreateProfile}
