@@ -173,10 +173,10 @@ span {
   padding: 40px 0 40px 0; }
   .steps .card {
     border: none;
-    border-radius: 16px; }
+    border-radius: 4px; }
     @media (max-width: 468px) {
       .steps .card {
-        margin-bottom: 20px; } }
+        margin-bottom: 30px; } }
     .steps .card .card-body .img-cont {
       display: flex;
       align-content: center;
@@ -397,10 +397,18 @@ section .section-title {
   border-radius: 4px;
   margin-top: 60px; }
 .dashboard .dash-header {
-  height: 250px;
+  height: 350px;
   background-color: #e9f9f0; }
+  @media (max-width: 468px) {
+    .dashboard .dash-header {
+      height: auto;
+      padding-bottom: 30px; } }
+  .dashboard .dash-header .img-box {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding-bottom: 0; }
   .dashboard .dash-header .header-text {
-    padding-top: 90px;
     font-weight: bolder; }
   .dashboard .dash-header .profile-actions {
     display: flex;

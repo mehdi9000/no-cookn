@@ -7,6 +7,9 @@ import DashHeader from '../shared/dash-header';
 import Spinner from '../shared/spinner';
 import MainContent from './main-content';
 import NewProfile from './new-profile';
+import Morning from '../../assets/morning.svg';
+import Noon from '../../assets/noon.svg';
+import Night from '../../assets/night.svg';
 
 class Dashboard extends Component {
   constructor() {
@@ -26,18 +29,20 @@ class Dashboard extends Component {
 
     let name = user.name.split(' ');
     let username = name[0];
-    // const { displayAddressForm } = this.state;
 
     const currentHour = new Date().getHours();
-    let greeting = '';
+    let greeting, greetingImage;
     if (currentHour >= 0 && currentHour < 12) {
-      greeting = "it's time to get some breakfast";
+      greeting = "the sun is on the rise, it's time to get some breakfast";
+      greetingImage = Morning;
     }
     if (currentHour >= 12 && currentHour < 17) {
-      greeting = "it's time to get some lunch";
+      greeting = 'looks like the sun is out, ready for lunch?';
+      greetingImage = Noon;
     }
     if (currentHour >= 17 && currentHour < 24) {
       greeting = "it's time to get some dinner";
+      greetingImage = Night;
     }
 
     let dashboardContent;
@@ -58,6 +63,7 @@ class Dashboard extends Component {
         <DashHeader
           name={username}
           greeting={greeting}
+          img={greetingImage}
           logOut={this.onLogoutClick}
         />
         <div className="container">

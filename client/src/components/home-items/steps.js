@@ -8,7 +8,7 @@ function Steps() {
     <div>
       <div class="steps">
         <div class="container">
-          <h3 className="mb-4 text-center">How it Works</h3>
+          <h3 className="mb-4 text-center pb-4">How it Works</h3>
           <div class="row">
             <div class="col-md-4 mb-3">
               <div class="card">

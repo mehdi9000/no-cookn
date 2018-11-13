@@ -240,9 +240,9 @@ span {
 
   .card {
     border: none;
-    border-radius: 16px;
+    border-radius: 4px;
     @media #{$mobile} {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
     .card-body {
       .img-cont {
@@ -535,11 +535,22 @@ section .section-title {
     margin-top: 60px;
   }
   .dash-header {
-    height: 250px;
+    height: 350px;
     background-color: $light-green;
+    @media #{$mobile} {
+      height: auto;
+      padding-bottom: 30px;
+    }
+
+    .img-box {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      padding-bottom: 0;
+    }
 
     .header-text {
-      padding-top: 90px;
+      // padding-top: 50px;
       font-weight: bolder;
     }
 
@@ -873,6 +884,7 @@ section .section-title {
   @media #{$mobile} {
     padding: 10px;
   }
+
   .img-box {
     display: flex;
     justify-content: center;
@@ -904,7 +916,7 @@ section .section-title {
         font-size: 18px;
       }
     }
-    .btn{
+    .btn {
       color: whitesmoke;
     }
   }

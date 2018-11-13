@@ -8,7 +8,7 @@ class TopRestaurants extends Component {
         <div className="restaurants">
           <div className="container">
             <div className="cards">
-              <h3 className="title">Top Restaurants</h3>
+              <h3 className="title pt-4">Top Restaurants</h3>
               <hr />
 
               <div className="row">

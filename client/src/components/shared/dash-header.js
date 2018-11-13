@@ -25,6 +25,9 @@ class DashHeader extends Component {
       <div>
         <div className="dash-header">
           <div className="container">
+            <div className="img-box">
+              <img src={this.props.img} width="60px" />
+            </div>
             <div className="greeting text-center">
               <h3 className="header-text">
                 {this.props.name}, {this.props.greeting}
@@ -41,7 +44,7 @@ class DashHeader extends Component {
 
               <Link to="/">
                 <button className="btn btn-sm btn-home">
-                  <i className="fas fa-home " /> homepage
+                  <i className="fas fa-home " /> restaurants
                 </button>
               </Link>
               <button
