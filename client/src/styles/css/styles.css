@@ -398,7 +398,7 @@ section .section-title {
   margin-top: 60px; }
 .dashboard .dash-header {
   height: 350px;
-  background-color: #e9f9f0; }
+  background-color: ghostwhite; }
   @media (max-width: 468px) {
     .dashboard .dash-header {
       height: auto;
@@ -407,9 +407,15 @@ section .section-title {
     display: flex;
     justify-content: center;
     align-content: center;
-    padding-bottom: 0; }
+    padding-bottom: 0;
+    padding-top: 30px; }
   .dashboard .dash-header .header-text {
-    font-weight: bolder; }
+    padding-top: 30px;
+    color: #50b83c;
+    font-size: 24px; }
+    .dashboard .dash-header .header-text span {
+      color: #efb331;
+      font-size: 32px; }
   .dashboard .dash-header .profile-actions {
     display: flex;
     justify-content: space-between;

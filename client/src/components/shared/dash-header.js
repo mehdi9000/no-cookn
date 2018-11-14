@@ -26,11 +26,14 @@ class DashHeader extends Component {
         <div className="dash-header">
           <div className="container">
             <div className="img-box">
-              <img src={this.props.img} width="60px" />
+              <img src={this.props.img} width="120px" height="120px" />
             </div>
             <div className="greeting text-center">
               <h3 className="header-text">
-                {this.props.name}, {this.props.greeting}
+                <span>{this.props.name}</span>, {this.props.greeting}
+                <span>
+                  <b>.</b>
+                </span>
               </h3>
             </div>
 

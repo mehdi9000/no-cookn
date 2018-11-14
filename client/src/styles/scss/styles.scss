@@ -536,22 +536,27 @@ section .section-title {
   }
   .dash-header {
     height: 350px;
-    background-color: #262626;
+    background-color: ghostwhite;
     @media #{$mobile} {
       height: auto;
       padding-bottom: 30px;
     }
-
     .img-box {
       display: flex;
       justify-content: center;
       align-content: center;
       padding-bottom: 0;
+      padding-top: 30px;
     }
 
     .header-text {
-      // padding-top: 50px;
-      font-weight: bolder;
+      padding-top: 30px;
+      color: $primary-green;
+      font-size: 24px;
+      span {
+        color: $primary-yellow;
+        font-size: 32px;
+      }
     }
 
     .profile-actions {
