@@ -536,7 +536,7 @@ section .section-title {
   }
   .dash-header {
     height: 350px;
-    background-color: $light-green;
+    background-color: #262626;
     @media #{$mobile} {
       height: auto;
       padding-bottom: 30px;
