@@ -1,16 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const RestaurantProfileSchema = new Schema({
   restaurant: {
     type: Schema.Types.ObjectId,
-    ref: 'restaurant'
+    ref: "restaurant"
   },
   reviews: [
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'user'
+        ref: "user"
       },
       text: {
         type: String,
@@ -87,7 +87,7 @@ const RestaurantProfileSchema = new Schema({
     {
       category: {
         type: String,
-        default:'Breakfast'
+        default: "Breakfast"
       },
       name: {
         type: String,
@@ -104,19 +104,31 @@ const RestaurantProfileSchema = new Schema({
       picture: {
         type: String
       },
-      time: {
+      deliverytime: {
         type: String
-      }
+      },
+      extras: [
+        {
+          name: String,
+          price: String
+        }
+      ]
     }
   ],
-  pictures: [{ type: String, default: '' }],
-  phone:{
+  deliveryareas: [{type: String}],
+  cuisines: [{type: String}],
+  paymentsaccepted: [{type: String}],
+  pictures: [{ type: String, default: "" }],
+  phone: {
     type: Number,
     required: false
   }
 });
 
+
+
+
 module.exports = RestaurantProfile = mongoose.model(
-  'restaurantProfile',
+  "restaurantProfile",
   RestaurantProfileSchema
 );
