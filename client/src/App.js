@@ -38,7 +38,7 @@ if (localStorage.jwtToken) {
   //check if token is expired
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
-    alert('Please Login again');
+    alert('Your seession has expired. Please sign in again');
     store.dispatch(logOutUser());
     window.location.href = '/login';
   }
