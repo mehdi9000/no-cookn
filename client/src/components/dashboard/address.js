@@ -43,10 +43,16 @@ class Address extends Component {
     let addressContent;
 
     if (profile === null || loading) {
+      // console.log(address);
+
       addressContent = <Spinner />;
-    } else if (Object.keys(profile) > 0) {
-      if (address.length > 1) {
-        console.log(address);
+    } else if (profile != null && !loading) {
+      // console.log(address);
+      let pAddress = address;
+      // console.log(pAddress.length);
+
+      if (pAddress.length < 1) {
+        // console.log('xoxo');
         addressContent = (
           <div className="mb-3">
             <button
