@@ -58,8 +58,7 @@ router.post('/partners/register', (req, res) => {
       const newRestaurant = new Restaurant({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
-        activationcode: activationCode
+        password: req.body.password
       });
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newRestaurant.password, salt, (err, hash) => {
@@ -70,11 +69,10 @@ router.post('/partners/register', (req, res) => {
             .then(restaurant => {
               const msg = {
                 to: restaurant.email,
-                from: 'maggie@e-kitchen.com',
-                subject: 'Welcome to E-Kitchen',
+                from: 'maggie@no-cookn.com',
+                subject: 'Welcome to no-cookn',
                 html: compiledRestaurantWelcomeTemplate.render({
-                  name: restaurant.name,
-                  activationcode: restaurant.activationcode
+                  name: restaurant.name
                 })
               };
               sendgrid.send(msg);
