@@ -58,8 +58,7 @@ router.post("/partners/register", (req, res) => {
       const newRestaurant = new Restaurant({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
-        activationcode: activationCode
+        password: req.body.password
       });
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newRestaurant.password, salt, (err, hash) => {
@@ -73,8 +72,7 @@ router.post("/partners/register", (req, res) => {
                 from: "maggie@e-kitchen.com",
                 subject: "Welcome to E-Kitchen",
                 html: compiledRestaurantWelcomeTemplate.render({
-                  name: restaurant.name,
-                  activationcode: restaurant.activationcode
+                  name: restaurant.name
                 })
               };
               sendgrid.send(msg);
@@ -115,43 +113,36 @@ router.post("/partners/login", (req, res) => {
       });
     }
 
-    if (restaurant.isactive === true) {
-      //Check if provided password matches saved password
-      bcrypt.compare(password, restaurant.password).then(isMatch => {
-        if (isMatch) {
-          //create payload
-          const payload = {
-            id: restaurant.id,
-            name: restaurant.name,
-            email: restaurant.email
-          };
+    //Check if provided password matches saved password
+    bcrypt.compare(password, restaurant.password).then(isMatch => {
+      if (isMatch) {
+        //create payload
+        const payload = {
+          id: restaurant.id,
+          name: restaurant.name,
+          email: restaurant.email
+        };
 
-          //sign jwt
-          jwt.sign(
-            payload,
-            keys.secretOrKey,
-            {
-              expiresIn: 3600
-            },
-            (err, token) => {
-              res.json({
-                success: true,
-                token: "Bearer " + token
-              });
-            }
-          );
-        } else {
-          return res.status(400).json({
-            password: "Password is incorrect"
-          });
-        }
-      });
-    } else {
-      return res.status(400).json({
-        error:
-          "Your account is inactive. Please check your e-mail for our welcome mail to activate your account"
-      });
-    }
+        //sign jwt
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          {
+            expiresIn: 604800
+          },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: 'Bearer ' + token
+            });
+          }
+        );
+      } else {
+        return res.status(400).json({
+          password: 'Password is incorrect'
+        });
+      }
+    });
   });
 });
 

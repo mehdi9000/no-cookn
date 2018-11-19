@@ -46,7 +46,7 @@ class Address extends Component {
       // console.log(address);
 
       addressContent = <Spinner />;
-    } else if (profile != null && !loading) {
+    } else if (profile.hasOwnProperty('address')) {
       // console.log(address);
       let pAddress = address;
       // console.log(pAddress.length);
