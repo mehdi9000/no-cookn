@@ -9,7 +9,7 @@ const Restaurant = require("../../models/Restaurant");
 const Order = require("../../models/Order");
 
 //Load profile validation
-const ValidateProfileInput = require("../../validation/profile");
+const ValidateProfileInput = require("../../validation/restaurants-profile");
 const ValidateAddressInput = require("../../validation/address");
 const ValidateMenuInput = require("../../validation/menu");
 const ValidateImageUpload = require("../../validation/image");
@@ -41,7 +41,7 @@ router.get(
       })
       .catch(err => res.status(404).json(err));
   }
-);
+);//tested
 
 // @route   POST api/restaurant-profile
 // @desc    Create or edit restaurant profile
@@ -60,8 +60,17 @@ router.post(
     // Get fields
     const restaurantProfileFields = {};
     restaurantProfileFields.restaurant = req.user.id;
-    if (req.body.phone) restaurantProfileFields.phone = req.body.phone;
-    if (req.body.location) restaurantProfileFields.location = req.body.location;
+    
+    if (req.body.categories) restaurantProfileFields.categories = req.body.categories.split(',');
+    if (req.body.opensat) restaurantProfileFields.opensat = req.body.opensat;
+
+    if (req.body.closeat) restaurantProfileFields.closesat = req.body.closessat;
+
+    if (req.body.deliveryareas) restaurantProfileFields.deliveryareas = req.body.deliveryareas.split(',');
+    if (req.body.cuisines) restaurantProfileFields.cuisines = req.body.cuisines.split(',');
+   
+    if (req.body.paymentsaccepted) restaurantProfileFields.paymentsaccepted = req.body.paymentsaccepted.split(',');
+    if (req.body.phone) restaurantProfileFields.phone = req.body.phone.split(',');
 
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
       restaurantProfile => {
@@ -81,8 +90,10 @@ router.post(
       }
     );
   }
-);
+);//tested
 // @route GET api/restaurants-profile/restaurant_id
+// @desc get all profile data of a restaurant
+// @access PRIVATE
 router.get(
   "/:restaurant_id",
 
@@ -108,7 +119,7 @@ router.get(
         })
       );
   }
-);
+);//tested
 
 // @route GET api/profile/all
 // @desc route to get all restaurant profiles
@@ -125,7 +136,7 @@ router.get("/partners/all-profiles/", (req, res) => {
       res.json(restaurantProfiles);
     })
     .catch(err => res.status(404).json(err));
-});
+});//tested
 
 // @route POST api/restaurant-profile/partners/address
 // @desc route to add new address
@@ -159,7 +170,7 @@ router.post(
         .then(restaurantProfile => res.json(restaurantProfile));
     });
   }
-);
+);//tested
 
 // @route DELETE api/profile/address/:address_id
 // @desc router to delete address from profile
@@ -193,9 +204,11 @@ router.delete(
   "/",
   passport.authenticate("restaurants", { session: false }),
   (req, res) => {
-    RestaurantProfile.findByIdAndRemove({ restaurant: req.user.id }).then(
+    let profile = { restaurant: req.user.id }
+    let profile2 = { _id: req.user.id }
+    RestaurantProfile.findByIdAndRemove(profile).then(
       restaurantProfile => {
-        Restaurant.findByIdAndRemove({ _id: req.user.id }).then(() =>
+        Restaurant.findByIdAndRemove(profile2).then(() =>
           res.json({ success: true })
         );
       }
@@ -235,16 +248,16 @@ router.post(
       // save new menu to profile
       restaurantProfile
         .save()
-        .then(restaurantProfile => res.json(restaurantProfile));
+        .then(restaurantProfile => res.json(restaurantProfile.menu));
     });
   }
-);
+);// tested
 
 // @route Delete api/restaurants/menu/:menu_id
 // @desc router to delete menu from restaurant's profile
 // @access PRIVATE
 router.delete(
-  "partners/menu/:menu_id",
+  "/partners/menu/:menu_id",
   passport.authenticate("restaurants", {
     session: false
   }),
@@ -282,187 +295,24 @@ router.get(
       })
       .catch(err => res.status(404).json(err));
   }
-);
-
-// @route   POST api/restaurant-profile
-// @desc    Create or edit restaurant profile
-// @access  Private
-router.post(
-  "/",
-  passport.authenticate("restaurants", { session: false }),
-  (req, res) => {
-    const { errors, isValid } = ValidateProfileInput(req.body);
-
-    //check validation
-    if (!isValid) {
-      // Return any errors with status 400
-      return res.status(400).json(errors);
-    }
-    // Get fields
-    const restaurantProfileFields = {};
-    restaurantProfileFields.user = req.user.id;
-    if (req.body.phone) restaurantProfileFields.phone = req.body.phone;
-    if (req.body.location) restaurantProfileFields.location = req.body.location;
-
-    RestaurantProfile.findOne({ restaurant: req.user.id }).then(
-      restaurantProfile => {
-        if (restaurantProfile) {
-          // Update
-          RestaurantProfile.findOneAndUpdate(
-            { restaurant: req.user.id },
-            { $set: restaurantProfile.Fields },
-            { new: true }
-          ).then(restaurantProfile => res.json(restaurantProfile));
-        } else {
-          // save RestaurantProfile
-          new RestaurantProfile(restaurantProfileFields)
-            .save()
-            .then(restaurantProfile => res.json(restaurantProfile));
-        }
-      }
-    );
-  }
-);
-
-//  @route POST api/restaurants-profile/restaurant_id
-//  @desc route to get all profile info of a restaurant
-//  @access  PRIVATE
-router.post(
-  "/restaurant/:restaurant_id",
-  passport.authenticate("restaurants", {
-    session: false
-  }),
-  (req, res) => {
-    const errors = {};
-
-    RestaurantProfile.findOne({
-      restaurant: req.params.restaurant_id
-    })
-      .populate("restaurantProfile", ["name", "email"])
-      .then(restaurantProfile => {
-        if (!restaurantProfile) {
-          errors.norestaurantprofile =
-            "There is no profile for this restaurant";
-          res.status(404).json(errors);
-        }
-
-        res.json(restaurantProfile);
-      })
-      .catch(err =>
-        res.status(404).json({
-          restaurantProfile: "There is no profile for this restaurant"
-        })
-      );
-  }
-);
-
-// @route GET api/profile/all
-// @desc route to get all restaurant profiles
-// @access PUBLIC
-router.get("/partners/all-profiles/", (req, res) => {
-  const errors = {};
-  RestaurantProfile.find()
-    .populate("restaurant profile", ["name", "avatar"])
-    .then(restaurantProfiles => {
-      if (!restaurantProfiles) {
-        errors.ProfileNotFound = "No profiles found";
-        return res.status(404).json(errors);
-      }
-      res.json(restaurantProfiles);
-    })
-    .catch(err => res.status(404).json(err));
-});
-
-// @route POST api/restaurant-profile/partners/address
-// @desc route to add new address
-// @access PRIVATE
-router.post(
-  "/partners/address",
-  passport.authenticate("restaurants", { session: false }),
-  (req, res) => {
-    const { errors, isValid } = ValidateAddressInput(req.body);
-
-    // Check Validation
-    if (!isValid) {
-      // Return any errors with 400 status
-      return res.status(400).json(errors);
-    }
-    RestaurantProfile.findOne({
-      restaurant: req.user.id
-    }).then(restaurantProfile => {
-      const newAddress = {
-        address1: req.body.address1,
-        address2: req.body.address2,
-        state: req.body.state,
-        city: req.body.city,
-        default: req.body.default
-      };
-      //add experience to array on profile model
-      restaurantProfile.address.unshift(newAddress);
-      //save the profile
-      restaurantProfile
-        .save()
-        .then(restaurantProfile => res.json(restaurantProfile));
-    });
-  }
-);
-
-// @route DELETE api/profile/address/:address_id
-// @desc router to delete address from profile
-// @access PRIVATE
-router.delete(
-  "partners/address/:address_id",
-  passport.authenticate("restaurants", {
-    session: false
-  }),
-  (req, res) => {
-    RestaurantProfile.findOne({
-      restaurant: req.user.id
-    })
-      .then(restaurantProfile => {
-        restaurantProfile.address.remove({
-          _id: req.params.address_id
-        });
-        restaurantProfile
-          .save()
-          .then(restaurantProfile => res.json(restaurantProfile.address))
-          .catch(err => res.json(err));
-      })
-      .catch(err => res.json(err));
-  }
-);
-
-// @route DELETE api/profile
-// @desc route to delete profile and user account
-// @access PRIVATE
-router.delete(
-  "/",
-  passport.authenticate("restaurants", { session: false }),
-  (req, res) => {
-    RestaurantProfile.findByIdAndRemove({ restaurant: req.user.id }).then(
-      restaurantProfile => {
-        Restaurant.findByIdAndRemove({ _id: req.user.id }).then(() =>
-          res.json({ success: true })
-        );
-      }
-    );
+);//tested
 
     // @ router Update api/restaurants-profile/menu/menu_id
     // @desc route to update restaurant profile
-    // @access PRIVATE
-// router.update(
-//   "/menu/menu_id",
-//   passport.authenticate("restaurants", { session: false }),
+    //@access PRIVATE
+router.post(
+  "/partners/menu/:menu_id",
+  passport.authenticate("restaurants", { session: false }),
+  (req, res)=>{
+    //check validation
+    const { errors, isValid } = ValidateMenuInput(req.body);
 
-// )
-//     //check validation
     if (!isValid) {
       // Return error with satus 400
       return res.status(400).json(errors);
     }
     // Get fields
-    const updatedProfile = {
-      id: req.params.menu_id,
+    const updatedMenu = {
       category: req.body.category,
       name: req.body.name,
       description: req.body.description,
@@ -472,24 +322,23 @@ router.delete(
     //error msg
     const err = { menu: "Menu or restaurant not found!" };
     //find restaurant  menu
-    RestaurantProfile.findOne({
-      //restaurant: req.params.restaurant_id } && {
-      menu: [{ id: req.params.menu_id }]
-    }).then(restaurantMenu => {
-      if (restaurantMenu) {
+    RestaurantProfile.findOne({ restaurant: req.user.id
+    }).then(restaurantProfile => {
+      if (restaurantProfile) {
         // Update menu
         RestaurantProfile.update(
-          { menu: [{ id: req.params.menu_id }] },
-          { $set: updatedProfile },
+          { "menu._id":req.params.id },
+          { $set: {"menu.0.name":updatedMenu.name} },
           { new: true }
         ).then(restaurantMenu => res.json(restaurantMenu));
       } else {
         // return 404 error menu not  found
-        return res.status(404).res.json(err.menu);
+        return res.status(404).json(err.menu);
       }
     });
   }
-);
+
+);//not tested
 
 //@route  POST api/restaurant-profiles/restaurants/partners/add-pictures
 //@desc   route for restaurant  to add pictures to their profile
@@ -498,7 +347,7 @@ router.post(
   "/partners/pictures",
   passport.authenticate("restaurants", { session: false }), //authenticate and verify
   (req, res) => {
-   
+   //malta for saving pictures
  const { errors, isValid } = ValidateImageUpload(req.body);
 
     // Check Validation
@@ -525,13 +374,13 @@ router.post(
       }
     );
   }
-);
+);// tested
 
 // @route DELETE api/restaurant/partners/picture
 // @desc  route to delete restaurant picture
 // @access PRIVATE
 router.delete(
-  "partners/restaurant/pictures/:picture_id",
+  "partners/restaurant/pictures/:picture_id",//returns arraynumber of picture
   passport.authenticate("restaurants", { session: false }), //authenticate and verify
   (req, res) => {
     //find restaurant profile

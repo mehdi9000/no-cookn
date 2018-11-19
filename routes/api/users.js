@@ -21,6 +21,7 @@ const compiledWelcomeTemplate = hogan.compile(WelcomeTemplate);
 const compiledResetTemplate = hogan.compile(ResetTemplate);
 
 const User = require('../../models/User');
+const RestaurantProfile = require('../../models/Restaurant-Profile');
 // @route Get api/posts/test @desc Tests Users route @access Public
 router.get('/test', (req, res) =>
   res.json({
@@ -260,5 +261,8 @@ router.delete(
     );
   }
 );
+
+
+
 
 module.exports = router;

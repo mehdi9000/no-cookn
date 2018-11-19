@@ -1,55 +1,55 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const nanoid = require('nanoid');
-const passport = require('passport');
-const sendgrid = require('@sendgrid/mail');
-const hogan = require('hogan.js');
-const fs = require('fs');
-const keys = require('../../config/keys');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const nanoid = require("nanoid");
+const passport = require("passport");
+const sendgrid = require("@sendgrid/mail");
+const hogan = require("hogan.js");
+const fs = require("fs");
+const keys = require("../../config/keys");
 
 sendgrid.setApiKey(keys.sendGridApi);
 
-const validateRegistrationInput = require('../../validation/register');
-const validateLoginInput = require('../../validation/login');
+const validateRegistrationInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
 //import and compile restaurantWelcome email file
 const RestaurantWelcomeTemplate = fs.readFileSync(
-  'mails/restaurantWelcome.hjs',
-  'utf-8'
+  "mails/restaurantWelcome.hjs",
+  "utf-8"
 );
 const ResetRestaurantTemplate = fs.readFileSync(
-  'mails/restaurantReset.hjs',
-  'utf-8'
+  "mails/restaurantReset.hjs",
+  "utf-8"
 );
 const compiledRestaurantWelcomeTemplate = hogan.compile(
   RestaurantWelcomeTemplate
 );
 const compiledRestaurantResetTemplate = hogan.compile(ResetRestaurantTemplate);
 
-const Restaurant = require('../../models/Restaurant');
+const Restaurant = require("../../models/Restaurant");
 
 // @route GET api/restaurant/test
 // @desc route to get restaurant test route
 // @access PUBLIC
-router.get('/test', (req, res) =>
-  res.json({ msg: 'restaurant test route works' })
+router.get("/test", (req, res) =>
+  res.json({ msg: "restaurant test route works" })
 );
 
 // @route POST api/restaurant/partners/register'
 // @desc route to register restaurant
 // @access PRIVATE
-router.post('/partners/register', (req, res) => {
+router.post("/partners/register", (req, res) => {
   const { errors, isValid } = validateRegistrationInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  Restaurant.findOne({
-    email: req.body.email
+  Restaurant.find({
+    $or: [{ email: req.body.email }, { name: req.body.name }]
   }).then(restaurant => {
     if (restaurant) {
-      errors.email = 'Email already exists';
+      errors.email = "Email or restaurant's name already exists";
       return res.status(400).json(errors);
     } else {
       //generate random hash string
@@ -70,8 +70,8 @@ router.post('/partners/register', (req, res) => {
             .then(restaurant => {
               const msg = {
                 to: restaurant.email,
-                from: 'maggie@e-kitchen.com',
-                subject: 'Welcome to E-Kitchen',
+                from: "maggie@e-kitchen.com",
+                subject: "Welcome to E-Kitchen",
                 html: compiledRestaurantWelcomeTemplate.render({
                   name: restaurant.name,
                   activationcode: restaurant.activationcode
@@ -90,7 +90,7 @@ router.post('/partners/register', (req, res) => {
 // @route POST api/restaurant/partners/login
 // @desc route to login in restaurant and generate restaurant
 // @access PUBLIC
-router.post('/partners/login', (req, res) => {
+router.post("/partners/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
@@ -104,14 +104,14 @@ router.post('/partners/login', (req, res) => {
     email
   }).then(restaurant => {
     if (!restaurant) {
-      errors.email = 'No account matched with email provided';
+      errors.email = "No account matched with email provided";
       return res.status(404).json(errors);
     }
 
     if (restaurant.passwordresetcode) {
       return res.status(403).json({
         error:
-          'you requested a password reset. Please reset your password to continue'
+          "you requested a password reset. Please reset your password to continue"
       });
     }
 
@@ -136,20 +136,20 @@ router.post('/partners/login', (req, res) => {
             (err, token) => {
               res.json({
                 success: true,
-                token: 'Bearer ' + token
+                token: "Bearer " + token
               });
             }
           );
         } else {
           return res.status(400).json({
-            password: 'Password is incorrect'
+            password: "Password is incorrect"
           });
         }
       });
     } else {
       return res.status(400).json({
         error:
-          'Your account is inactive. Please check your e-mail for our welcome mail to activate your account'
+          "Your account is inactive. Please check your e-mail for our welcome mail to activate your account"
       });
     }
   });
@@ -158,7 +158,7 @@ router.post('/partners/login', (req, res) => {
 // @route GET api/restaurants/partners/account/activationcode
 // @desc route to change restaurant isactive state to true
 // @access PUBLIC
-router.get('/partners/account/activate/:activationcode', (req, res) => {
+router.get("/partners/account/activate/:activationcode", (req, res) => {
   const activationcode = req.params.activationcode;
   Restaurant.findOne({
     activationcode
@@ -166,12 +166,12 @@ router.get('/partners/account/activate/:activationcode', (req, res) => {
     .then(restaurant => {
       if (restaurant) {
         restaurant.isactive = true;
-        restaurant.activationcode = '';
+        restaurant.activationcode = "";
         restaurant.save();
         return res.status(200).json(restaurant);
       } else {
         return res.status(200).json({
-          activation: 'Your account has been verified'
+          activation: "Your account has been verified"
         });
       }
     })
@@ -181,13 +181,13 @@ router.get('/partners/account/activate/:activationcode', (req, res) => {
 // @route POST api/restaurants/partners/account/passwordreset
 // @desc route for restaurants to request password reset code
 // @access PUBLIC
-router.post('/partners/account/passwordreset', (req, res) => {
+router.post("/partners/account/passwordreset", (req, res) => {
   const email = req.body.email;
   Restaurant.findOne({ email })
     .then(restaurant => {
       if (!restaurant) {
         return res.status(404).json({
-          error: 'No account matched with email provided'
+          error: "No account matched with email provided"
         });
       } else {
         restaurant.passwordresetcode = nanoid(50);
@@ -195,8 +195,8 @@ router.post('/partners/account/passwordreset', (req, res) => {
         restaurant.save().then(restaurant => {
           const msg = {
             to: restaurant.email,
-            from: 'maggie@e-kitchen .com',
-            subject: 'Password Reset Request',
+            from: "maggie@e-kitchen .com",
+            subject: "Password Reset Request",
             html: compiledRestaurantResetTemplate.render({
               name: restaurant.name,
               passwordresetcode: restaurant.passwordresetcode
@@ -211,7 +211,7 @@ router.post('/partners/account/passwordreset', (req, res) => {
 });
 
 router.post(
-  '/partners/account/passwordreset/:passwordresetcode',
+  "/partners/account/passwordreset/:passwordresetcode",
   (req, res) => {
     const passwordresetcode = req.params.passwordresetcode;
     const password = req.body.password;
@@ -220,13 +220,13 @@ router.post(
         if (!restaurant) {
           return res
             .status(400)
-            .json({ error: 'Oops! Something is not right' });
+            .json({ error: "Oops! Something is not right" });
         } else {
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(password, salt, (err, hash) => {
               if (err) throw err;
               restaurant.password = hash;
-              restaurant.passwordresetcode = '';
+              restaurant.passwordresetcode = "";
               restaurant.isactive = true;
               restaurant.save();
               return res.status(200).json(restaurant);
@@ -242,13 +242,13 @@ router.post(
 // @desc route to get details of currently logged in restaurant
 // @access PRIVATE
 router.get(
-  '/current',
-  passport.authenticate('restaurants', { session: false }),
+  "/current",
+  passport.authenticate("restaurants", { session: false }),
   (req, res) => {
     const errors = {};
     Restaurant.findById(req.user.id)
       .then(restaurant => {
-        errors.userNotFound = 'restaurant Not found';
+        errors.userNotFound = "restaurant Not found";
         if (!restaurant) {
           return res.status(404).json(errors);
         }
@@ -265,8 +265,8 @@ router.get(
 // @desc route to delete restaurant account
 // @access PRIVATE
 router.delete(
-  '/',
-  passport.authenticate('restaurants', {
+  "/",
+  passport.authenticate("restaurants", {
     session: false
   }),
   (req, res) => {

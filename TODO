@@ -40,3 +40,29 @@ Todo:
 
 
 //SUPER ADMIN
+☐ Create new admin
+☐ Delete other admins
+☐ Dashboard
+a. Orders (New order, Total order, Delivered order)
+b. View reviews
+c. Filter
+d. Financial Summary
+☐  Manage Restaurant and User
+a. Create restaurant profile
+b. View/Edit/Delete existing restaurant
+c. View/Edit/Delete existing User
+
+☐ Manage Menu Item and Category
+a. Add new product/item
+b. Edit/delete existing product/items 
+
+☐ Manage Menu Item and Category
+a. Add new product/item
+b. Edit/delete existing product/items
+
+☐ View Activity Log
+a. Track restaurant and user Activity History
+ 
+☐ Manage Payment
+a. View all transactions
+b. Generate payment/financial reports

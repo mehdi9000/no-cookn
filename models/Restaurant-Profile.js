@@ -6,6 +6,9 @@ const RestaurantProfileSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "restaurant"
   },
+  name:{
+
+  },
   reviews: [
     {
       user: {
@@ -39,11 +42,7 @@ const RestaurantProfileSchema = new Schema({
   closesat: {
     type: String
   },
-  photos: [
-    {
-      type: String
-    }
-  ],
+
   likes: {
     type: Number,
     default: 0
@@ -119,10 +118,9 @@ const RestaurantProfileSchema = new Schema({
   cuisines: [{type: String}],
   paymentsaccepted: [{type: String}],
   pictures: [{ type: String, default: "" }],
-  phone: {
-    type: Number,
-    required: false
-  }
+  phone: [{
+    type: String
+  }]
 });
 
 
