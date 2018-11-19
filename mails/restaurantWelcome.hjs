@@ -10,9 +10,11 @@
 
 <body>
     <h3>Welcome to no-cookn {{name}}.</h3>
-    <p>We are glad you have decided to register your restaurant with us. To activate your accout please click on the
-        link below.</p>
-    <a href="http://localhost:4001/{{activationcode}}">activation link</a>
+    <p>We are glad you had decided to join our growing network of restaurant partners.</p>
+    <p>The next steps will take you through creating your restaurant profile. Please fill all the required information
+        as accurately as you can.</p>
+    <p>We are excited to start working with you and we can't wait to help you reach more food lovers.</p>
+
 </body>
 
 </html>
