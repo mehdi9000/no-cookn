@@ -12,6 +12,8 @@ const keys = require('../../config/keys');
 sendgrid.setApiKey(keys.sendGridApi);
 
 const validateRegistrationInput = require('../../validation/register');
+const validateRestaurantInput = require('../../validation/restaurant-validation');
+
 const validateLoginInput = require('../../validation/login');
 
 //import and compile restaurantWelcome email file
@@ -40,6 +42,28 @@ router.get('/test', (req, res) =>
 // @route POST api/restaurant/partners/register'
 // @desc route to register restaurant
 // @access PRIVATE
+
+router.post('/name-search', (req, res) => {
+  const { errors, isValid } = validateRestaurantInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  console.log(req.body.restaurantname);
+  Restaurant.findOne({ restaurantname: req.body.restaurantname })
+    .then(restaurant => {
+      if (restaurant) {
+        errors.restaurantname = 'This restaurant has already been registered';
+        return res.status(400).json(errors);
+      } else {
+        return res.status(200).json({ msg: 'Not registered' });
+      }
+    })
+    .catch(
+      error => console.log(error),
+      res.status(400).json({ msg: 'something went wrong' })
+    );
+});
+
 router.post('/partners/register', (req, res) => {
   const { errors, isValid } = validateRegistrationInput(req.body);
   if (!isValid) {
@@ -51,13 +75,12 @@ router.post('/partners/register', (req, res) => {
       { restaurantname: req.body.restaurantname }
     ]
   }).then(restaurant => {
-    if (restaurant) {
+    if (restaurant.length > 0) {
       errors.email = "Email or restaurant's name already exists";
       return res.status(400).json(errors);
     } else {
       //generate random hash string
       //store hash in db
-      let activationCode = nanoid(50);
       const newRestaurant = new Restaurant({
         restaurantname: req.body.restaurantname,
         name: req.body.name,
@@ -124,6 +147,7 @@ router.post('/partners/login', (req, res) => {
         const payload = {
           id: restaurant.id,
           name: restaurant.name,
+          restaurantname: restaurant.restaurantname,
           email: restaurant.email
         };
 

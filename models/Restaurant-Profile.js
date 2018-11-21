@@ -1,19 +1,16 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const RestaurantProfileSchema = new Schema({
   restaurant: {
     type: Schema.Types.ObjectId,
-    ref: "restaurant"
-  },
-  name:{
-
+    ref: 'restaurant'
   },
   reviews: [
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: "user"
+        ref: 'user'
       },
       text: {
         type: String,
@@ -33,7 +30,8 @@ const RestaurantProfileSchema = new Schema({
   ],
   categories: [
     {
-      type: String
+      type: String,
+      required: true
     }
   ],
   opensat: {
@@ -42,7 +40,6 @@ const RestaurantProfileSchema = new Schema({
   closesat: {
     type: String
   },
-
   likes: {
     type: Number,
     default: 0
@@ -86,7 +83,7 @@ const RestaurantProfileSchema = new Schema({
     {
       category: {
         type: String,
-        default: "Breakfast"
+        default: 'Breakfast'
       },
       name: {
         type: String,
@@ -108,25 +105,27 @@ const RestaurantProfileSchema = new Schema({
       },
       extras: [
         {
-          name: String,
-          price: String
+          extrasname: String,
+          extrasprice: String
         }
       ]
     }
   ],
-  deliveryareas: [{type: String}],
-  cuisines: [{type: String}],
-  paymentsaccepted: [{type: String}],
-  pictures: [{ type: String, default: "" }],
-  phone: [{
+  deliveryareas: [{ type: String }],
+  cuisines: [{ type: String }],
+  paymentsaccepted: [{ type: String }],
+  pictures: [{ type: String, default: '' }],
+  phone: [
+    {
+      type: String
+    }
+  ],
+  deliverytime: {
     type: String
-  }]
+  }
 });
 
-
-
-
 module.exports = RestaurantProfile = mongoose.model(
-  "restaurantProfile",
+  'restaurantProfile',
   RestaurantProfileSchema
 );
