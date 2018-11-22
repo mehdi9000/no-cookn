@@ -1,36 +1,37 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const nanoid = require('nanoid');
-const passport = require('passport');
-const sendgrid = require('@sendgrid/mail');
-const hogan = require('hogan.js');
-const fs = require('fs');
-const keys = require('../../config/keys');
+const express = require("express");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const nanoid = require("nanoid");
+const passport = require("passport");
+const sendgrid = require("@sendgrid/mail");
+const hogan = require("hogan.js");
+const fs = require("fs");
+const keys = require("../../config/keys");
 
 sendgrid.setApiKey(keys.sendGridApi);
 
-const validateRegistrationInput = require('../../validation/register');
-const validateLoginInput = require('../../validation/login');
+const validateRegistrationInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
 const router = express.Router();
 
-const WelcomeTemplate = fs.readFileSync('mails/welcome.hjs', 'utf-8');
-const ResetTemplate = fs.readFileSync('mails/reset.hjs', 'utf-8');
+const WelcomeTemplate = fs.readFileSync("mails/welcome.hjs", "utf-8");
+const ResetTemplate = fs.readFileSync("mails/reset.hjs", "utf-8");
 const compiledWelcomeTemplate = hogan.compile(WelcomeTemplate);
 const compiledResetTemplate = hogan.compile(ResetTemplate);
 
-const User = require('../../models/User');
-const RestaurantProfile = require('../../models/Restaurant-Profile');
+const User = require("../../models/User");
+const RestaurantProfile = require("../../models/Restaurant-Profile");
+const Restaurant = require("../../models/Restaurant");
 // @route Get api/posts/test @desc Tests Users route @access Public
-router.get('/test', (req, res) =>
+router.get("/test", (req, res) =>
   res.json({
-    msg: 'Users Works'
+    msg: "Users Works"
   })
 );
 
 // @route POST api/users/register @desc @access PUBLIC
-router.post('/register', (req, res) => {
+router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegistrationInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
@@ -39,7 +40,7 @@ router.post('/register', (req, res) => {
     email: req.body.email
   }).then(user => {
     if (user) {
-      errors.email = 'Email already exists';
+      errors.email = "Email already exists";
       return res.status(400).json(errors);
     } else {
       //generate random hash string
@@ -60,8 +61,8 @@ router.post('/register', (req, res) => {
             .then(user => {
               const msg = {
                 to: user.email,
-                from: 'maggie@no-cookn.com',
-                subject: 'Welcome to no-cookn',
+                from: "maggie@no-cookn.com",
+                subject: "Welcome to no-cookn",
                 html: compiledWelcomeTemplate.render({
                   name: user.name
                 })
@@ -79,7 +80,7 @@ router.post('/register', (req, res) => {
 // @route POST api/users/login
 // @desc route to login in user and generate users
 // @access PUBLIC
-router.post('/login', (req, res) => {
+router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
@@ -94,14 +95,14 @@ router.post('/login', (req, res) => {
     email
   }).then(user => {
     if (!user) {
-      errors.email = 'No account matched with email provided';
+      errors.email = "No account matched with email provided";
       return res.status(404).json(errors);
     }
 
     if (user.passwordresetcode) {
       return res.status(403).json({
         error:
-          'You requested a password reset. Please reset your password to continue.'
+          "You requested a password reset. Please reset your password to continue."
       });
     }
 
@@ -126,13 +127,13 @@ router.post('/login', (req, res) => {
             (err, token) => {
               res.json({
                 success: true,
-                token: 'Bearer ' + token
+                token: "Bearer " + token
               });
             }
           );
         } else {
           return res.status(400).json({
-            password: 'Password is incorrect'
+            password: "Password is incorrect"
           });
         }
       });
@@ -143,22 +144,22 @@ router.post('/login', (req, res) => {
 // @route GET api/users/account/activationcode
 // @desc route to change user isactive state to true
 // @access PUBLIC
-router.get('/account/activate/:activationcode', (req, res) => {
+router.get("/account/activate/:activationcode", (req, res) => {
   const activationcode = req.params.activationcode;
   User.findOne({ activationcode })
     .then(user => {
       if (!user) {
-        return res.status(404).json({ errors: 'User not found' });
+        return res.status(404).json({ errors: "User not found" });
       }
       if (user) {
         user.isactive = true;
-        user.activationcode = '';
+        user.activationcode = "";
         user.save();
         return res.status(200).json(user);
       } else {
         return res
           .status(200)
-          .json({ activation: 'Your account has been verified' });
+          .json({ activation: "Your account has been verified" });
       }
     })
     .catch(err => res.json(err));
@@ -167,22 +168,22 @@ router.get('/account/activate/:activationcode', (req, res) => {
 // @route POST api/users/account/passwordreset
 // @desc route for user to request password reset code
 // @access PUBLIC
-router.post('/account/passwordreset', (req, res) => {
+router.post("/account/passwordreset", (req, res) => {
   const email = req.body.email;
   User.findOne({ email })
     .then(user => {
       if (!user) {
         return res
           .status(404)
-          .json({ error: 'No account matched with email provided' });
+          .json({ error: "No account matched with email provided" });
       } else {
         user.passwordresetcode = nanoid(50);
         user.isactive = false;
         user.save().then(user => {
           const msg = {
             to: user.email,
-            from: 'maggie@no-cookn.com',
-            subject: 'Password Reset Request',
+            from: "maggie@no-cookn.com",
+            subject: "Password Reset Request",
             html: compiledResetTemplate.render({
               name: user.name,
               passwordresetcode: user.passwordresetcode
@@ -196,19 +197,19 @@ router.post('/account/passwordreset', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.post('/account/passwordreset/:passwordresetcode', (req, res) => {
+router.post("/account/passwordreset/:passwordresetcode", (req, res) => {
   const passwordresetcode = req.params.passwordresetcode;
   const password = req.body.password;
   User.findOne({ passwordresetcode })
     .then(user => {
       if (!user) {
-        return res.status(400).json({ error: 'Oops! Something is not right' });
+        return res.status(400).json({ error: "Oops! Something is not right" });
       } else {
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(password, salt, (err, hash) => {
             if (err) throw err;
             user.password = hash;
-            user.passwordresetcode = '';
+            user.passwordresetcode = "";
             user.isactive = true;
             user.save();
             return res.status(200).json(user);
@@ -223,13 +224,13 @@ router.post('/account/passwordreset/:passwordresetcode', (req, res) => {
 // @desc route to get details of currently logged in user
 // @access PRIVATE
 router.get(
-  '/current',
-  passport.authenticate('users', { session: false }),
+  "/current",
+  passport.authenticate("users", { session: false }),
   (req, res) => {
     const errors = {};
     User.findById(req.user.id)
       .then(user => {
-        errors.userNotFound = 'User Not found';
+        errors.userNotFound = "User Not found";
         if (!user) {
           return res.status(404).json(errors);
         }
@@ -247,8 +248,8 @@ router.get(
 // @desc route to delete user account
 // @access PRIVATE
 router.delete(
-  '/',
-  passport.authenticate('users', {
+  "/",
+  passport.authenticate("users", {
     session: false
   }),
   (req, res) => {
@@ -262,7 +263,17 @@ router.delete(
   }
 );
 
-
-
+//
+router.get("/search", (req, res) => {
+  RestaurantProfile.findOne({
+    deliveryareas: [req.body.location]
+  }).then(restaurantProfile => {
+    if (restaurantProfile) {
+      return res.status(200).json(restaurantProfile);
+    } else {
+      return res.status(404).json("No restaurant delivers to your location");
+    }
+  });
+});
 
 module.exports = router;

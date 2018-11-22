@@ -6,9 +6,6 @@ const RestaurantProfileSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "restaurant"
   },
-  name:{
-
-  },
   reviews: [
     {
       user: {
@@ -97,7 +94,7 @@ const RestaurantProfileSchema = new Schema({
         required: true
       },
       price: {
-        type: String,
+        type: Number,
         required: true
       },
       picture: {
@@ -114,6 +111,10 @@ const RestaurantProfileSchema = new Schema({
       ]
     }
   ],
+  order:[{
+    type: Schema.Types.ObjectId,
+    ref: "order"
+  }],
   deliveryareas: [{type: String}],
   cuisines: [{type: String}],
   paymentsaccepted: [{type: String}],

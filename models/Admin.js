@@ -12,7 +12,8 @@ const AdminSchema = new Schema({
     unique: true
   },
   admintype: {
-    type: String
+    type: String,
+    default: "regular"
   },
   password: {
     type: String,

@@ -30,7 +30,8 @@ router.get(
     RestaurantProfile.findOne({
       restaurant: req.user.id
     })
-      .populate('restaurant profile', ['name', 'email'])
+      .populate('restaurant', ['name', 'email'])
+      .populate('order')
       .then(restaurantprofile => {
         if (!restaurantprofile) {
           errors.norestaurantprofile =
@@ -453,4 +454,8 @@ router.post(
     });
   }
 );
+
+
+
+
 module.exports = router;

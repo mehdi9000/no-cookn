@@ -2,13 +2,14 @@ const express = require('express');
 // const mongoose = require('mongoose');
 const passport = require('passport');
 const router = express.Router();
+const nanoid = require('nanoid');
 
 //TODO: create address input validation file
 
-//Load Profile
+//Load Models
 const Profile = require('../../models/Profile');
-//Load User
 const User = require('../../models/User');
+const Order = require('../../models/Order');
 
 //Load profile validation
 const ValidateProfileInput = require('../../validation/profile');
@@ -212,4 +213,27 @@ router.delete(
     });
   }
 );
+
+//  POST api/profile/add-order/
+//  route to add order to cart
+//  @access PRIVATE
+router.post(
+  '/add-order/:restaurant_id', 
+  passport.authenticate('users', { session: false }),
+  (req,res)=>{
+    const ordernumber = nanoid(6);
+    const neworder = {}
+    neworder.order_no = ordernumber;
+    neworder.user_id = req.user.id;
+    neworder.restaurant_id = req.params.restaurant_id;
+    neworder.item = req.body.item;
+    neworder.delivery_date = req.body.delivery_date
+    new Order(neworder)
+    .save()
+    .then(order =>{ res.json(order)})
+    
+  }
+)//tested ok
+
+
 module.exports = router;
