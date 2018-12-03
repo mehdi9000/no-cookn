@@ -240,11 +240,11 @@ router.post(
     RestaurantProfile.findOne({
       restaurant: req.user.id
     }).then(restaurantProfile => {
-      console.log(restaurantProfile.menu);
+      console.log(req.body);
       // Get body
       const newMenu = {
-        category: req.body.category,
         name: req.body.name,
+        category: req.body.category,
         description: req.body.description,
         price: req.body.price,
         picture: req.body.picture,
@@ -281,7 +281,7 @@ router.delete(
         restaurantProfile.menu.remove({
           _id: req.params.menu_id
         });
-        RestaurantProfile.save()
+        restaurantProfile.save()
           .then(restaurantProfile => res.json(restaurantProfile.menu))
           .catch(err => res.json(err));
       })

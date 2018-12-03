@@ -43,16 +43,11 @@ class Address extends Component {
     let addressContent;
 
     if (profile === null || loading) {
-      // console.log(address);
-
       addressContent = <Spinner />;
     } else if (profile.hasOwnProperty('address')) {
-      // console.log(address);
       let pAddress = address;
-      // console.log(pAddress.length);
 
       if (pAddress.length < 1) {
-        // console.log('xoxo');
         addressContent = (
           <div className="mb-3">
             <button
@@ -70,39 +65,41 @@ class Address extends Component {
           </div>
         );
       } else {
-        addressContent = address.map(address => (
-          <div>
-            <div className="col-md-6 mb-3" key={address._id}>
-              <div className="address-card">
-                <h4 className="text-muted">{address.address1}</h4>
-                <h4 className="text-muted">{address.address2}</h4>
-                <h4 className="text-muted">
-                  {address.area}, {address.state}
-                </h4>
-                <i
-                  className="fas fa-trash text-danger"
-                  onClick={this.onDeleteClick.bind(this, address._id)}
-                />
-                &nbsp; &nbsp; &nbsp; &nbsp;
-                <i className="fas fa-pen text-warning" />
+        if (profile.address.length > 0) {
+          addressContent = address.map(address => (
+            <div>
+              <div className="col-md-6 mb-3" key={address._id}>
+                <div className="address-card">
+                  <h4 className="text-muted">{address.address1}</h4>
+                  <h4 className="text-muted">{address.address2}</h4>
+                  <h4 className="text-muted">
+                    {address.area}, {address.state}
+                  </h4>
+                  <i
+                    className="fas fa-trash text-danger"
+                    onClick={this.onDeleteClick.bind(this, address._id)}
+                  />
+                  &nbsp; &nbsp; &nbsp; &nbsp;
+                  <i className="fas fa-pen text-warning" />
+                </div>
+                <div className="mt-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.setState({
+                        displayAddressForm: !displayAddressForm
+                      });
+                    }}
+                    className="btn btn-info"
+                  >
+                    Add New Address
+                  </button>
+                </div>
               </div>
-              <div className="mt-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    this.setState({
-                      displayAddressForm: !displayAddressForm
-                    });
-                  }}
-                  className="btn btn-info"
-                >
-                  Add New Address
-                </button>
-              </div>
+              {displayAddressForm ? <AddressForm /> : ' '}
             </div>
-            {displayAddressForm ? <AddressForm /> : ' '}
-          </div>
-        ));
+          ));
+        }
       }
     }
     return (
