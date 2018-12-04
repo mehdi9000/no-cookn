@@ -61,6 +61,9 @@ router.post(
     const restaurantProfileFields = {};
     restaurantProfileFields.restaurant = req.user.id;
 
+    if (req.body.deliveryareas)
+      restaurantProfileFields.deliveryareas = req.body.deliveryareas.split(',');
+
     if (req.body.categories)
       restaurantProfileFields.categories = req.body.categories.split(',');
     if (req.body.opensat) restaurantProfileFields.opensat = req.body.opensat;
