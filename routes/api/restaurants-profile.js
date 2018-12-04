@@ -19,6 +19,10 @@ const ValidateProfileInput = require("../../validation/restaurants-profile");
 const ValidateAddressInput = require("../../validation/address");
 const ValidateMenuInput = require("../../validation/menu");
 const ValidateImageUpload  = require("../../validation/image")
+const ValidateProfileInput = require('../../validation/profile');
+const ValidateAddressInput = require('../../validation/address');
+const ValidateMenuInput = require('../../validation/menu');
+const ValidateImageUpload = require('../../validation/image');
 
 //Image uploads and storage Config
 const ImageUploadConfig= require("../../config/uploads");
@@ -54,8 +58,7 @@ router.get(
     RestaurantProfile.findOne({
       restaurant: req.user.id
     })
-      .populate('restaurant', ['name', 'email'])
-      .populate('order')
+      .populate('restaurant profile', ['name', 'email', 'restaurantname'])
       .then(restaurantprofile => {
         if (!restaurantprofile) {
           errors.norestaurantprofile =
@@ -66,7 +69,7 @@ router.get(
       })
       .catch(err => res.status(404).json(err));
   }
-);//tested
+); //tested
 
 // @route   POST api/restaurant-profile
 // @desc    Create or edit restaurant profile
@@ -85,17 +88,31 @@ router.post(
     // Get fields
     const restaurantProfileFields = {};
     restaurantProfileFields.restaurant = req.user.id;
-    
-    if (req.body.categories) restaurantProfileFields.categories = req.body.categories.split(',');
+
+    // if (req.body.deliveryareas)
+    //   restaurantProfileFields.deliveryareas = req.body.deliveryareas.split(',');
+
+    if (req.body.categories)
+      restaurantProfileFields.categories = req.body.categories.split(',');
     if (req.body.opensat) restaurantProfileFields.opensat = req.body.opensat;
 
-    if (req.body.closeat) restaurantProfileFields.closesat = req.body.closessat;
+    if (req.body.closesat) restaurantProfileFields.closesat = req.body.closesat;
+    if (req.body.deliverytime)
+      restaurantProfileFields.deliverytime = req.body.deliverytime;
+    if (req.body.minimumorder)
+      restaurantProfileFields.minimumorder = req.body.minimumorder;
 
-    if (req.body.deliveryareas) restaurantProfileFields.deliveryareas = req.body.deliveryareas.split(',');
-    if (req.body.cuisines) restaurantProfileFields.cuisines = req.body.cuisines.split(',');
-   
-    if (req.body.paymentsaccepted) restaurantProfileFields.paymentsaccepted = req.body.paymentsaccepted.split(',');
-    if (req.body.phone) restaurantProfileFields.phone = req.body.phone.split(',');
+    if (req.body.deliveryareas)
+      restaurantProfileFields.deliveryareas = req.body.deliveryareas.split(',');
+    if (req.body.cuisines)
+      restaurantProfileFields.cuisines = req.body.cuisines.split(',');
+
+    if (req.body.paymentsaccepted)
+      restaurantProfileFields.paymentsaccepted = req.body.paymentsaccepted.split(
+        ','
+      );
+    if (req.body.phone)
+      restaurantProfileFields.phone = req.body.phone.split(',');
 
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
       restaurantProfile => {
@@ -115,7 +132,7 @@ router.post(
       }
     );
   }
-);//tested
+); //tested
 // @route GET api/restaurants-profile/restaurant_id
 // @desc get all profile data of a restaurant
 // @access PRIVATE
@@ -128,7 +145,7 @@ router.get(
     RestaurantProfile.findOne({
       restaurant: req.params.restaurant_id
     })
-      .populate('restaurant', ['name', 'email'])
+      .populate('restaurant', ['name', 'avatar', 'restaurantname', 'email'])
       .then(restaurantProfile => {
         if (!restaurantProfile) {
           errors.norestaurantprofile =
@@ -144,7 +161,7 @@ router.get(
         })
       );
   }
-);//tested
+); //tested
 
 // @route GET api/profile/all
 // @desc route to get all restaurant profiles
@@ -152,7 +169,7 @@ router.get(
 router.get('/partners/all-profiles/', (req, res) => {
   const errors = {};
   RestaurantProfile.find()
-    .populate('restaurant', ['name', 'avatar'])
+    .populate('restaurant', ['name', 'avatar', 'restaurantname', 'email'])
     .then(restaurantProfiles => {
       if (!restaurantProfiles) {
         errors.ProfileNotFound = 'No profiles found';
@@ -161,7 +178,7 @@ router.get('/partners/all-profiles/', (req, res) => {
       res.json(restaurantProfiles);
     })
     .catch(err => res.status(404).json(err));
-});//tested
+}); //tested
 
 // @route POST api/restaurant-profile/partners/address
 // @desc route to add new address
@@ -184,7 +201,8 @@ router.post(
         address1: req.body.address1,
         address2: req.body.address2,
         state: req.body.state,
-        city: req.body.city,
+        area: req.body.area,
+        phone: req.body.phone,
         default: req.body.default
       };
       //add experience to array on profile model
@@ -195,7 +213,7 @@ router.post(
         .then(restaurantProfile => res.json(restaurantProfile));
     });
   }
-);//tested
+); //tested
 
 //@route to get address by id
 //GET api/restaurant-profile/:restaurant_id/:address_id
@@ -258,15 +276,13 @@ router.delete(
   '/',
   passport.authenticate('restaurants', { session: false }),
   (req, res) => {
-    let profile = { restaurant: req.user.id }
-    let profile2 = { _id: req.user.id }
-    RestaurantProfile.findByIdAndRemove(profile).then(
-      restaurantProfile => {
-        Restaurant.findByIdAndRemove(profile2).then(() =>
-          res.json({ success: true })
-        );
-      }
-    );
+    let profile = { restaurant: req.user.id };
+    let profile2 = { _id: req.user.id };
+    RestaurantProfile.findByIdAndRemove(profile).then(restaurantProfile => {
+      Restaurant.findByIdAndRemove(profile2).then(() =>
+        res.json({ success: true })
+      );
+    });
   }
 );
 
@@ -291,14 +307,19 @@ router.post(
       console.log(restaurantProfile.menu);
       // Get body
       const newMenu = {
-        category: req.body.category,
         name: req.body.name,
+        category: req.body.category,
         description: req.body.description,
         price: req.body.price,
         time: req.body.time,
         extrasName:req.body.extrasName,
         extrasPrice:req.body.extrasPrice,
       };
+      newMenu.extras = {};
+      if (req.body.extrasname) newMenu.extras.extrasname = req.body.extrasname;
+      if (req.body.extrasprice)
+        newMenu.extras.extrasprice = req.body.extrasprice;
+
       //add menu to menu array
       restaurantProfile.menu.unshift(newMenu);
       // save new menu to profile
@@ -348,8 +369,8 @@ router.post(
 // @desc router to delete menu from restaurant's profile
 // @access PRIVATE
 router.delete(
-  "/partners/menu/:menu_id",
-  passport.authenticate("restaurants", {
+  '/partners/menu/:menu_id',
+  passport.authenticate('restaurants', {
     session: false
   }),
   (req, res) => {
@@ -360,7 +381,8 @@ router.delete(
         restaurantProfile.menu.remove({
           _id: req.params.menu_id
         });
-        RestaurantProfile.save()
+        restaurantProfile
+          .save()
           .then(restaurantProfile => res.json(restaurantProfile.menu))
           .catch(err => res.json(err));
       })
@@ -386,15 +408,15 @@ router.get(
       })
       .catch(err => res.status(404).json(err));
   }
-);//tested
+); //tested
 
-    // @ router Update api/restaurants-profile/menu/menu_id
-    // @desc route to update restaurant profile
-    //@access PRIVATE
+// @ router Update api/restaurants-profile/menu/menu_id
+// @desc route to update restaurant profile
+//@access PRIVATE
 router.post(
-  "/partners/menu/:menu_id",
-  passport.authenticate("restaurants", { session: false }),
-  (req, res)=>{
+  '/partners/menu/:menu_id',
+  passport.authenticate('restaurants', { session: false }),
+  (req, res) => {
     //check validation
     const { errors, isValid } = ValidateMenuInput(req.body);
 
@@ -412,23 +434,23 @@ router.post(
     //error msg
     const err = { menu: 'Menu or restaurant not found!' };
     //find restaurant  menu
-    RestaurantProfile.findOne({ restaurant: req.user.id
-    }).then(restaurantProfile => {
-      if (restaurantProfile) {
-        // Update menu
-        RestaurantProfile.update(
-          { "menu._id":req.params.id },
-          { $set: {"menu.0.name":updatedMenu.name} },
-          { new: true }
-        ).then(restaurantMenu => res.json(restaurantMenu));
-      } else {
-        // return 404 error menu not  found
-        return res.status(404).json(err.menu);
+    RestaurantProfile.findOne({ restaurant: req.user.id }).then(
+      restaurantProfile => {
+        if (restaurantProfile) {
+          // Update menu
+          RestaurantProfile.update(
+            { 'menu._id': req.params.id },
+            { $set: { 'menu.0.name': updatedMenu.name } },
+            { new: true }
+          ).then(restaurantMenu => res.json(restaurantMenu));
+        } else {
+          // return 404 error menu not  found
+          return res.status(404).json(err.menu);
+        }
       }
-    });
+    );
   }
-
-);//not tested
+); //not tested
 
 //get one menu
 //@route to get menuby id
@@ -491,7 +513,7 @@ router.post(
       }
     );
   }
-);// tested
+); // tested
 
 // @route DELETE api/restaurant/partners/picture
 // @desc  route to delete restaurant picture

@@ -74,7 +74,7 @@ class Footer extends Component {
                 <ul className="list-unstyled list-inline social text-center">
                   <li className="list-inline-item">
                     <Link to="/">
-                      <i class="fab fa-facebook-square" />
+                      <i className="fab fa-facebook-square" />
                     </Link>
                   </li>
                   <li className="list-inline-item">

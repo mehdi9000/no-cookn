@@ -31,24 +31,26 @@ class Settings extends Component {
     if (profile === null || loading) {
       address = <Spinner />;
     } else {
-      address = <p>nothing here</p>;
-      // address = profile.address.map(address => (
-      //   <div className="col-md-4" key={address._id}>
-      //     <div className="address-card">
-      //       <h4 className="text-muted">{address.address1}</h4>
-      //       <h4 className="text-muted">{address.address2}</h4>
-      //       <h4 className="text-muted">
-      //         {address.area}, {address.state}
-      //       </h4>
-      //       <i
-      //         className="fas fa-trash text-danger"
-      //         onClick={this.onDeleteClick.bind(this, address._id)}
-      //       />
-      //       &nbsp; &nbsp;
-      //       <i className="fas fa-pen text-warning" />
-      //     </div>
-      //   </div>
-      // ));
+      if (profile.address.length > 0) {
+        address = <p>nothing here</p>;
+        // address = profile.address.map(address => (
+        //   <div className="col-md-4" key={address._id}>
+        //     <div className="address-card">
+        //       <h4 className="text-muted">{address.address1}</h4>
+        //       <h4 className="text-muted">{address.address2}</h4>
+        //       <h4 className="text-muted">
+        //         {address.area}, {address.state}
+        //       </h4>
+        //       <i
+        //         className="fas fa-trash text-danger"
+        //         onClick={this.onDeleteClick.bind(this, address._id)}
+        //       />
+        //       &nbsp; &nbsp;
+        //       <i className="fas fa-pen text-warning" />
+        //     </div>
+        //   </div>
+        // ));
+      }
     }
 
     return (

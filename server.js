@@ -35,7 +35,7 @@ app.use('/mails', express.static(path.join(__dirname, 'mails')));
 mongoose
   .connect(
     db,
-    { useNewUrlParser: true }
+    { useNewUrlParser: true, useFindAndModify: true }
   )
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log('err', err));

@@ -9,7 +9,12 @@ const NotFound = () => {
         <div className="container">
           <div className="not-found">
             <div className="img-box">
-              <img src={BrokeBot} className="img-fluid" width="600px" />
+              <img
+                src={BrokeBot}
+                className="img-fluid"
+                alt="no-cookn"
+                width="600px"
+              />
             </div>
             <div className="text-box">
               <h4 className="mt-5">Ooops! You broke a link.</h4>
