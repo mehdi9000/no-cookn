@@ -201,6 +201,7 @@ router.post('/account/passwordreset', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+//route to reseset password
 router.post('/account/passwordreset/:passwordresetcode', (req, res) => {
   const passwordresetcode = req.params.passwordresetcode;
   const password = req.body.password;

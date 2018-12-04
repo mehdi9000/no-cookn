@@ -234,6 +234,6 @@ router.post(
     
   }
 )//tested ok
-
+//get all restaurants
 
 module.exports = router;

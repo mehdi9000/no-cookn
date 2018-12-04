@@ -25,6 +25,10 @@ const UserSchema = new Schema({
   // activationcode: {
   //   type: String
   // },
+  suspended:{
+    type: Boolean,
+    default:  false,
+  },
   passwordresetcode: {
     type: String
   },

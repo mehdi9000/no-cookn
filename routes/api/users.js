@@ -8,6 +8,7 @@ const hogan = require("hogan.js");
 const fs = require("fs");
 const keys = require("../../config/keys");
 
+
 sendgrid.setApiKey(keys.sendGridApi);
 
 const validateRegistrationInput = require("../../validation/register");
@@ -97,6 +98,13 @@ router.post("/login", (req, res) => {
     if (!user) {
       errors.email = "No account matched with email provided";
       return res.status(404).json(errors);
+    }
+
+    if (user.suspended == true) {
+      return res.status(300).json({
+        error:
+          "Your account has been suspended temporarily. Contact the admin to recover your account"
+      });
     }
 
     if (user.passwordresetcode) {
@@ -263,7 +271,7 @@ router.delete(
   }
 );
 
-//
+//search location
 router.get("/search", (req, res) => {
   RestaurantProfile.findOne({
     deliveryareas: [req.body.location]

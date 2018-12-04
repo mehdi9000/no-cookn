@@ -2,24 +2,48 @@ const express = require('express');
 // const mongoose = require('mongoose');
 const passport = require('passport');
 const router = express.Router();
+const multer  = require('multer');
+const path = require('path');
+
+
+
 
 //Load Models
 const RestaurantProfile = require('../../models/Restaurant-Profile');
 const Restaurant = require('../../models/Restaurant');
 const Order = require('../../models/Order');
 
+
 //Load profile validation
 const ValidateProfileInput = require("../../validation/restaurants-profile");
 const ValidateAddressInput = require("../../validation/address");
 const ValidateMenuInput = require("../../validation/menu");
-const ValidateImageUpload = require("../../validation/image");
+const ValidateImageUpload  = require("../../validation/image")
 
+//Image uploads and storage Config
+const ImageUploadConfig= require("../../config/uploads");
+const upload = ImageUploadConfig.test()
+const restaurantsUpload = ImageUploadConfig.restaurant()
+const menuUpload = ImageUploadConfig.menu()
+//
+
+//test route
 router.get('/test', (req, res) =>
   res.json({ msg: 'Restaurant Profile Works' })
-);
-
+); 
+//test upload
+router.get(
+  '/:address',  (req, res)=>{
+    RestaurantProfile.findOne({'address._id':req.params.address}).then(restaurantProfile=>{
+      if(restaurantProfile){
+        return res.json(restaurantProfile)
+      }
+      else return res.json('bad')
+    }) 
+})
+ 
 // @route Get api/restaurants-profile
-//@desc route to get currently logged in restaurant from
+// @desc route to get currently logged in restaurant from 
 // restaurant auth @access PRIVATE
 router.get(
   '/',
@@ -173,6 +197,35 @@ router.post(
   }
 );//tested
 
+//@route to get address by id
+//GET api/restaurant-profile/:restaurant_id/:address_id
+//access PUBLIC
+router.get(
+  '/:restaurant_id/:address_id',
+  //no auth needed
+  (req, res) => {
+    const address_id = req.params.address_id//get address id
+    RestaurantProfile.findOne({
+      restaurant: req.params.restaurant_id
+    }).then(restaurantProfile =>{
+      if(!restaurantProfile){
+        return res.status(404).json('restaurant not found')
+      }
+      // else return res.json('good')
+      else
+      restaurantProfile.address.findOne({_id:address_id}).then(address =>{
+        if(!address){
+          return res.status(404).json('address does not exist in our database')
+        } 
+        else{
+          return res.status(200).json(address)
+        }
+      })
+    })
+  }
+
+)
+
 // @route DELETE api/profile/address/:address_id
 // @desc router to delete address from profile
 // @access PRIVATE
@@ -234,6 +287,7 @@ router.post(
     RestaurantProfile.findOne({
       restaurant: req.user.id
     }).then(restaurantProfile => {
+      
       console.log(restaurantProfile.menu);
       // Get body
       const newMenu = {
@@ -241,8 +295,9 @@ router.post(
         name: req.body.name,
         description: req.body.description,
         price: req.body.price,
-        picture: req.body.picture,
-        time: req.body.time
+        time: req.body.time,
+        extrasName:req.body.extrasName,
+        extrasPrice:req.body.extrasPrice,
       };
       //add menu to menu array
       restaurantProfile.menu.unshift(newMenu);
@@ -251,6 +306,41 @@ router.post(
         .save()
         .then(restaurantProfile => res.json(restaurantProfile.menu));
     });
+  }
+);// tested 
+
+
+//@route  POST api/restaurant-profiles/restaurants/partners/pictures
+//@desc   route for restaurant to add pictures to their menu
+//@access PRIVATE
+router.post(
+  '/partners/menu/pictures',
+  menuUpload,
+  passport.authenticate('restaurants', { session: false }), //authenticate and verify
+  (req, res) => {
+   //multer for saving pictures
+    // const  filenames = req.files.map(function(file) {
+    //   return(file.path); // or file.originalname
+    // });
+    //find restaurant
+    RestaurantProfile.findOne({ 'menu._id': req.body.menu_id }).then(
+      restaurantProfile => {
+        if (restaurantProfile) {
+          // //collect new pictures
+          // const newPictures = filenames;
+          // //add pictures
+          // restaurantProfile.pictures.unshift(newPictures);
+          // //save profile
+          // restaurantProfile
+          //   .save()
+          //   .then(restaurantProfile => res.json(restaurantProfile.pictures));
+          return res.status(200).json(restaurantProfile)
+        } //end if
+        else {
+          return res.status(404).json('profile not found');
+        } //end else
+      }
+    );
   }
 );// tested
 
@@ -318,7 +408,6 @@ router.post(
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
-      picture: req.body.picture
     };
     //error msg
     const err = { menu: 'Menu or restaurant not found!' };
@@ -341,29 +430,56 @@ router.post(
 
 );//not tested
 
-//@route  POST api/restaurant-profiles/restaurants/partners/add-pictures
+//get one menu
+//@route to get menuby id
+//GET api/restaurant-profile/:restaurant_id/:menu_id
+//access PUBLIC
+router.get(
+  '/:restaurant_id/:menu_id',
+  //no auth needed
+  (req, res) => {
+    const menu_id = req.params.menu_id//get address id
+    RestaurantProfile.findOne({
+      restaurant: req.params.restaurant_id
+    }).then(restaurantProfile =>{
+      if(!restaurantProfile){
+        return res.status(404).json('restaurant not found')
+      }
+      // else return res.json('good')
+      else
+      restaurantProfile.menu.findOne({_id:menu_id}).then(menu =>{
+        if(!menu){
+          return res.status(404).json('menu does not exist in our database')
+        } 
+        else{
+          return res.status(200).json(menu)
+        }
+      })
+    })
+  }
+
+)
+
+//@route  POST api/restaurant-profiles/restaurants/partners/pictures
 //@desc   route for restaurant  to add pictures to their profile
 //@access PRIVATE
 router.post(
   '/partners/pictures',
+  restaurantsUpload,
   passport.authenticate('restaurants', { session: false }), //authenticate and verify
   (req, res) => {
-   //malta for saving pictures
- const { errors, isValid } = ValidateImageUpload(req.body);
-
-    // Check Validation
-    if (!isValid) {
-      // Return any errors with 400 status
-      return res.status(400).json(errors);
-    }
-    //find user
+   //multer for saving pictures
+    const  filenames = req.files.map(function(file) {
+      return(file.path); // or file.originalname
+    });
+    //find restaurant
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
       restaurantProfile => {
         if (restaurantProfile) {
           //collect new pictures
-          const newPicture = req.body.picture;
+          const newPictures = filenames;
           //add pictures
-          restaurantProfile.pictures.unshift(newPicture);
+          restaurantProfile.pictures.unshift(newPictures);
           //save profile
           restaurantProfile
             .save()
@@ -382,6 +498,7 @@ router.post(
 // @access PRIVATE
 router.delete(
   "partners/restaurant/pictures/:picture_id",//returns arraynumber of picture
+
   passport.authenticate("restaurants", { session: false }), //authenticate and verify
   (req, res) => {
     //find restaurant profile
@@ -407,13 +524,11 @@ router.delete(
 //  @desc route to get all orders
 //  @access PRIVaTE
 router.get(
-  '/all-orders',
+  '/partners/all-orders',
   passport.authenticate('restaurants', { session: false }),
   (req, res) => {
-    //find all rorders
+    //find all orders
     Order.find({ restaurant_id: req.user.id })
-      .populate('user', '_id')
-      .populate('restaurant', '_id')
       .then(order => {
         if (order) {
           res.json(order);
@@ -423,10 +538,34 @@ router.get(
             .status(404)
             .res.json('There are no orders for this restaurant ');
         } //end else
+        return res.status(404).json("No orders for your restaurant")
       });
   }
 );
-
+//  @route POST api/restaurants-profile/partners/order/:order_id
+//  @desc route to get one order
+//  access PRIVATE
+router.get(
+  '/partners/order/:order_id',
+  passport.authenticate('restaurants', { session: false }),
+  (req, res) => {
+    Order.findOne({ order_id: req.params.order_id }).then(order => {
+      if (order) {
+        order.status = req.body.status;
+        order.save().then(res.json(order));
+      } //end if
+      else {
+        return res
+          .status(403, 404)
+          .res.json(
+            'Order not found or ' +
+              'you might not have the necessary permissions for this action '
+          );
+      } //end else
+    });
+  }
+);
+ 
 //  @route POST api/restaurants-profile/partners/order/:order_id
 //  @desc route to make restaurants change status of order
 //  access PRIVATE
@@ -434,11 +573,7 @@ router.post(
   '/partners/order/:order_id',
   passport.authenticate('restaurants', { session: false }),
   (req, res) => {
-    /*
-    Validation file not yet written
-    */
-    //find restaurant
-    Order.findOne({ _id: req.params.order_id }).then(order => {
+    Order.findOne({ order_id: req.params.order_id }).then(order => {
       if (order) {
         order.status = req.body.status;
         order.save().then(res.json(order));
@@ -455,7 +590,23 @@ router.post(
   }
 );
 
-
+//  @route POST api/restaurants-profile/partners/categories
+//  @desc route to add menu categories
+//  @access PRIVATE
+router.post(
+  'partners/categories', 
+  passport.authenticate('restaurants', { session: false }),
+  (req,res) => {
+    RestaurantProfile.findOne({restaurant:req.user.id})
+    .then(restaurantProfile =>{
+      if(!restaurantProfile){
+        res.status(404).json('Restaurant not found')
+      }
+      restaurantProfile.categories = req.body.categories.split(',')
+      restaurantProfile.save()
+    })
+  }
+)
 
 
 module.exports = router;

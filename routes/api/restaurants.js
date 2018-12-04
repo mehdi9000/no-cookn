@@ -105,6 +105,12 @@ router.post("/partners/login", (req, res) => {
       errors.email = "No account matched with email provided";
       return res.status(404).json(errors);
     }
+    if (restaurant.suspended == true) {
+      return res.status(300).json({
+        error:
+          "Your account has been suspended temporarily. Contact the admin to recover your account"
+      });
+    }
 
     if (restaurant.passwordresetcode) {
       return res.status(403).json({

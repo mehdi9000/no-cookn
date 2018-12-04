@@ -79,6 +79,7 @@ const RestaurantProfileSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  Categories: [], 
   menu: [
     {
       category: {
@@ -94,21 +95,17 @@ const RestaurantProfileSchema = new Schema({
         required: true
       },
       price: {
-        type: Number,
+        type: String,
         required: true
       },
-      picture: {
-        type: String
+      pictures: {
+        type: Array
       },
       deliverytime: {
         type: String
       },
-      extras: [
-        {
-          name: String,
-          price: String
-        }
-      ]
+      extrasName: [],
+      extrasPrice:[],
     }
   ],
   order:[{
