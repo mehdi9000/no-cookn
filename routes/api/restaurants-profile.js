@@ -61,8 +61,8 @@ router.post(
     const restaurantProfileFields = {};
     restaurantProfileFields.restaurant = req.user.id;
 
-    if (req.body.deliveryareas)
-      restaurantProfileFields.deliveryareas = req.body.deliveryareas.split(',');
+    // if (req.body.deliveryareas)
+    //   restaurantProfileFields.deliveryareas = req.body.deliveryareas.split(',');
 
     if (req.body.categories)
       restaurantProfileFields.categories = req.body.categories.split(',');
@@ -173,7 +173,8 @@ router.post(
         address1: req.body.address1,
         address2: req.body.address2,
         state: req.body.state,
-        city: req.body.city,
+        area: req.body.area,
+        phone: req.body.phone,
         default: req.body.default
       };
       //add experience to array on profile model

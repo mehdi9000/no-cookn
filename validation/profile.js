@@ -7,9 +7,9 @@ module.exports = function ValidateProfileInput(data) {
   data.phone = !isEmpty(data.phone) ? data.phone : '';
   // data.location = !isEmpty(data.location) ? data.location : '';
 
-  if (Validator.isEmpty(data.phone)) {
-    errors.phone = 'Phone is required';
-  }
+  // if (Validator.isEmpty(data.phone)) {
+  //   errors.phone = 'Phone is required';
+  // }
 
   // if (
   //   !Validator.isLength(data.phone, {

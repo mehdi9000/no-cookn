@@ -60,6 +60,9 @@ const RestaurantProfileSchema = new Schema({
   },
   address: [
     {
+      phone: {
+        type: String
+      },
       address1: {
         type: String,
         required: true
@@ -88,8 +91,7 @@ const RestaurantProfileSchema = new Schema({
   menu: [
     {
       category: {
-        type: String,
-        default: 'Breakfast'
+        type: String
       },
       name: {
         type: String,
