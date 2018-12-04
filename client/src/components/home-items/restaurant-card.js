@@ -19,7 +19,7 @@ class RestaurantCard extends Component {
                   <div className="d-flex justify-content-between align-items-center">
                     <h6 className="card-subtitle mb-2 text-muted">
                       <small className="badge badge-custom">
-                        <b>Fast Food • Breakfast</b>
+                        <b>{restaurant.categories}</b>
                       </small>
                     </h6>
 
@@ -30,7 +30,7 @@ class RestaurantCard extends Component {
                   </h5>
                   <p className="card-text text-muted">
                     currently open - closes at
-                    <b className="text-dark"> 9pm</b>
+                    <b className="text-dark"> {restaurant.closesat}</b>
                   </p>
                   <p className="card-text text-muted">
                     minimum order <b className="text-dark">N500</b>

@@ -71,6 +71,8 @@ router.post(
     if (req.body.closesat) restaurantProfileFields.closesat = req.body.closesat;
     if (req.body.deliverytime)
       restaurantProfileFields.deliverytime = req.body.deliverytime;
+    if (req.body.minimumorder)
+      restaurantProfileFields.minimumorder = req.body.minimumorder;
 
     if (req.body.deliveryareas)
       restaurantProfileFields.deliveryareas = req.body.deliveryareas.split(',');

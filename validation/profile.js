@@ -11,14 +11,14 @@ module.exports = function ValidateProfileInput(data) {
     errors.phone = 'Phone is required';
   }
 
-  if (
-    !Validator.isLength(data.phone, {
-      min: 11,
-      max: 13
-    })
-  ) {
-    errors.phone = 'Phone number must be between 11 and 13 characters';
-  }
+  // if (
+  //   !Validator.isLength(data.phone, {
+  //     min: 11,
+  //     max: 14
+  //   })
+  // ) {
+  //   errors.phone = 'Phone number must be between 11 and 13 characters';
+  // }
 
   // if (Validator.isEmpty(data.location)) {
   //   errors.location = 'Location field is required';
