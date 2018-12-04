@@ -13,7 +13,7 @@ import Home from './components/home';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
 import Welcome from './components/auth/welcome';
-import Verification from './components/auth/verify-account';
+// import Verification from './components/auth/verify-account';
 import Dashboard from './components/dashboard/dash';
 import CreateProfile from './components/dashboard/create-profile';
 import Settings from './components/dashboard/settings';

@@ -30,7 +30,7 @@ router.get(
     RestaurantProfile.findOne({
       restaurant: req.user.id
     })
-      .populate('restaurant profile', ['name', 'email'])
+      .populate('restaurant profile', ['name', 'email', 'restaurantnames'])
       .then(restaurantprofile => {
         if (!restaurantprofile) {
           errors.norestaurantprofile =
@@ -115,7 +115,7 @@ router.get(
     RestaurantProfile.findOne({
       restaurant: req.params.restaurant_id
     })
-      .populate('restaurant', ['name', 'email'])
+      .populate('restaurant', ['name', 'avatar', 'restaurantname', 'email'])
       .then(restaurantProfile => {
         if (!restaurantProfile) {
           errors.norestaurantprofile =
@@ -139,7 +139,7 @@ router.get(
 router.get('/partners/all-profiles/', (req, res) => {
   const errors = {};
   RestaurantProfile.find()
-    .populate('restaurant', ['name', 'avatar'])
+    .populate('restaurant', ['name', 'avatar', 'restaurantname', 'email'])
     .then(restaurantProfiles => {
       if (!restaurantProfiles) {
         errors.ProfileNotFound = 'No profiles found';
@@ -284,7 +284,8 @@ router.delete(
         restaurantProfile.menu.remove({
           _id: req.params.menu_id
         });
-        restaurantProfile.save()
+        restaurantProfile
+          .save()
           .then(restaurantProfile => res.json(restaurantProfile.menu))
           .catch(err => res.json(err));
       })
