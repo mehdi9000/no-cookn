@@ -106,14 +106,14 @@ const RestaurantProfileSchema = new Schema({
         type: String,
         required: true
       },
-      pictures: {
-        type: Array
+      picture: {
+        type: String
       },
       deliverytime: {
         type: String
       },
-      extrasName: [],
-      extrasPrice:[],
+      extrasname: [],
+      extrasprice:[],
     }
   ],
   order:[{

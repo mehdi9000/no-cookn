@@ -5,7 +5,9 @@ const router = express.Router();
 const multer  = require('multer');
 const path = require('path');
 
-
+//get address by id
+//get menu by id
+//create menu categories e.g mains, soups, fish, options etc []//done
 
 
 //Load Models
@@ -104,6 +106,7 @@ router.post(
 
     if (req.body.deliveryareas)
       restaurantProfileFields.deliveryareas = req.body.deliveryareas.split(',');
+
     if (req.body.cuisines)
       restaurantProfileFields.cuisines = req.body.cuisines.split(',');
 
@@ -113,6 +116,8 @@ router.post(
       );
     if (req.body.phone)
       restaurantProfileFields.phone = req.body.phone.split(',');
+
+
 
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
       restaurantProfile => {
@@ -291,6 +296,7 @@ router.delete(
 // @access  PRIVATE
 router.post(
   '/partners/menu',
+  menuUpload,
   passport.authenticate('restaurants', { session: false }),
   (req, res) => {
     const { errors, isValid } = ValidateMenuInput(req.body);
@@ -312,13 +318,15 @@ router.post(
         description: req.body.description,
         price: req.body.price,
         time: req.body.time,
-        extrasName:req.body.extrasName,
-        extrasPrice:req.body.extrasPrice,
+        picture: req.file.path
       };
       newMenu.extras = {};
-      if (req.body.extrasname) newMenu.extras.extrasname = req.body.extrasname;
-      if (req.body.extrasprice)
-        newMenu.extras.extrasprice = req.body.extrasprice;
+            // split extras name and price
+
+      if (req.body.extrasame) newMenu.extras.extrasname 
+      = req.body.extrasname.split(',');
+      if (req.body.extrasprice)newMenu.extras.extrasprice
+       = req.body.extrasprice.split(',');
 
       //add menu to menu array
       restaurantProfile.menu.unshift(newMenu);
@@ -331,39 +339,7 @@ router.post(
 );// tested 
 
 
-//@route  POST api/restaurant-profiles/restaurants/partners/pictures
-//@desc   route for restaurant to add pictures to their menu
-//@access PRIVATE
-router.post(
-  '/partners/menu/pictures',
-  menuUpload,
-  passport.authenticate('restaurants', { session: false }), //authenticate and verify
-  (req, res) => {
-   //multer for saving pictures
-    // const  filenames = req.files.map(function(file) {
-    //   return(file.path); // or file.originalname
-    // });
-    //find restaurant
-    RestaurantProfile.findOne({ 'menu._id': req.body.menu_id }).then(
-      restaurantProfile => {
-        if (restaurantProfile) {
-          // //collect new pictures
-          // const newPictures = filenames;
-          // //add pictures
-          // restaurantProfile.pictures.unshift(newPictures);
-          // //save profile
-          // restaurantProfile
-          //   .save()
-          //   .then(restaurantProfile => res.json(restaurantProfile.pictures));
-          return res.status(200).json(restaurantProfile)
-        } //end if
-        else {
-          return res.status(404).json('profile not found');
-        } //end else
-      }
-    );
-  }
-);// tested
+
 
 // @route Delete api/restaurants/menu/:menu_id
 // @desc router to delete menu from restaurant's profile
@@ -490,18 +466,14 @@ router.post(
   restaurantsUpload,
   passport.authenticate('restaurants', { session: false }), //authenticate and verify
   (req, res) => {
-   //multer for saving pictures
-    const  filenames = req.files.map(function(file) {
-      return(file.path); // or file.originalname
-    });
     //find restaurant
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
       restaurantProfile => {
         if (restaurantProfile) {
           //collect new pictures
-          const newPictures = filenames;
+          const newPicture = req.file.path;
           //add pictures
-          restaurantProfile.pictures.unshift(newPictures);
+          restaurantProfile.pictures.unshift(newPicture);
           //save profile
           restaurantProfile
             .save()

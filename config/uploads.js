@@ -32,7 +32,7 @@ module.exports = {
         }
       })
       const upload = multer({ storage: storage })
-      return upload.array('photos', 5)
+      return upload.single('photo')
       
     },
     //menu
@@ -48,7 +48,7 @@ module.exports = {
         }
       })
       const upload = multer({ storage: storage })
-      return upload.array('photos', 4)
+      return upload.single('photo')
   
       
     },
