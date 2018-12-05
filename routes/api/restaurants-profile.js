@@ -2,52 +2,67 @@ const express = require('express');
 // const mongoose = require('mongoose');
 const passport = require('passport');
 const router = express.Router();
-const multer  = require('multer');
+const multer = require('multer');
 const path = require('path');
-
-
-
+const fs = require('fs');
 
 //Load Models
 const RestaurantProfile = require('../../models/Restaurant-Profile');
 const Restaurant = require('../../models/Restaurant');
 const Order = require('../../models/Order');
 
-
 //Load profile validation
-const ValidateProfileInput = require("../../validation/restaurants-profile");
-const ValidateAddressInput = require("../../validation/address");
-const ValidateMenuInput = require("../../validation/menu");
-const ValidateImageUpload  = require("../../validation/image")
-const ValidateProfileInput = require('../../validation/profile');
+const ValidateProfileInput = require('../../validation/restaurants-profile');
 const ValidateAddressInput = require('../../validation/address');
 const ValidateMenuInput = require('../../validation/menu');
 const ValidateImageUpload = require('../../validation/image');
 
+// const ValidateImageUpload = require('../../validation/image');
+// const ValidateProfileInput = require('../../validation/profile');
+// const ValidateAddressInput = require('../../validation/address');
+// const ValidateMenuInput = require('../../validation/menu');
+
 //Image uploads and storage Config
-const ImageUploadConfig= require("../../config/uploads");
-const upload = ImageUploadConfig.test()
-const restaurantsUpload = ImageUploadConfig.restaurant()
-const menuUpload = ImageUploadConfig.menu()
+const ImageUploadConfig = require('../../config/uploads');
+const uploads = ImageUploadConfig.test();
+const restaurantsUpload = ImageUploadConfig.restaurant();
+const menuUpload = ImageUploadConfig.menu();
 //
+
+// configure storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads');
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      new Date().getTime().toString() +
+        '-' +
+        file.fieldname +
+        path.extname(file.originalname)
+    );
+  }
+});
+const upload = multer({ storage });
 
 //test route
 router.get('/test', (req, res) =>
   res.json({ msg: 'Restaurant Profile Works' })
-); 
+);
 //test upload
-router.get(
-  '/:address',  (req, res)=>{
-    RestaurantProfile.findOne({'address._id':req.params.address}).then(restaurantProfile=>{
-      if(restaurantProfile){
-        return res.json(restaurantProfile)
-      }
-      else return res.json('bad')
-    }) 
-})
- 
+router.get('/:address', (req, res) => {
+  RestaurantProfile.findOne({ 'address._id': req.params.address }).then(
+    restaurantProfile => {
+      if (restaurantProfile) {
+        return res.json(restaurantProfile);
+      } else return res.json('bad');
+    }
+  );
+});
+
 // @route Get api/restaurants-profile
-// @desc route to get currently logged in restaurant from 
+// @desc route to get currently logged in restaurant from
 // restaurant auth @access PRIVATE
 router.get(
   '/',
@@ -76,9 +91,13 @@ router.get(
 // @access  Private
 router.post(
   '/',
-  passport.authenticate('restaurants', { session: false }),
+  passport.authenticate('restaurants', {
+    session: false
+  }),
+  upload.single('logo'),
   (req, res) => {
     const { errors, isValid } = ValidateProfileInput(req.body);
+
 
     //check validation
     if (!isValid) {
@@ -113,6 +132,17 @@ router.post(
       );
     if (req.body.phone)
       restaurantProfileFields.phone = req.body.phone.split(',');
+
+    if (req.file) restaurantProfileFields.logo = req.file.path;
+
+    // var tmp_path = req.file.path;
+
+    // var target_path = './public/images/' + req.file.filename;
+
+    // fs.rename(tmp_path, target_path, function(err) {
+    //   if (err) throw err;
+    //   fs.unlink(tmp_path);
+    // });
 
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
       restaurantProfile => {
@@ -222,27 +252,27 @@ router.get(
   '/:restaurant_id/:address_id',
   //no auth needed
   (req, res) => {
-    const address_id = req.params.address_id//get address id
+    const address_id = req.params.address_id; //get address id
     RestaurantProfile.findOne({
       restaurant: req.params.restaurant_id
-    }).then(restaurantProfile =>{
-      if(!restaurantProfile){
-        return res.status(404).json('restaurant not found')
+    }).then(restaurantProfile => {
+      if (!restaurantProfile) {
+        return res.status(404).json('restaurant not found');
       }
       // else return res.json('good')
       else
-      restaurantProfile.address.findOne({_id:address_id}).then(address =>{
-        if(!address){
-          return res.status(404).json('address does not exist in our database')
-        } 
-        else{
-          return res.status(200).json(address)
-        }
-      })
-    })
+        restaurantProfile.address.findOne({ _id: address_id }).then(address => {
+          if (!address) {
+            return res
+              .status(404)
+              .json('address does not exist in our database');
+          } else {
+            return res.status(200).json(address);
+          }
+        });
+    });
   }
-
-)
+);
 
 // @route DELETE api/profile/address/:address_id
 // @desc router to delete address from profile
@@ -303,7 +333,6 @@ router.post(
     RestaurantProfile.findOne({
       restaurant: req.user.id
     }).then(restaurantProfile => {
-      
       console.log(restaurantProfile.menu);
       // Get body
       const newMenu = {
@@ -312,8 +341,8 @@ router.post(
         description: req.body.description,
         price: req.body.price,
         time: req.body.time,
-        extrasName:req.body.extrasName,
-        extrasPrice:req.body.extrasPrice,
+        extrasName: req.body.extrasName,
+        extrasPrice: req.body.extrasPrice
       };
       newMenu.extras = {};
       if (req.body.extrasname) newMenu.extras.extrasname = req.body.extrasname;
@@ -328,8 +357,7 @@ router.post(
         .then(restaurantProfile => res.json(restaurantProfile.menu));
     });
   }
-);// tested 
-
+); // tested
 
 //@route  POST api/restaurant-profiles/restaurants/partners/pictures
 //@desc   route for restaurant to add pictures to their menu
@@ -339,7 +367,7 @@ router.post(
   menuUpload,
   passport.authenticate('restaurants', { session: false }), //authenticate and verify
   (req, res) => {
-   //multer for saving pictures
+    //multer for saving pictures
     // const  filenames = req.files.map(function(file) {
     //   return(file.path); // or file.originalname
     // });
@@ -355,7 +383,7 @@ router.post(
           // restaurantProfile
           //   .save()
           //   .then(restaurantProfile => res.json(restaurantProfile.pictures));
-          return res.status(200).json(restaurantProfile)
+          return res.status(200).json(restaurantProfile);
         } //end if
         else {
           return res.status(404).json('profile not found');
@@ -363,7 +391,7 @@ router.post(
       }
     );
   }
-);// tested
+); // tested
 
 // @route Delete api/restaurants/menu/:menu_id
 // @desc router to delete menu from restaurant's profile
@@ -429,7 +457,7 @@ router.post(
       category: req.body.category,
       name: req.body.name,
       description: req.body.description,
-      price: req.body.price,
+      price: req.body.price
     };
     //error msg
     const err = { menu: 'Menu or restaurant not found!' };
@@ -460,27 +488,25 @@ router.get(
   '/:restaurant_id/:menu_id',
   //no auth needed
   (req, res) => {
-    const menu_id = req.params.menu_id//get address id
+    const menu_id = req.params.menu_id; //get address id
     RestaurantProfile.findOne({
       restaurant: req.params.restaurant_id
-    }).then(restaurantProfile =>{
-      if(!restaurantProfile){
-        return res.status(404).json('restaurant not found')
+    }).then(restaurantProfile => {
+      if (!restaurantProfile) {
+        return res.status(404).json('restaurant not found');
       }
       // else return res.json('good')
       else
-      restaurantProfile.menu.findOne({_id:menu_id}).then(menu =>{
-        if(!menu){
-          return res.status(404).json('menu does not exist in our database')
-        } 
-        else{
-          return res.status(200).json(menu)
-        }
-      })
-    })
+        restaurantProfile.menu.findOne({ _id: menu_id }).then(menu => {
+          if (!menu) {
+            return res.status(404).json('menu does not exist in our database');
+          } else {
+            return res.status(200).json(menu);
+          }
+        });
+    });
   }
-
-)
+);
 
 //@route  POST api/restaurant-profiles/restaurants/partners/pictures
 //@desc   route for restaurant  to add pictures to their profile
@@ -490,9 +516,9 @@ router.post(
   restaurantsUpload,
   passport.authenticate('restaurants', { session: false }), //authenticate and verify
   (req, res) => {
-   //multer for saving pictures
-    const  filenames = req.files.map(function(file) {
-      return(file.path); // or file.originalname
+    //multer for saving pictures
+    const filenames = req.files.map(function(file) {
+      return file.path; // or file.originalname
     });
     //find restaurant
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
@@ -519,9 +545,9 @@ router.post(
 // @desc  route to delete restaurant picture
 // @access PRIVATE
 router.delete(
-  "partners/restaurant/pictures/:picture_id",//returns arraynumber of picture
+  'partners/restaurant/pictures/:picture_id', //returns arraynumber of picture
 
-  passport.authenticate("restaurants", { session: false }), //authenticate and verify
+  passport.authenticate('restaurants', { session: false }), //authenticate and verify
   (req, res) => {
     //find restaurant profile
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
@@ -550,18 +576,17 @@ router.get(
   passport.authenticate('restaurants', { session: false }),
   (req, res) => {
     //find all orders
-    Order.find({ restaurant_id: req.user.id })
-      .then(order => {
-        if (order) {
-          res.json(order);
-        } //end if
-        else {
-          return res
-            .status(404)
-            .res.json('There are no orders for this restaurant ');
-        } //end else
-        return res.status(404).json("No orders for your restaurant")
-      });
+    Order.find({ restaurant_id: req.user.id }).then(order => {
+      if (order) {
+        res.json(order);
+      } //end if
+      else {
+        return res
+          .status(404)
+          .res.json('There are no orders for this restaurant ');
+      } //end else
+      return res.status(404).json('No orders for your restaurant');
+    });
   }
 );
 //  @route POST api/restaurants-profile/partners/order/:order_id
@@ -587,7 +612,7 @@ router.get(
     });
   }
 );
- 
+
 //  @route POST api/restaurants-profile/partners/order/:order_id
 //  @desc route to make restaurants change status of order
 //  access PRIVATE
@@ -616,19 +641,19 @@ router.post(
 //  @desc route to add menu categories
 //  @access PRIVATE
 router.post(
-  'partners/categories', 
+  'partners/categories',
   passport.authenticate('restaurants', { session: false }),
-  (req,res) => {
-    RestaurantProfile.findOne({restaurant:req.user.id})
-    .then(restaurantProfile =>{
-      if(!restaurantProfile){
-        res.status(404).json('Restaurant not found')
+  (req, res) => {
+    RestaurantProfile.findOne({ restaurant: req.user.id }).then(
+      restaurantProfile => {
+        if (!restaurantProfile) {
+          res.status(404).json('Restaurant not found');
+        }
+        restaurantProfile.categories = req.body.categories.split(',');
+        restaurantProfile.save();
       }
-      restaurantProfile.categories = req.body.categories.split(',')
-      restaurantProfile.save()
-    })
+    );
   }
-)
-
+);
 
 module.exports = router;

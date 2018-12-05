@@ -30,7 +30,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'mails')));
 app.use('/mails', express.static(path.join(__dirname, 'mails')));
-
+app.use(express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 //Connect to MongoDB
 mongoose
   .connect(

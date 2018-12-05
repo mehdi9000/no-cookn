@@ -26,9 +26,9 @@ const RestaurantSchema = new Schema({
     type: Boolean,
     default: false
   },
-  suspended:{
+  suspended: {
     type: Boolean,
-    default: false,
+    default: false
   },
   activationcode: {
     type: String

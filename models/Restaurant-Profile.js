@@ -28,6 +28,9 @@ const RestaurantProfileSchema = new Schema({
       }
     }
   ],
+  logo: {
+    type: String
+  },
   categories: [
     {
       type: String,
@@ -88,7 +91,7 @@ const RestaurantProfileSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  Categories: [], 
+  Categories: [],
   menu: [
     {
       category: {
@@ -113,20 +116,24 @@ const RestaurantProfileSchema = new Schema({
         type: String
       },
       extrasName: [],
-      extrasPrice:[],
+      extrasPrice: []
     }
   ],
-  order:[{
-    type: Schema.Types.ObjectId,
-    ref: "order"
-  }],
-  deliveryareas: [{type: String}],
-  cuisines: [{type: String}],
-  paymentsaccepted: [{type: String}],
-  pictures: [{ type: String, default: "" }],
-  phone: [{
-    type: String
-  }]
+  order: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'order'
+    }
+  ],
+  deliveryareas: [{ type: String }],
+  cuisines: [{ type: String }],
+  paymentsaccepted: [{ type: String }],
+  pictures: [{ type: String, default: '' }],
+  phone: [
+    {
+      type: String
+    }
+  ]
 });
 
 module.exports = RestaurantProfile = mongoose.model(
