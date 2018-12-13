@@ -9,7 +9,7 @@ class Header extends Component {
           <div className="container justify-items-center">
             <h2 className="main-header mb-3">Order food now.</h2>
             <h4 className="sub-main-header mb-3">
-              Thousands of restaurants at your fingertips
+              Thousands of restaurants at your fingertips.
             </h4>
             <SearchForm />
           </div>

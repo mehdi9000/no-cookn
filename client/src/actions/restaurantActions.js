@@ -34,6 +34,25 @@ export const getRestaurant = id => dispatch => {
     );
 };
 
+export const getRestaurantsByLocation = (location, history) => dispatch => {
+  dispatch(setRestaurantLoading());
+  axios
+    .post(`${url}/api/restaurants-profile/location-search`, location)
+    .then(res => {
+      history.push('/restaurants/results');
+      dispatch({
+        type: GET_RESTAURANT,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_RESTAURANT,
+        payload: null
+      })
+    );
+};
+
 // Get Posts
 export const getRestaurants = () => dispatch => {
   dispatch(setRestaurantLoading());

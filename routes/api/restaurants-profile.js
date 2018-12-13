@@ -45,9 +45,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 //test route
-router.get('/test', (req, res) =>
-  res.json({ msg: 'Restaurant Profile Works' })
-);
+router.get('/test', (req, res) => {
+  console.log(req.query.q);
+  res.json({ msg: 'Restaurant Profile Works' });
+});
+
 //test upload
 router.get('/:address', (req, res) => {
   RestaurantProfile.findOne({ 'address._id': req.params.address }).then(
@@ -57,6 +59,24 @@ router.get('/:address', (req, res) => {
       } else return res.json('bad');
     }
   );
+});
+
+//location search
+router.post('/location-search', (req, res) => {
+  let { location } = req.body;
+  RestaurantProfile.find({ deliveryareas: location })
+    .populate('restaurant', ['name', 'avatar', 'restaurantname', 'email'])
+    .then(restaurants => {
+      if (restaurants) {
+        return res.status(200).json(restaurants);
+      } else {
+        return res.json({ msg: 'No restaurants found' });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(400).json({ error: 'something went wrong' });
+    });
 });
 
 // @route Get api/restaurants-profile
@@ -104,12 +124,12 @@ router.post(
     // Get fields
     const restaurantProfileFields = {};
     restaurantProfileFields.restaurant = req.user.id;
-
-    // if (req.body.deliveryareas)
-    //   restaurantProfileFields.deliveryareas = req.body.deliveryareas.split(',');
-
     if (req.body.categories)
-      restaurantProfileFields.categories = req.body.categories.split(',');
+      restaurantProfileFields.categories = req.body.categories
+        .split(',')
+        .map(function(item) {
+          return item.trim();
+        });
     if (req.body.opensat) restaurantProfileFields.opensat = req.body.opensat;
 
     if (req.body.closesat) restaurantProfileFields.closesat = req.body.closesat;
@@ -119,17 +139,31 @@ router.post(
       restaurantProfileFields.minimumorder = req.body.minimumorder;
 
     if (req.body.deliveryareas)
-      restaurantProfileFields.deliveryareas = req.body.deliveryareas.split(',');
+      restaurantProfileFields.deliveryareas = req.body.deliveryareas
+        .split(',')
+        .map(function(item) {
+          return item.trim();
+        });
 
     if (req.body.cuisines)
-      restaurantProfileFields.cuisines = req.body.cuisines.split(',');
+      restaurantProfileFields.cuisines = req.body.cuisines
+        .split(',')
+        .map(function(item) {
+          return item.trim();
+        });
 
     if (req.body.paymentsaccepted)
-      restaurantProfileFields.paymentsaccepted = req.body.paymentsaccepted.split(
-        ','
-      );
+      restaurantProfileFields.paymentsaccepted = req.body.paymentsaccepted
+        .split(',')
+        .map(function(item) {
+          return item.trim();
+        });
     if (req.body.phone)
-      restaurantProfileFields.phone = req.body.phone.split(',');
+      restaurantProfileFields.phone = req.body.phone
+        .split(',')
+        .map(function(item) {
+          return item.trim();
+        });
 
     if (req.file) restaurantProfileFields.logo = req.file.path;
 
@@ -322,6 +356,7 @@ router.post(
       restaurant: req.user.id
     }).then(restaurantProfile => {
       // Get body
+      console.log(req.body.name);
       const newMenu = {
         name: req.body.name,
         category: req.body.category,
@@ -334,9 +369,17 @@ router.post(
       // split extras name and price
 
       if (req.body.extrasame)
-        newMenu.extras.extrasname = req.body.extrasname.split(',');
+        newMenu.extras.extrasname = req.body.extrasname
+          .split(',')
+          .map(function(item) {
+            return item.trim();
+          });
       if (req.body.extrasprice)
-        newMenu.extras.extrasprice = req.body.extrasprice.split(',');
+        newMenu.extras.extrasprice = req.body.extrasprice
+          .split(',')
+          .map(function(item) {
+            return item.trim();
+          });
 
       //add menu to menu array
       restaurantProfile.menu.unshift(newMenu);

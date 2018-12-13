@@ -5,10 +5,13 @@ html {
   padding: 0;
   margin: 0; }
 
-@media (max-width: 468px) {
-  .login-btn,
-  .signup-btn {
-    margin-bottom: 8px; } }
+.login-btn,
+.signup-btn {
+  margin-right: 5px; }
+  @media (max-width: 468px) {
+    .login-btn,
+    .signup-btn {
+      margin-bottom: 8px; } }
 
 .dashnav {
   background: #fdeee7 !important; }
@@ -97,6 +100,10 @@ span {
       border-radius: 2px 2px 0 0;
       background-blend-mode: multiply; }
     .restaurants .cards .card .card-body .badge {
+      color: #50b83c; }
+    .restaurants .cards .card .card-body .rating-box {
+      background-color: #e9f9f0;
+      padding: 5px 15px;
       color: #50b83c; }
     .restaurants .cards .card .card-body .card-title a {
       font-family: 'Nunito', sans-serif;
@@ -665,5 +672,77 @@ section .section-title {
         font-size: 18px; } }
   .not-found .text-box .btn {
     color: whitesmoke; }
+
+.results-box {
+  margin-top: 5px;
+  border-radius: 4px;
+  background: white;
+  height: 200px;
+  overflow-y: scroll; }
+  .results-box ul {
+    list-style-type: none;
+    padding: 0; }
+    .results-box ul li {
+      padding: 10px;
+      text-align: left;
+      cursor: pointer;
+      color: #253858;
+      font-weight: bold; }
+      .results-box ul li:hover {
+        background-color: #e9f9f0; }
+
+.results .header {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fdeee7;
+  padding: 30px; }
+  .results .header h5 {
+    color: #253858; }
+  .results .header h6 {
+    color: #efb331;
+    font-weight: bold; }
+  .results .header .option {
+    display: flex; }
+    .results .header .option select {
+      margin-right: 10px;
+      width: 150px !important;
+      border-radius: 0 !important;
+      border: none;
+      box-shadow: none;
+      outline: none; }
+      .results .header .option select:focus {
+        border: none;
+        box-shadow: none;
+        outline: none; }
+  .results .header input {
+    border: none;
+    outline: none;
+    box-shadow: none; }
+    .results .header input:focus {
+      border: none;
+      box-shadow: none;
+      outline: none; }
+  @media (max-width: 468px) {
+    .results .header {
+      padding: 20px;
+      flex-direction: column;
+      align-items: flex-start; }
+      .results .header div {
+        width: 100%;
+        margin-bottom: 10px; }
+      .results .header h4 {
+        font-size: 16px; } }
+  @media (min-width: 469px) and (max-width: 920px) {
+    .results .header {
+      padding: 20px;
+      flex-direction: column;
+      align-items: flex-start; }
+      .results .header div {
+        width: 100%;
+        margin-bottom: 10px; }
+      .results .header h4 {
+        font-size: 18px; } }
 
 /*# sourceMappingURL=styles.css.map */

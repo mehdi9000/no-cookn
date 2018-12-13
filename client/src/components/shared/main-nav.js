@@ -1,8 +1,44 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { logOutUser } from '../../actions/authActions';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class MainNav extends Component {
   render() {
+    const { isAuthenticated } = this.props.auth;
+
+    const guestNav = (
+      <span>
+        {' '}
+        <li>
+          <Link to="/login">
+            <button className="btn btn-sm mr-2 login-btn">Sign In</button>
+          </Link>
+        </li>
+        <li>
+          <Link to="/register">
+            <button className="btn btn-sm signup-btn">Sign Up</button>
+          </Link>
+        </li>
+      </span>
+    );
+
+    const authNav = (
+      <span>
+        <li style={{ marginTop: '5px', fontWeight: '500' }}>
+          <Link to="/dashboard">
+            <button className="btn btn-sm mr-2 login-btn">My Profile</button>
+          </Link>
+        </li>
+        {/* <li>
+          <Link to="/">
+            <button className="btn btn-sm signup-btn">Logout</button>
+          </Link>
+        </li> */}
+      </span>
+    );
+
     return (
       <div>
         <header>
@@ -56,19 +92,7 @@ class MainNav extends Component {
                       </Link>
                     </div>
                   </li>
-                  <li>
-                    <Link to="/login">
-                      <button className="btn btn-sm mr-2 login-btn">
-                        Sign In
-                      </button>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link to="/register">
-                      <button className="btn btn-sm signup-btn">Sign Up</button>
-                    </Link>
-                  </li>
+                  {isAuthenticated ? authNav : guestNav}
                 </ul>
               </div>
             </div>
@@ -78,4 +102,14 @@ class MainNav extends Component {
     );
   }
 }
-export default MainNav;
+MainNav.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  { logOutUser }
+)(MainNav);

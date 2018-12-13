@@ -51,12 +51,7 @@ router.post('/name-search', (req, res) => {
   console.log(req.body.restaurantname);
   Restaurant.findOne({ restaurantname: req.body.restaurantname })
     .then(restaurant => {
-      if (restaurant) {
-        errors.restaurantname = 'This restaurant has already been registered';
-        return res.status(400).json(errors);
-      } else {
-        return res.status(200).json({ msg: 'Not registered' });
-      }
+      return res.json(restaurant);
     })
     .catch(
       error => console.log(error),
@@ -135,7 +130,7 @@ router.post('/partners/login', (req, res) => {
     if (restaurant.suspended == true) {
       return res.status(300).json({
         error:
-          "Your account has been suspended temporarily. Contact the admin to recover your account"
+          'Your account has been suspended temporarily. Contact the admin to recover your account'
       });
     }
 
@@ -304,5 +299,13 @@ router.delete(
     );
   }
 );
+
+router.get('/location-search', (req, res) => {
+  // let query = req.query.query;
+  console.log(req.query.q);
+  // RestaurantProfile.find({deliveryareas: query}).then(restaurant => {
+  //   console.log(restaurant)
+  // })
+});
 
 module.exports = router;

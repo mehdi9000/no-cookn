@@ -23,6 +23,7 @@ import { logOutUser, setCurrentUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
 import RestaurantProfile from './components/public-restaurant/restaurant';
 import NotFound from './components/shared/404';
+import SearchResults from './components/search-results.js/search-results';
 
 if (localStorage.jwtToken) {
   //set header auth
@@ -56,6 +57,7 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/welcome" component={Welcome} />
               <Route path="/restaurant" component={RestaurantProfile} />
+              <Route path="/restaurants/results" component={SearchResults} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute
                 path="/profile/create-profile"

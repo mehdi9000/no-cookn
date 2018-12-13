@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Logo from '../../assets/lg.jpeg';
 
-class RestaurantCard extends Component {
+class SearchCard extends Component {
   render() {
     let logoURL;
     let date = new Date();
@@ -18,7 +18,7 @@ class RestaurantCard extends Component {
       <div>
         <div className="row">
           {restaurants.map((restaurant, index) => (
-            <div className="col-lg-4 col-md-6" key={index}>
+            <div className="col-lg-3 col-md-6" key={index}>
               <div className="card mb-4 box-shadow">
                 <img
                   className="card-img-top"
@@ -73,4 +73,4 @@ class RestaurantCard extends Component {
     );
   }
 }
-export default RestaurantCard;
+export default SearchCard;

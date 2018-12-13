@@ -2,6 +2,7 @@
 
 .login-btn,
 .signup-btn {
+  margin-right: 5px;
   @media #{$mobile} {
     margin-bottom: 8px;
   }
@@ -129,6 +130,12 @@ span {
       .card-body {
         .badge {
           color: $primary-green;
+        }
+        .rating-box {
+          background-color: $light-green;
+          padding: 5px 15px;
+          color: $primary-green;
+          // font-weight: bold;
         }
         .card-title {
           a {
@@ -923,6 +930,105 @@ section .section-title {
     }
     .btn {
       color: whitesmoke;
+    }
+  }
+}
+
+.results-box {
+  margin-top: 5px;
+  border-radius: 4px;
+  background: white;
+  height: 200px;
+  overflow-y: scroll;
+  ul {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      padding: 10px;
+      text-align: left;
+      cursor: pointer;
+      color: $text-color;
+      font-weight: bold;
+      &:hover {
+        background-color: $light-green;
+      }
+    }
+  }
+}
+
+.results {
+  .header {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $light-yellow;
+    padding: 30px;
+
+    h5 {
+      color: $text-color;
+    }
+    h6 {
+      color: $primary-yellow;
+      font-weight: bold;
+    }
+
+    .option {
+      display: flex;
+
+      select {
+        margin-right: 10px;
+        width: 150px !important;
+        border-radius: 0 !important;
+        border: none;
+        box-shadow: none;
+        outline: none;
+
+        &:focus {
+          border: none;
+          box-shadow: none;
+          outline: none;
+        }
+      }
+    }
+
+    input {
+      border: none;
+      outline: none;
+      box-shadow: none;
+
+      &:focus {
+        border: none;
+        box-shadow: none;
+        outline: none;
+      }
+    }
+
+    @media #{$mobile} {
+      div {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      padding: 20px;
+      h4 {
+        font-size: 16px;
+      }
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    @media #{$tablet} {
+      div {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      padding: 20px;
+      h4 {
+        font-size: 18px;
+      }
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 }

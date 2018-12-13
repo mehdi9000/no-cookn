@@ -17,7 +17,6 @@ class TopRestaurants extends Component {
       restauantContent = <Spinner />;
     } else {
       restauantContent = <RestaurantCard restaurants={restaurants} />;
-      // <PostFeed posts={posts} />
     }
     return (
       <div>

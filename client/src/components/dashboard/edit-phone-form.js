@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createProfile, getCurrentProfile } from '../../actions/profileActions';
+import { createProfile } from '../../actions/profileActions';
 import TextFieldGroup from '../shared/text-field-group';
 import Spinner from '../shared/spinner';
 
@@ -132,5 +132,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createProfile, getCurrentProfile }
+  { createProfile }
 )(EditPhoneForm);

@@ -38,7 +38,6 @@ export const createProfile = (profileData, history) => dispatch => {
   axios
     .post(`${url}/api/profile`, profileData)
     .then(res => {
-      console.log(res.data);
       // history.push('/dashboard');
       swal({
         title: 'Success',
@@ -62,7 +61,6 @@ export const createAddress = addressData => dispatch => {
   axios
     .post(`${url}/api/profile/address`, addressData)
     .then(res => {
-      console.log(res.data);
       swal({
         title: 'Success',
         text: 'Profile updated succesfully.',
