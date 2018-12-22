@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import { getRestaurantsByLocation } from '../../actions/restaurantActions';
 import Spinner from '../shared/spinner';
 import SearchCard from '../shared/search-cards';
-import Logo from '../../assets/lg.jpeg';
-import SearchForm from '../home-items/search-form';
+import EmptyState from './empty-state';
+// import Search from './search';
 
 let locationValue = localStorage.getItem('location');
 
@@ -28,9 +28,7 @@ class SearchResults extends Component {
       if (restaurant.length > 0) {
         searchContent = <SearchCard restaurants={restaurant} />;
       } else {
-        searchContent = (
-          <h1>We don't have restaurants delivering to this location.</h1>
-        );
+        searchContent = <EmptyState />;
       }
     }
     return (
@@ -51,7 +49,6 @@ class SearchResults extends Component {
                 className="form-control"
                 placeholder="search"
               />
-              {/* <SearchForm /> */}
             </div>
 
             <div className="option">
@@ -64,6 +61,8 @@ class SearchResults extends Component {
               </select>
             </div>
           </div>
+
+          {/* <Search /> */}
 
           <div className="restaurants">
             <div className="cards">{searchContent}</div>
