@@ -24,7 +24,6 @@ class Settings extends Component {
   render() {
     const { displayAddressForm } = this.state;
     const { profile, loading } = this.props.profile;
-    // let addresses = profile.address;
 
     let address;
 

@@ -50,8 +50,8 @@ router.get('/test', (req, res) => {
   res.json({ msg: 'Restaurant Profile Works' });
 });
 
-//test upload
-router.get('/:address', (req, res) => {
+// test upload
+router.get('address/:address', (req, res) => {
   RestaurantProfile.findOne({ 'address._id': req.params.address }).then(
     restaurantProfile => {
       if (restaurantProfile) {
@@ -78,6 +78,8 @@ router.post('/location-search', (req, res) => {
       return res.status(400).json({ error: 'something went wrong' });
     });
 });
+
+
 
 // @route Get api/restaurants-profile
 // @desc route to get currently logged in restaurant from

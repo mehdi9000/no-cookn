@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './styles/css/styles.css';
 import './styles/css/bootstrap.min.css';
-// import './styles/css/fontawesome.min.css';
 
 import store from './store';
 import PrivateRoute from '../src/components/shared/private-route';
@@ -56,7 +55,10 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               <Route path="/welcome" component={Welcome} />
-              <Route path="/restaurant" component={RestaurantProfile} />
+              <Route
+                path="/restaurants/:id/:restaurantname"
+                component={RestaurantProfile}
+              />
               <Route path="/restaurants/results" component={SearchResults} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute

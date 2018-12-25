@@ -53,14 +53,6 @@ class EditPhoneForm extends Component {
       if (Object.keys(profile).length > 0) {
         settingContent = (
           <div className="col-md-12">
-            <div className="setting-header">
-              <button
-                className="btn btn-info btn-sm mr-4"
-                onClick={this.props.close}
-              >
-                <i className="fas fa-arrow-left" /> back
-              </button>
-            </div>
             <div className="form-box">
               <h5 className="text-muted">Update Your Primary Phone Number</h5>
               <form className="profile-form" onSubmit={this.onSubmit}>

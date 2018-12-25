@@ -688,7 +688,7 @@ section .section-title {
 
 .tabs {
   background-color: white;
-  border: 1px solid rgba($primary-green, 0.2s);
+  // border: 1px solid rgba($primary-green, 0.2s);
   margin-bottom: 10px;
 
   // box-shadow: $shadow;
@@ -696,23 +696,24 @@ section .section-title {
 }
 .tab-list {
   list-style-type: none;
-  // padding: 10px;
   display: flex;
   flex: 1;
   justify-content: flex-start;
-  // flex-wrap: wrap;
   overflow-x: scroll;
+  padding: 0;
+  border-bottom: 1px solid $light-yellow;
 }
 .tab-list-item {
   display: flex;
-  padding: 10px 24px;
+  padding: 10px 20px;
   cursor: pointer;
   color: $text-color;
-  font-weight: 700;
+  font-weight: 500;
   // letter-spacing: 1px;
   font-size: 16px;
 
   &:hover {
+    color: $primary-yellow;
     border-bottom: 2px solid $primary-yellow;
     -webkit-transition: border-bottom 0.3s ease-in;
     -moz-transition: border-bottom 0.3s ease-in;
@@ -730,6 +731,7 @@ section .section-title {
 }
 .tab-list-active {
   border-bottom: 2px solid $primary-yellow;
+  color: $primary-yellow;
 }
 
 .empty-tab-content-box {
@@ -769,90 +771,154 @@ section .section-title {
   padding: 40px;
 }
 
-.restaurant-header {
-  height: 350px;
-  background-color: black;
+/*************** RESTAURANT PAGE ****************/
 
+.restaurant-header {
+  margin-top: 0;
+  height: 200px;
+  background: #485563;
+  background: -webkit-linear-gradient(to right, #485563, #29323c);
+  background: linear-gradient(to right, #485563, #29323c);
   @media #{$mobile} {
     height: auto;
-
-    .info-box {
-      margin-top: 20px;
-    }
-  }
-
-  .large-header {
-    padding: 60px 0px 60px 0px;
-    .img-box {
-      img {
-        width: 350px;
-      }
-    }
-    .info-box {
-      .rest-disp {
-        padding: 10px;
-        border: 1px solid $primary-yellow;
-      }
-    }
   }
 }
+.tab-box {
+  margin-bottom: 40px;
+  .content-box {
+    box-shadow: $shadow;
+    margin-top: -40px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 3px;
 
-.restinfo {
-  .phone-box {
-    .title {
-      color: $text-color;
-      font-size: 18px;
+    .overview-box {
+      h1 {
+        font-weight: 700;
+        color: $text-color;
+      }
+      .meta-box {
+        font-size: 14px;
+      }
     }
-    .number {
-      color: $primary-green;
-      font-size: 20px;
+    .cat-box {
+      .p-title {
+        color: $text-color;
+        font-size: 18px;
+      }
+      .pills {
+        border-radius: 100px;
+        padding: 5px 20px;
+        background-color: $light-yellow;
+        color: $primary-yellow;
+      }
     }
-  }
-  .time-box {
-    .title {
-      color: $text-color;
-      font-size: 18px;
-    }
-    .times {
-      .hour {
+    .info-box {
+      .item-box {
         display: flex;
-        justify-content: space-between;
-        b {
-          color: $text-color;
+        margin-bottom: 10px;
+        .icon {
+          margin-right: 10px;
+          color: rgba($primary-yellow, 0.7);
+        }
+        .text {
+          display: flex;
+          flex-direction: column;
+          font-size: 14px;
+
+          span {
+            :first-of-type {
+              color: $text-color;
+            }
+            :nth-last-of-type(2) {
+              color: $text-color;
+            }
+          }
+        }
+      }
+    }
+
+    .rating-box {
+      .rating-header {
+        color: $text-color;
+
+        .title {
+          font-weight: bold;
         }
 
-        span {
-          color: $primary-yellow;
+        .rating {
+          background-color: $primary-yellow;
+          padding: 3px 20px;
+          font-size: 20px;
+          color: white;
+          margin-left: 10px;
+          border-radius: 3px;
+        }
+
+        .rev {
+          display: flex;
+          justify-content: space-between;
+
+          .review {
+            background-color: $primary-green;
+            padding: 3px 20px;
+            font-size: 20px;
+            color: white;
+            margin-left: 10px;
+            border-radius: 3px;
+          }
+        }
+
+        .reviews {
+          margin-top: 40px;
+          .box {
+            display: flex;
+            justify-content: center;
+            // align-items: center;
+          }
+          .avatar {
+            margin-right: 20px;
+            span {
+              padding: 15px;
+              background: $primary-red;
+              color: white;
+              border-radius: 100px;
+            }
+          }
+        }
+      }
+    }
+
+    .menu-box {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid $light-green;
+      .menu-img {
+        margin-right: 10px;
+        img {
+          border-radius: 4px;
+        }
+      }
+      .menu-info {
+        h5 {
+          color: $text-color;
+          margin-bottom: -5px;
+        }
+        p {
+          color: $text-color;
+          font-size: 14px;
+        }
+      }
+      .ot-box {
+        h5 {
+          color: $primary-red;
+          font-size: 22px;
         }
       }
     }
   }
-
-  .feature-box {
-    .title {
-      color: $text-color;
-      font-size: 18px;
-    }
-  }
-
-  .cuisine-box {
-    .title {
-      color: $text-color;
-      font-size: 18px;
-    }
-
-    span {
-      color: $primary-green;
-    }
-  }
-
-  .address-box {
-    .title {
-      color: $text-color;
-      font-size: 18px;
-    }
-  }
 }
+/*************** RESTAURANT PAGE ****************/
 
 .modall {
   z-index: 99;
@@ -862,7 +928,6 @@ section .section-title {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
-
   .modal-main {
     position: fixed;
     background: white;

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Modal from '../shared/modal';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
+// import Modal from '../shared/modal';
 import EditPhoneForm from '../dashboard/edit-phone-form';
 import Address from '../dashboard/address';
 
@@ -8,8 +10,16 @@ class DashHeader extends Component {
   constructor() {
     super();
     this.state = {
-      show: false
+      show: false,
+      modal: false
     };
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
   }
 
   showModal = () => {
@@ -43,10 +53,7 @@ class DashHeader extends Component {
             </div>
 
             <div className="profile-actions">
-              <button
-                className="btn btn-sm btn-settings"
-                onClick={this.showModal}
-              >
+              <button className="btn btn-sm btn-settings" onClick={this.toggle}>
                 <i className="fas fa-cogs" /> settings
               </button>
 
@@ -64,10 +71,24 @@ class DashHeader extends Component {
             </div>
           </div>
         </div>
-        <Modal show={this.state.show}>
-          <EditPhoneForm close={this.hideModal} />
 
-          <Address />
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+          className={this.props.className}
+          size="lg"
+        >
+          <ModalHeader toggle={this.toggle}>Profile Settings</ModalHeader>
+          <ModalBody>
+            <EditPhoneForm close={this.hideModal} />
+
+            <Address />
+          </ModalBody>
+          <ModalFooter>
+            <Button color="info" onClick={this.toggle}>
+              Cancel
+            </Button>
+          </ModalFooter>
         </Modal>
       </div>
     );

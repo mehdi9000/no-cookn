@@ -1,88 +1,141 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class RestaurantInformation extends Component {
+class Overview extends Component {
   render() {
     return (
-      <div className="restinfo">
-        <div className="row">
-          <div className="col-md-4">
-            <div className="row">
-              <div className="col-12">
-                <div className="phone-box">
-                  <h4 className="title">
+      <div className="overview-box">
+        <h1>The Place</h1>
+        <hr />
+        <div className="meta-box">
+          <b>
+            <i className="fas fa-star" /> 3.2
+          </b>
+          &nbsp; &nbsp;
+          <b>
+            <i className="fas fa-utensils" /> Nigerian•African
+          </b>{' '}
+          &nbsp; &nbsp;{' '}
+          <b>
+            <i className="fas fa-money-check-alt" /> N2000
+          </b>{' '}
+          &nbsp; &nbsp;
+          <b>
+            <i className="fas fa-heart" /> 0
+          </b>{' '}
+          &nbsp; &nbsp;
+        </div>
+
+        <div className="cat-box mt-3">
+          <span className="p-title">Categories: </span>
+          <span className="pills">Fast Food</span>{' '}
+          <span className="pills">Family</span>{' '}
+          <span className="pills">Fit Fam</span>
+        </div>
+
+        <div className="row mt-5">
+          <div className="col-lg-6">
+            <div className="info-box">
+              <div className="item-box">
+                <div className="icon">
+                  <i className="fas fa-clock" />
+                </div>
+                <div className="text">
+                  <span>
+                    <b>Hours of Operation</b>
+                  </span>
+                  <span>9-5</span>
+                </div>
+              </div>
+
+              <div className="item-box">
+                <div className="icon">
+                  <i className="fas fa-phone" />
+                </div>
+                <div className="text">
+                  <span>
                     <b>Phone Number</b>
-                  </h4>
-                  <h4 className="number">
-                    <b>0701717788</b>
-                  </h4>
+                  </span>
+                  <span>07017177788</span>
                 </div>
               </div>
-              <div className="col-12">
-                <div className="cuisine-box">
-                  <h4 className="title">
-                    <b>Cuisines</b>
-                  </h4>
-                  <span>Nigerian, British, Continental</span>
+
+              <div className="item-box">
+                <div className="icon">
+                  <i className="fas fa-truck" />
+                </div>
+                <div className="text">
+                  <span>
+                    <b>Delievry Areas</b>
+                  </span>
+                  <span>Ikeja, Ikosi, Magodo Phase 1</span>
+                </div>
+              </div>
+
+              <div className="item-box">
+                <div className="icon">
+                  <i className="fas fa-credit-card" />
+                </div>
+                <div className="text">
+                  <span>
+                    <b>Payments Accepted</b>
+                  </span>
+                  <span>Cash, POS, POS On Delivery</span>
+                </div>
+              </div>
+
+              <div className="item-box">
+                <div className="icon">
+                  <i className="fas fa-stopwatch" />
+                </div>
+                <div className="text">
+                  <span>
+                    <b>Average Delivery Time</b>
+                  </span>
+                  <span>40 Minutes</span>
+                </div>
+              </div>
+
+              <div className="item-box">
+                <div className="icon">
+                  <i className="fas fa-stopwatch" />
+                </div>
+                <div className="text">
+                  <span>
+                    <b>Website</b>
+                  </span>
+                  <span>
+                    <a
+                      href="http://no-cookn.herokuapp.com"
+                      target="_blank"
+                      style={{ color: 'red' }}
+                      rel="noopener noreferrer"
+                    >
+                      http://no-cookn.herokuapp.com
+                    </a>
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="col-md-4">
-            <div className="row">
-              <div className="col-12">
-                <div className="time-box">
-                  <h4 className="title">
-                    <b>Opening Hours</b>
-                  </h4>
-                  <h6 className="times">
-                    <div className="hour">
-                      <b>Mon</b> <span>8am - 8pm</span>
-                    </div>
-                    <div className="hour">
-                      <b>Mon</b> <span>8am - 8pm</span>
-                    </div>
-                    <div className="hour">
-                      <b>Mon</b> <span>8am - 8pm</span>
-                    </div>
-                    <div className="hour">
-                      <b>Mon</b> <span>8am - 8pm</span>
-                    </div>
-                    <div className="hour">
-                      <b>Mon</b> <span>8am - 8pm</span>
-                    </div>
-                    <div className="hour">
-                      <b>Mon</b> <span>8am - 8pm</span>
-                    </div>
-                    <div className="hour">
-                      <b>Mon</b> <span>8am - 8pm</span>
-                    </div>
-                  </h6>
+          <div className="col-lg-6">
+            <div className="info-box">
+              <div className="item-box">
+                <div className="icon">
+                  <i className="fas fa-hotel" />
                 </div>
-              </div>
-
-              <div className="col-12">
-                <div className="address-box">
-                  <h4 className="title">
+                <div className="text">
+                  <span>
                     <b>Address</b>
-                  </h4>
-                  <span>2 Kaffi street, Ikeja Alausa, Lagos</span> <br />
-                  <Link to="/">Other Branches</Link>
+                  </span>
+                  <span>
+                    {' '}
+                    <b style={{ color: 'red' }}>57, Marina, Lagos Island.</b>
+                  </span>
+                  <span>Other Branches</span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="col md-4">
-            <div className="feature-box">
-              <h4 className="title">
-                <b>More Info</b>
-              </h4>
-              <ul>
-                <li>Cash On Delivery</li>
-                <li>Special Breakfast</li>
-              </ul>
             </div>
           </div>
         </div>
@@ -91,4 +144,4 @@ class RestaurantInformation extends Component {
   }
 }
 
-export default RestaurantInformation;
+export default Overview;

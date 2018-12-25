@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Logo from '../../assets/lg.jpeg';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class RestaurantCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false
+    };
+
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
   render() {
     let logoURL;
     let date = new Date();
@@ -10,7 +26,7 @@ class RestaurantCard extends Component {
     const { restaurants } = this.props;
 
     if (window.location.hostname === 'localhost') {
-      logoURL = 'http://' + window.location.hostname + ':4001/';
+      logoURL = 'http://localhost:4001/';
     } else {
       logoURL = 'http://' + window.location.hostname + '/';
     }
@@ -42,7 +58,13 @@ class RestaurantCard extends Component {
                     )}
                   </div>
                   <h5 className="card-title">
-                    <a href="/">{restaurant.restaurant.restaurantname}</a>
+                    <a
+                      href={`/restaurants/${restaurant.restaurant._id}/${
+                        restaurant.restaurant.restaurantname
+                      }`}
+                    >
+                      {restaurant.restaurant.restaurantname}
+                    </a>
                   </h5>
                   <p className="card-text text-muted">
                     currently open - closes at
@@ -53,10 +75,22 @@ class RestaurantCard extends Component {
                     <b className="text-danger">{restaurant.minimumorder}</b>
                   </p>
                   <div className="d-flex justify-content-between align-items-center">
-                    <button type="button" className="btn btn-sm btn-outline">
-                      view
-                    </button>
-                    <button type="button" className="btn btn-sm btn-outline">
+                    <Link
+                      to={`/restaurants/${restaurant.restaurant._id}/${
+                        restaurant.restaurant.restaurantname
+                      }`}
+                    >
+                      <button className="btn btn-sm btn-outline">view</button>
+                    </Link>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline"
+                      onClick={this.toggle}
+                      style={{
+                        backgroundColor: 'rgb(233, 249, 240)',
+                        color: 'rgb(80, 184, 60)'
+                      }}
+                    >
                       menu
                     </button>
 
@@ -66,6 +100,31 @@ class RestaurantCard extends Component {
                   </div>
                 </div>
               </div>
+              <Modal
+                isOpen={this.state.modal}
+                toggle={this.toggle}
+                className={this.props.className}
+              >
+                <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+                <ModalBody>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="primary" onClick={this.toggle}>
+                    Do Something
+                  </Button>{' '}
+                  <Button color="secondary" onClick={this.toggle}>
+                    Cancel
+                  </Button>
+                </ModalFooter>
+              </Modal>
             </div>
           ))}
         </div>

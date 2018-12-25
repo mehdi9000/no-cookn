@@ -48,7 +48,6 @@ class SearchForm extends Component {
     });
 
     let { restaurant } = this.props.restaurant;
-    console.log(restaurant);
 
     return (
       <div>

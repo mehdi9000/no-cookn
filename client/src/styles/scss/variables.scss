@@ -1,9 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,500,600,700');
-
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700');
 $shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
 $hover-shadow: 0 4px 6px 0 rgba(80, 184, 60, 0.3);
 
-$text-color: #253858;
+$text-color: #3e416d;
 
 $primary-green: rgb(80, 184, 60);
 $primary-red: rgb(222, 54, 24);
@@ -21,7 +20,7 @@ $shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
 
 body,
 html {
-  font-family: 'Nunito', sans-serif !important;
+  font-family: 'Quicksand', sans-serif !important;
   padding: 0;
   margin: 0;
 }
