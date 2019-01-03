@@ -19,17 +19,17 @@ class RestaurantCard extends Component {
     });
   }
   render() {
-    let logoURL;
+    // let logoURL;
     let date = new Date();
     let currentTime = date.getHours();
     console.log(currentTime);
     const { restaurants } = this.props;
 
-    if (window.location.hostname === 'localhost') {
-      logoURL = 'http://localhost:4001/';
-    } else {
-      logoURL = 'http://' + window.location.hostname + '/';
-    }
+    // if (window.location.hostname === 'localhost') {
+    //   logoURL = 'http://localhost:4001/';
+    // } else {
+    //   logoURL = 'http://' + window.location.hostname + '/';
+    // }
     return (
       <div>
         <div className="row">

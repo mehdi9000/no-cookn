@@ -101,7 +101,7 @@ class Reviews extends Component {
                   />
                 </div>
                 <button
-                  class="btn btn-warning btn-block"
+                  className="btn btn-warning btn-block"
                   style={{ color: 'white' }}
                 >
                   Submit Review

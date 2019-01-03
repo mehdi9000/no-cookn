@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Options from '../../utils/options';
+import Select from 'react-select';
+
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getRestaurantsByLocation } from '../../actions/restaurantActions';
@@ -15,19 +17,33 @@ class SearchForm extends Component {
     this.state = {
       query: '',
       show: false,
+      selectedOption: null,
       results: []
     };
     this.onChange = this.onChange.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
   onChange = e => {
     this.setState({ query: this.queryRef.current.value });
+  };
+
+  handleChange = selectedOption => {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption.value);
   };
 
   handleCheck(e) {
     let newQuery = { location: e.currentTarget.dataset.id };
     localStorage.setItem('location', e.currentTarget.dataset.id);
     this.props.getRestaurantsByLocation(newQuery, this.props.history);
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    let { selectedOption } = this.state;
+    console.log('selectedOption', selectedOption.value);
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -47,44 +63,25 @@ class SearchForm extends Component {
       return filteredResults;
     });
 
-    let { restaurant } = this.props.restaurant;
+    // let { restaurant } = this.props.restaurant;
 
     return (
       <div>
         <div className="form-container">
-          <form className="landing-form">
+          <form className="landing-form" onSubmit={this.onSubmit}>
             <div className="form-row">
               <div className="form-group col-md-10">
-                <input
-                  type="text"
-                  className="form-control"
-                  name="query"
-                  ref={this.queryRef}
-                  onChange={this.onChange}
-                  placeholder="Where do you want your food delivered?"
-                  autoComplete="off"
+                <Select
+                  value={this.state.selectedOption}
+                  onChange={this.handleChange}
+                  options={options}
+                  name="selectedOption"
+                  placeholder="Select Delivery Area"
                 />
-                {filteredResults.length ? (
-                  <div className="results-box">
-                    <ul>
-                      {filteredResults.map((word, index) => (
-                        <li
-                          key={index}
-                          data-id={word.value}
-                          onClick={this.handleCheck}
-                        >
-                          {word.value}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  ''
-                )}
               </div>
-              {/* <div className="form-group col-md-2">
+              <div className="form-group col-md-2">
                 <button className="btn search-btn">Show Restaurants</button>
-              </div> */}
+              </div>
             </div>
           </form>
         </div>

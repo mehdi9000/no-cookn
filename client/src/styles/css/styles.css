@@ -5,6 +5,13 @@ html {
   padding: 0;
   margin: 0; }
 
+.css-vj8t7z {
+  height: 60px; }
+
+.css-1hwfws3 {
+  font-size: 24px;
+  font-weight: 500; }
+
 .login-btn,
 .signup-btn {
   margin-right: 5px; }
@@ -599,6 +606,8 @@ section .section-title {
       padding: 5px 20px;
       background-color: #fdeee7;
       color: #efb331; }
+      .tab-box .content-box .cat-box .pills:hover {
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18); }
     .tab-box .content-box .info-box .item-box {
       display: flex;
       margin-bottom: 10px; }
@@ -647,6 +656,7 @@ section .section-title {
             color: white;
             border-radius: 100px; }
     .tab-box .content-box .menu-box {
+      padding: 10px;
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid #e9f9f0; }
@@ -661,8 +671,8 @@ section .section-title {
         color: #3e416d;
         font-size: 14px; }
       .tab-box .content-box .menu-box .ot-box h5 {
-        color: #de3618;
-        font-size: 22px; }
+        color: rgba(222, 54, 24, 0.8);
+        font-size: 20px; }
 
 /*************** RESTAURANT PAGE ****************/
 .modall {

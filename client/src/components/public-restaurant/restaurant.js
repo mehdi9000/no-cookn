@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getRestaurant } from '../../actions/restaurantActions';
-import Spinner from '../shared/spinner';
+// import Spinner from '../shared/spinner';
 
-import Dummy from '../../assets/header-img.jpg';
+// import Dummy from '../../assets/header-img.jpg';
 import Tabs from '../shared/tabs';
 import Menu from './menu';
 import Overview from './info';
@@ -18,6 +18,7 @@ class RestaurantProfile extends Component {
   }
   render() {
     let { restaurant } = this.props.restaurant;
+    console.log('restaurant', restaurant);
 
     return (
       <div>

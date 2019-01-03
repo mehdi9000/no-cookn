@@ -811,6 +811,10 @@ section .section-title {
         padding: 5px 20px;
         background-color: $light-yellow;
         color: $primary-yellow;
+
+        &:hover {
+          box-shadow: $shadow;
+        }
       }
     }
     .info-box {
@@ -890,6 +894,7 @@ section .section-title {
     }
 
     .menu-box {
+      padding: 10px;
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid $light-green;
@@ -911,8 +916,8 @@ section .section-title {
       }
       .ot-box {
         h5 {
-          color: $primary-red;
-          font-size: 22px;
+          color: rgba($primary-red, 0.8);
+          font-size: 20px;
         }
       }
     }
