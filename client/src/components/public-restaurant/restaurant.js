@@ -10,6 +10,7 @@ import Menu from './menu';
 import Overview from './info';
 import Reviews from './reviews';
 import MainNav from '../shared/main-nav';
+import Cart from './cart';
 
 class RestaurantProfile extends Component {
   componentDidMount() {
@@ -47,7 +48,11 @@ class RestaurantProfile extends Component {
                   </Tabs>
                 </div>
               </div>
-              <div className="col-md-4">cart or something</div>
+              <div className="col-md-4">
+                <div className="cart-box">
+                  <Cart />
+                </div>
+              </div>
             </div>
           </div>
         </div>

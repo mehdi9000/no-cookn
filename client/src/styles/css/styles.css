@@ -34,7 +34,7 @@ span {
 .header-jumb {
   background-color: rgba(0, 0, 0, 0.7) !important;
   border-radius: 0 !important;
-  background-image: url(../../assets/header-img.jpg);
+  background-image: url("../../assets/header-img.webp");
   background-size: cover;
   background-repeat: no-repeat;
   background-blend-mode: multiply; }
@@ -321,7 +321,7 @@ section .section-title {
 #footer {
   background-color: #343a40 !important;
   border-top: 5px solid #efb331;
-  background-image: url("../../assets/barbecue-barbeque-bbq-1268551.jpg");
+  background-image: url("../../assets/barbecue-barbeque-bbq-1268551.webp");
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: multiply; }
@@ -578,9 +578,9 @@ section .section-title {
 .restaurant-header {
   margin-top: 0;
   height: 200px;
-  background: #485563;
-  background: -webkit-linear-gradient(to right, #485563, #29323c);
-  background: linear-gradient(to right, #485563, #29323c); }
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: darken;
+  background-image: url("../../assets/pattern.webp"); }
   @media (max-width: 468px) {
     .restaurant-header {
       height: auto; } }
@@ -673,6 +673,12 @@ section .section-title {
       .tab-box .content-box .menu-box .ot-box h5 {
         color: rgba(222, 54, 24, 0.8);
         font-size: 20px; }
+  .tab-box .cart-box {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+    margin-top: -40px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 3px; }
 
 /*************** RESTAURANT PAGE ****************/
 .modall {

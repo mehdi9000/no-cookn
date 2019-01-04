@@ -21,6 +21,7 @@ class MenuItem extends Component {
   }
   render() {
     let item = this.props.menuItem;
+
     return (
       <div>
         <div className="menu-box">
@@ -50,6 +51,7 @@ class MenuItem extends Component {
           className={this.props.className}
           item={item}
           addToCart={this.props.addToCart}
+          cart={this.props.cart}
         />
       </div>
     );

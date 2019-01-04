@@ -3,6 +3,10 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 class MenuModal extends Component {
   render() {
+    //use item.id when you call from api
+    const thisItemInCart = this.props.cart.filter(
+      item => item === this.props.item
+    );
     return (
       <div>
         <Modal
@@ -54,7 +58,8 @@ class MenuModal extends Component {
                   className="btn btn-sm btn-success"
                   onClick={() => this.props.addToCart(this.props.item)}
                 >
-                  <i className="fas fa-plus" /> Add
+                  <i className="fas fa-plus" /> Add (
+                  {thisItemInCart.length || 0})
                 </button>
               </div>
             </div>
