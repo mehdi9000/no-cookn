@@ -79,8 +79,6 @@ router.post('/location-search', (req, res) => {
     });
 });
 
-
-
 // @route Get api/restaurants-profile
 // @desc route to get currently logged in restaurant from
 // restaurant auth @access PRIVATE
@@ -207,8 +205,8 @@ router.get(
             'There is no profile for this restaurant';
           res.status(404).json(errors);
         }
-
         res.json(restaurantProfile);
+        console.log(restaurantProfile.restaurant.restaurantname);
       })
       .catch(err =>
         res.status(404).json({

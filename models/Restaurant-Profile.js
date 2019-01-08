@@ -28,6 +28,9 @@ const RestaurantProfileSchema = new Schema({
       }
     }
   ],
+  website: {
+    type: String
+  },
   logo: {
     type: String
   },
@@ -91,7 +94,6 @@ const RestaurantProfileSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  Categories: [],
   menu: [
     {
       category: {
@@ -116,7 +118,7 @@ const RestaurantProfileSchema = new Schema({
         type: String
       },
       extrasname: [],
-      extrasprice:[],
+      extrasprice: []
     }
   ],
   order: [

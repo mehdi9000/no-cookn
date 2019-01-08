@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getRestaurant } from '../../actions/restaurantActions';
-// import Spinner from '../shared/spinner';
+import Spinner from '../shared/spinner';
 
 // import Dummy from '../../assets/header-img.jpg';
 import Tabs from '../shared/tabs';
@@ -19,12 +19,14 @@ class RestaurantProfile extends Component {
   }
   render() {
     let { restaurant } = this.props.restaurant;
-    console.log('restaurant', restaurant);
 
-    return (
-      <div>
-        <MainNav />
-        <div className="restaurant-header" />
+    let restaurantContent;
+
+    if (restaurant === undefined || null) {
+      restaurantContent = <Spinner />;
+      console.log('still loading');
+    } else {
+      restaurantContent = (
         <div className="tab-box">
           <div className="container">
             <div className="row justify-content-center">
@@ -32,7 +34,7 @@ class RestaurantProfile extends Component {
                 <div className="content-box">
                   <Tabs>
                     <div label="Overview">
-                      <Overview />
+                      <Overview restaurant={restaurant.restaurant} />
                     </div>
                     <div label="Menu">
                       <Menu />
@@ -56,6 +58,15 @@ class RestaurantProfile extends Component {
             </div>
           </div>
         </div>
+      );
+      console.log('restaurant', restaurant.restaurant);
+    }
+
+    return (
+      <div>
+        <MainNav />
+        <div className="restaurant-header" />
+        {restaurantContent}
       </div>
     );
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Dummy from '../../assets/header-img.jpg';
 import MenuModal from './menu-modal';
 import { ADD_TO_CART } from '../../actions/types';
+import { addToCart } from '../../actions/cartActions';
 import { connect } from 'react-redux';
 
 class MenuItem extends Component {
@@ -63,15 +64,15 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addToCart: item => {
-      dispatch({ type: ADD_TO_CART, payload: item });
-      console.log(item);
-    }
-  };
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     addToCart: item => {
+//       dispatch({ type: ADD_TO_CART, payload: item });
+//       console.log(item);
+//     }
+//   };
+// }
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { addToCart }
 )(MenuItem);

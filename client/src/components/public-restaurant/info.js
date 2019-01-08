@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 
 class Overview extends Component {
   render() {
+    console.log(this.props.restaurant);
+    let { restaurantname } = this.props.restaurant;
     return (
       <div className="overview-box">
         <h1>The Place</h1>

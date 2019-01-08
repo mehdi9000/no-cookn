@@ -6,7 +6,6 @@ class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fadeIn: false,
       menu: ['Bananas', 'Frozen Pizza', "Flamin' Hot Cheetos", 'Arugula']
     };
   }

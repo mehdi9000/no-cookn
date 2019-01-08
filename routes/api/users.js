@@ -38,7 +38,7 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
   User.findOne({
-    email: req.body.email
+    email: req.body.email.toLowerCase()
   }).then(user => {
     if (user) {
       errors.email = "Email already exists";
@@ -49,7 +49,7 @@ router.post("/register", (req, res) => {
       // let activationCode = nanoid(50);
       const newUser = new User({
         name: req.body.name,
-        email: req.body.email,
+        email: req.body.email.toLowerCase(),
         password: req.body.password
         // activationcode: activationCode
       });
@@ -88,7 +88,7 @@ router.post("/login", (req, res) => {
   }
 
   //save email and password in variables
-  const email = req.body.email;
+  const email = req.body.email.toLowercase();
   const password = req.body.password;
 
   //Find the user by email
