@@ -3,10 +3,6 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 class MenuModal extends Component {
   render() {
-    //use item.id when you call from api
-    const thisItemInCart = this.props.cart.filter(
-      item => item === this.props.item
-    );
     return (
       <div>
         <Modal
@@ -15,7 +11,7 @@ class MenuModal extends Component {
           className={this.props.className}
         >
           <ModalHeader toggle={this.props.toggle}>
-            {this.props.item}
+            {this.props.item.name}
           </ModalHeader>
           <ModalBody>
             <div className="form-group">
@@ -59,8 +55,19 @@ class MenuModal extends Component {
                   onClick={() => this.props.addToCart(this.props.item)}
                 >
                   <i className="fas fa-plus" /> Add (
-                  {thisItemInCart.length || 0})
+                  {(this.props.cartItem && this.props.cartItem.quantity) || 0})
                 </button>
+
+                {this.props.cartItem ? (
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => this.props.removeItem(this.props.cartItem)}
+                  >
+                    <i className="fas fa-minus" /> Remove
+                  </button>
+                ) : (
+                  ''
+                )}
               </div>
             </div>
           </ModalBody>

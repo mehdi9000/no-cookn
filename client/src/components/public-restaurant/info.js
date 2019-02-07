@@ -3,19 +3,17 @@ import React, { Component } from 'react';
 
 class Overview extends Component {
   render() {
-    console.log(this.props.restaurant);
-    let { restaurantname } = this.props.restaurant;
     return (
       <div className="overview-box">
-        <h1>The Place</h1>
+        <h1>{this.props.info.name}</h1>
         <hr />
         <div className="meta-box">
           <b>
-            <i className="fas fa-star" /> 3.2
+            <i className="fas fa-star" /> {this.props.info.rating}
           </b>
           &nbsp; &nbsp;
           <b>
-            <i className="fas fa-utensils" /> Nigerian•African
+            <i className="fas fa-utensils" /> {this.props.info.cuisines}
           </b>{' '}
           &nbsp; &nbsp;{' '}
           <b>
@@ -23,16 +21,18 @@ class Overview extends Component {
           </b>{' '}
           &nbsp; &nbsp;
           <b>
-            <i className="fas fa-heart" /> 0
+            <i className="fas fa-heart" /> {this.props.info.likes}
           </b>{' '}
           &nbsp; &nbsp;
         </div>
 
         <div className="cat-box mt-3">
           <span className="p-title">Categories: </span>
-          <span className="pills">Fast Food</span>{' '}
-          <span className="pills">Family</span>{' '}
-          <span className="pills">Fit Fam</span>
+          {this.props.info.categories.map((item, index) => (
+            <span className="pills" key={index}>
+              {item}
+            </span>
+          ))}{' '}
         </div>
 
         <div className="row mt-5">
@@ -46,7 +46,10 @@ class Overview extends Component {
                   <span>
                     <b>Hours of Operation</b>
                   </span>
-                  <span>9-5</span>
+                  <span>
+                    <b>{this.props.info.opensat}</b> -{' '}
+                    <b>{this.props.info.closesat}</b>
+                  </span>
                 </div>
               </div>
 
@@ -58,7 +61,11 @@ class Overview extends Component {
                   <span>
                     <b>Phone Number</b>
                   </span>
-                  <span>07017177788</span>
+                  {this.props.info.phone.map((item, index) => (
+                    <a href={`tel: ${item}`} key={index}>
+                      {item}
+                    </a>
+                  ))}
                 </div>
               </div>
 
@@ -70,7 +77,7 @@ class Overview extends Component {
                   <span>
                     <b>Delievry Areas</b>
                   </span>
-                  <span>Ikeja, Ikosi, Magodo Phase 1</span>
+                  <span>{this.props.info.deliveryareas}</span>
                 </div>
               </div>
 
@@ -82,7 +89,7 @@ class Overview extends Component {
                   <span>
                     <b>Payments Accepted</b>
                   </span>
-                  <span>Cash, POS, POS On Delivery</span>
+                  <span>{this.props.info.paymentsaccepted}</span>
                 </div>
               </div>
 
@@ -94,7 +101,7 @@ class Overview extends Component {
                   <span>
                     <b>Average Delivery Time</b>
                   </span>
-                  <span>40 Minutes</span>
+                  <span>{this.props.info.deliverytime} Minutes</span>
                 </div>
               </div>
 

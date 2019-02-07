@@ -6,7 +6,12 @@ class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      menu: ['Bananas', 'Frozen Pizza', "Flamin' Hot Cheetos", 'Arugula']
+      menu: [
+        { id: '1', name: 'Bananas', price: 200 },
+        { id: '2', name: 'Frozen Pizza', price: 1500 },
+        { id: '3', name: "Flamin' Hot Cheetos", price: 300 },
+        { id: '4', name: 'Arugula', price: 250 }
+      ]
     };
   }
   render() {

@@ -93,6 +93,13 @@ class MainNav extends Component {
                     </div>
                   </li>
                   {isAuthenticated ? authNav : guestNav}
+
+                  {/* <li className="nav-item dropdown mr-3">
+                    Cart{' '}
+                    {this.props.cart.reduce((acc, item) => {
+                      return acc + item.quantity;
+                    }, 0)}
+                  </li> */}
                 </ul>
               </div>
             </div>
@@ -107,7 +114,8 @@ MainNav.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  cart: state.cart
 });
 export default connect(
   mapStateToProps,

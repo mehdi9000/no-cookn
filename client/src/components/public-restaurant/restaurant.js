@@ -20,6 +20,29 @@ class RestaurantProfile extends Component {
   render() {
     let { restaurant } = this.props.restaurant;
 
+    const restaurantname = ((restaurant || {}).restaurant || {}).restaurantname;
+    const menu = (restaurant || {}).menu || [];
+    const cuisines = (restaurant || {}).cuisines || [];
+    const categories = (restaurant || {}).categories || [];
+    const phone = (restaurant || {}).phone || [];
+    const deliveryareas = (restaurant || {}).deliveryareas || [];
+    const paymentsaccepted = (restaurant || {}).paymentsaccepted || [];
+
+    const overviewInfo = {
+      categories,
+      phone,
+      name: restaurantname,
+      rating: restaurant.rating,
+      deliverytime: restaurant.deliverytime,
+      minimumorder: restaurant.minimumorder,
+      likes: restaurant.likes,
+      opensat: restaurant.opensat,
+      closesat: restaurant.closesat,
+      cuisines: cuisines.join(', '),
+      deliveryareas: deliveryareas.join(', '),
+      paymentsaccepted: paymentsaccepted.join(', ')
+    }
+
     let restaurantContent;
 
     if (restaurant === undefined || null) {
@@ -34,17 +57,17 @@ class RestaurantProfile extends Component {
                 <div className="content-box">
                   <Tabs>
                     <div label="Overview">
-                      <Overview restaurant={restaurant.restaurant} />
+                      <Overview info={overviewInfo} />
                     </div>
                     <div label="Menu">
-                      <Menu />
+                      <Menu menuItems={menu} />
                     </div>
                     <div label="Reviews">
-                      <Reviews />
+                      <Reviews name={restaurantname} />
                     </div>
                     <div label="Photos">
                       <div className="ph-header">
-                        <h5>The Place's Showcase</h5>
+                        <h5>{restaurantname}'s Showcase</h5>
                       </div>
                     </div>
                   </Tabs>
@@ -59,7 +82,6 @@ class RestaurantProfile extends Component {
           </div>
         </div>
       );
-      console.log('restaurant', restaurant.restaurant);
     }
 
     return (

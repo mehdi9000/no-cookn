@@ -205,7 +205,7 @@ router.get(
             'There is no profile for this restaurant';
           res.status(404).json(errors);
         }
-        res.json(restaurantProfile);
+        return res.json(restaurantProfile);
         console.log(restaurantProfile.restaurant.restaurantname);
       })
       .catch(err =>

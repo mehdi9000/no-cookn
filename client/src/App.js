@@ -67,7 +67,6 @@ class App extends Component {
               />
               <PrivateRoute path="/profile/settings" component={Settings} />
               <Route component={NotFound} />
-
               {/* <Route
                 exact
                 path="/primary-user/accounts/verification/:activationcode"

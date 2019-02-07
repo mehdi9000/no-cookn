@@ -922,12 +922,84 @@ section .section-title {
       }
     }
   }
+
+  .emptycartbox {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .imagebox {
+      margin-bottom: 10px;
+    }
+  }
   .cart-box {
     box-shadow: $shadow;
     margin-top: -40px;
     background-color: white;
     padding: 20px;
     border-radius: 3px;
+
+    .cart-item {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-bottom: 1px solid rgba($primary-green, 0.3);
+      padding-bottom: 8px;
+      padding-top: 8px;
+      .menu-img {
+        img {
+          border-radius: 6px;
+        }
+      }
+      .item-info {
+        h6 {
+          color: $primary-yellow;
+        }
+        p {
+          font-size: 12px;
+          font-weight: 500;
+          color: $primary-red;
+        }
+      }
+
+      .item-actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .item-price {
+          display: flex;
+          justify-content: flex-end;
+          h6 {
+            color: $primary-red;
+            font-weight: bold;
+            font-size: 18px;
+          }
+        }
+        .actions {
+          .btn {
+            border-radius: 100px !important;
+            &:hover {
+              box-shadow: $shadow;
+            }
+          }
+          .plus {
+            background-color: $light-green;
+            color: $primary-green;
+          }
+          .badge {
+            font-size: 16px;
+            color: $primary-green;
+            font-weight: bold;
+          }
+          .minus {
+            background-color: $light-yellow;
+            color: $primary-yellow;
+          }
+        }
+      }
+    }
   }
 }
 /*************** RESTAURANT PAGE ****************/

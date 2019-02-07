@@ -23,7 +23,7 @@ class Reviews extends Component {
         <div className="rating-box">
           <div className="rating-header">
             <h5 className="mb-3 mt-3">
-              <b>What People are saying about The Place.</b>
+              <b>What People are saying about {this.props.name}.</b>
             </h5>
             <div className="rev">
               <span className="title">Overall Rating</span>

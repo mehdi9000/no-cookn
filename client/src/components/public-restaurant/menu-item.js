@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Dummy from '../../assets/header-img.jpg';
 import MenuModal from './menu-modal';
-import { ADD_TO_CART } from '../../actions/types';
-import { addToCart } from '../../actions/cartActions';
+import { addToCart, removeFromCart } from '../../actions/cartActions';
 import { connect } from 'react-redux';
 
 class MenuItem extends Component {
@@ -30,7 +29,7 @@ class MenuItem extends Component {
             <img src={Dummy} alt="menu" width="80px" />
           </div>
           <div className="menu-info">
-            <h5>{item}</h5>
+            <h5>{item.name}</h5>
             <small className="text-muted">
               <b>Avg Delivery Time: 35 Minutes</b>
             </small>
@@ -52,7 +51,10 @@ class MenuItem extends Component {
           className={this.props.className}
           item={item}
           addToCart={this.props.addToCart}
-          cart={this.props.cart}
+          removeItem={this.props.removeFromCart}
+          cartItem={
+            this.props.cart.filter(cartItem => cartItem.id === item.id)[0]
+          }
         />
       </div>
     );
@@ -64,15 +66,7 @@ function mapStateToProps(state) {
   };
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     addToCart: item => {
-//       dispatch({ type: ADD_TO_CART, payload: item });
-//       console.log(item);
-//     }
-//   };
-// }
 export default connect(
   mapStateToProps,
-  { addToCart }
+  { addToCart, removeFromCart }
 )(MenuItem);
