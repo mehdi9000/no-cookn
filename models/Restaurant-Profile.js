@@ -42,15 +42,15 @@ const RestaurantProfileSchema = new Schema({
   ],
   opensat: {
     type: String,
-    required: true
+    // required: true
   },
   closesat: {
     type: String,
-    required: true
+    // required: true
   },
   minimumorder: {
     type: String,
-    required: true
+    // required: true
   },
   likes: {
     type: Number,
@@ -71,22 +71,22 @@ const RestaurantProfileSchema = new Schema({
       },
       address1: {
         type: String,
-        required: true
+        // required: true
       },
       address2: {
         type: String
       },
       state: {
         type: String,
-        required: true
+        // required: true
       },
       area: {
         type: String,
-        required: true
+        // required: true
       },
       default: {
         type: Boolean,
-        default: false
+        // default: false
       }
     }
   ],

@@ -634,19 +634,40 @@ router.post(
 //  @desc route to add menu categories
 //  @access PRIVATE
 router.post(
-  'partners/categories',
+  '/partners/categories',
   passport.authenticate('restaurants', { session: false }),
   (req, res) => {
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
-      restaurantProfile => {
+      restaurantProfile => { 
         if (!restaurantProfile) {
-          res.status(404).json('Restaurant not found');
+          return res.status(404).json('Restaurant not found');
         }
-        restaurantProfile.categories = req.body.categories.split(',');
-        restaurantProfile.save();
+        restaurantProfile.categories = req.body.categories
+        restaurantProfile.save().then(res.json(restaurantProfile.categories));
+        
       }
     );
   }
 );
+
+//  @route GET api/restaurants-profile/partners/categories
+//  @desc route to get restaurant's categories
+//  @access PRIVATE
+router.get(
+  '/partners/categories',
+  passport.authenticate('restaurants', {session:false}),
+  (req,res)=>{
+    RestaurantProfile.findOne({ restaurant: req.user.id}).then(
+      restaurantProfile =>{
+        if(!restaurantProfile){
+          return res.status(404).json('Restaurant not found')
+        }
+        //if found
+        return res.json(restaurantProfile.categories)
+      }
+    )
+  }
+)
+
 
 module.exports = router;
