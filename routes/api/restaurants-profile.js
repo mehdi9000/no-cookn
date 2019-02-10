@@ -114,13 +114,13 @@ router.post(
   }),
   upload.single('logo'),
   (req, res) => {
-    const { errors, isValid } = ValidateProfileInput(req.body);
+    // const { errors, isValid } = ValidateProfileInput(req.body);
 
-    //check validation
-    if (!isValid) {
-      // Return any errors with status 400
-      return res.status(400).json(errors);
-    }
+    // //check validation
+    // if (!isValid) {
+    //   // Return any errors with status 400
+    //   return res.status(400).json(errors);
+    // }
     // Get fields
     const restaurantProfileFields = {};
     restaurantProfileFields.restaurant = req.user.id;
@@ -137,6 +137,8 @@ router.post(
       restaurantProfileFields.deliverytime = req.body.deliverytime;
     if (req.body.minimumorder)
       restaurantProfileFields.minimumorder = req.body.minimumorder;
+
+    if (req.body.website) restaurantProfileFields.website = req.body.website;
 
     if (req.body.deliveryareas)
       restaurantProfileFields.deliveryareas = req.body.deliveryareas
@@ -634,7 +636,7 @@ router.post(
 //  @desc route to add menu categories
 //  @access PRIVATE
 router.post(
-  'partners/categories',
+  '/partners/categories',
   passport.authenticate('restaurants', { session: false }),
   (req, res) => {
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
@@ -642,8 +644,14 @@ router.post(
         if (!restaurantProfile) {
           res.status(404).json('Restaurant not found');
         }
-        restaurantProfile.categories = req.body.categories.split(',');
+        restaurantProfile.menucategories = req.body.categories
+          .split(',')
+          .map(function(item) {
+            return item.trim();
+          });
+        console.log(restaurantProfile.menucategories);
         restaurantProfile.save();
+        return res.json(restaurantProfile.menucategories);
       }
     );
   }

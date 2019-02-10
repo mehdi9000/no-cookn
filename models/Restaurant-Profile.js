@@ -6,6 +6,27 @@ const RestaurantProfileSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'restaurant'
   },
+
+  website: { type: String },
+  logo: { type: String },
+  opensat: { type: String, required: true },
+  closesat: { type: String, required: true },
+  likes: { type: Number, default: 0 },
+  minimumorder: { type: String, required: true },
+  deliverytime: { ype: String },
+  rating: { type: Number, default: 0 },
+  favourites: { type: Number, default: 0 },
+  creationdate: { type: Date, default: Date.now },
+
+  deliveryareas: [{ type: String }],
+  cuisines: [{ type: String }],
+  paymentsaccepted: [{ type: String }],
+  pictures: [{ type: String, default: '' }],
+  categories: [{ type: String }],
+  menucategories: [{ type: String }],
+
+  phone: [{ type: String }],
+
   reviews: [
     {
       user: {
@@ -28,42 +49,6 @@ const RestaurantProfileSchema = new Schema({
       }
     }
   ],
-  website: {
-    type: String
-  },
-  logo: {
-    type: String
-  },
-  categories: [
-    {
-      type: String,
-      required: true
-    }
-  ],
-  opensat: {
-    type: String,
-    required: true
-  },
-  closesat: {
-    type: String,
-    required: true
-  },
-  minimumorder: {
-    type: String,
-    required: true
-  },
-  likes: {
-    type: Number,
-    default: 0
-  },
-  rating: {
-    type: Number,
-    default: 0
-  },
-  favourites: {
-    type: Number,
-    default: 0
-  },
   address: [
     {
       phone: {
@@ -90,10 +75,6 @@ const RestaurantProfileSchema = new Schema({
       }
     }
   ],
-  creationdate: {
-    type: Date,
-    default: Date.now
-  },
   menu: [
     {
       category: {
@@ -125,15 +106,6 @@ const RestaurantProfileSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: 'order'
-    }
-  ],
-  deliveryareas: [{ type: String }],
-  cuisines: [{ type: String }],
-  paymentsaccepted: [{ type: String }],
-  pictures: [{ type: String, default: '' }],
-  phone: [
-    {
-      type: String
     }
   ]
 });
