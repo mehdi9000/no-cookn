@@ -49,6 +49,45 @@ const RestaurantProfileSchema = new Schema({
       }
     }
   ],
+<<<<<<< HEAD
+=======
+  website: {
+    type: String
+  },
+  logo: {
+    type: String
+  },
+  categories: [
+    {
+      type: String,
+      required: true
+    }
+  ],
+  opensat: {
+    type: String,
+    // required: true
+  },
+  closesat: {
+    type: String,
+    // required: true
+  },
+  minimumorder: {
+    type: String,
+    // required: true
+  },
+  likes: {
+    type: Number,
+    default: 0
+  },
+  rating: {
+    type: Number,
+    default: 0
+  },
+  favourites: {
+    type: Number,
+    default: 0
+  },
+>>>>>>> 9b06c45dd4a2a9f5a0168f411697ebd18ae406bc
   address: [
     {
       phone: {
@@ -56,22 +95,22 @@ const RestaurantProfileSchema = new Schema({
       },
       address1: {
         type: String,
-        required: true
+        // required: true
       },
       address2: {
         type: String
       },
       state: {
         type: String,
-        required: true
+        // required: true
       },
       area: {
         type: String,
-        required: true
+        // required: true
       },
       default: {
         type: Boolean,
-        default: false
+        // default: false
       }
     }
   ],

@@ -642,7 +642,7 @@ router.post(
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
       restaurantProfile => {
         if (!restaurantProfile) {
-          res.status(404).json('Restaurant not found');
+          return res.status(404).json('Restaurant not found');
         }
         restaurantProfile.menucategories = req.body.categories
           .split(',')
@@ -651,6 +651,25 @@ router.post(
           });
         console.log(restaurantProfile.menucategories);
         restaurantProfile.save();
+        return res.status(201).json(restaurantProfile.menucategories);
+      }
+    );
+  }
+);
+
+//  @route GET api/restaurants-profile/partners/categories
+//  @desc route to get restaurant's categories
+//  @access PRIVATE
+router.get(
+  '/partners/categories',
+  passport.authenticate('restaurants', { session: false }),
+  (req, res) => {
+    RestaurantProfile.findOne({ restaurant: req.user.id }).then(
+      restaurantProfile => {
+        if (!restaurantProfile) {
+          return res.status(404).json('Restaurant not found');
+        }
+        //if found
         return res.json(restaurantProfile.menucategories);
       }
     );
