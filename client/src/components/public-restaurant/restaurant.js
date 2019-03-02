@@ -41,13 +41,12 @@ class RestaurantProfile extends Component {
       cuisines: cuisines.join(', '),
       deliveryareas: deliveryareas.join(', '),
       paymentsaccepted: paymentsaccepted.join(', ')
-    }
+    };
 
     let restaurantContent;
 
     if (restaurant === undefined || null) {
       restaurantContent = <Spinner />;
-      console.log('still loading');
     } else {
       restaurantContent = (
         <div className="tab-box">

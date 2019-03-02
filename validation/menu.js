@@ -5,7 +5,7 @@ module.exports = function ValidateMenuInput(data) {
   const errors = {};
 
   data.category = !isEmpty(data.category) ? data.category : '';
-  data.name = !isEmpty(data.name) ? data.description : '';
+  data.menuname = !isEmpty(data.menuname) ? data.menuname : '';
   data.deliverytime = !isEmpty(data.deliverytime) ? data.deliverytime : '';
   data.price = !isEmpty(data.price) ? data.price : '';
 
@@ -13,8 +13,8 @@ module.exports = function ValidateMenuInput(data) {
     errors.category = 'A category is rquired for the menu item';
   }
 
-  if (Validator.isEmpty(data.name)) {
-    errors.name = 'A name is required for the menu item';
+  if (Validator.isEmpty(data.menuname)) {
+    errors.menuname = 'A name is required for the menu item';
   }
 
   // if (Validator.isEmpty(data.description)) {

@@ -208,7 +208,6 @@ router.get(
           res.status(404).json(errors);
         }
         return res.json(restaurantProfile);
-        console.log(restaurantProfile.restaurant.restaurantname);
       })
       .catch(err =>
         res.status(404).json({
@@ -358,9 +357,9 @@ router.post(
       restaurant: req.user.id
     }).then(restaurantProfile => {
       // Get body
-      console.log(req.body.name);
+      console.log(req.body);
       const newMenu = {
-        name: req.body.name,
+        menuname: req.body.menuname,
         category: req.body.category,
         description: req.body.description,
         price: req.body.price,
@@ -649,7 +648,6 @@ router.post(
           .map(function(item) {
             return item.trim();
           });
-        console.log(restaurantProfile.menucategories);
         restaurantProfile.save();
         return res.status(201).json(restaurantProfile.menucategories);
       }
