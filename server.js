@@ -9,6 +9,8 @@ const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const restaurants = require('./routes/api/restaurants');
 const restaurantsProfile = require('./routes/api/restaurants-profile');
+const menu = require('./routes/api/menu');
+
 const category = require('./routes/api/master/category');
 
 //DB CONFIG
@@ -32,12 +34,12 @@ app.use(express.static(path.join(__dirname, 'mails')));
 app.use('/mails', express.static(path.join(__dirname, 'mails')));
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.use(express.static(path.join(__dirname, 'menuImages')));
+app.use('/menuImages', express.static(path.join(__dirname, 'menuImages')));
 //Connect to MongoDB
 mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true, useFindAndModify: true }
-  )
+  .connect(db, { useNewUrlParser: true, useFindAndModify: true })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log('err', err));
 
@@ -53,6 +55,7 @@ app.use('/api/profile', profile);
 app.use('/api/restaurants', restaurants);
 app.use('/api/restaurants-profile', restaurantsProfile);
 app.use('/api/category', category);
+app.use('/api/menu', menu);
 
 if (process.env.NODE_ENV === 'production') {
   // Set static folder

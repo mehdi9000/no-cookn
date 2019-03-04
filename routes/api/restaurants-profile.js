@@ -338,59 +338,29 @@ router.delete(
   }
 );
 
-// @route   POST api/restaurant/partners/menu
-// @desc    route to add food menu to a restaurant profile
-// @access  PRIVATE
-router.post(
-  '/partners/menu',
-  passport.authenticate('restaurants', { session: false }),
-  upload.single('picture'),
+router.get(
+  '/partners/menu/:id',
+  //no auth needed
   (req, res) => {
-    const { errors, isValid } = ValidateMenuInput(req.body);
-
-    //check validation
-    if (!isValid) {
-      // Return error with satus 400
-      return res.status(400).json(errors);
-    }
+    const { id } = req.params; //get address id
     RestaurantProfile.findOne({
-      restaurant: req.user.id
+      address: { $elemMatch: { id } }
     }).then(restaurantProfile => {
-      // Get body
-      console.log(req.body);
-      const newMenu = {
-        menuname: req.body.menuname,
-        category: req.body.category,
-        description: req.body.description,
-        price: req.body.price,
-        deliverytime: req.body.deliverytime,
-        picture: req.file.path
-      };
-      newMenu.extras = {};
-      // split extras name and price
-
-      if (req.body.extrasame)
-        newMenu.extras.extrasname = req.body.extrasname
-          .split(',')
-          .map(function(item) {
-            return item.trim();
-          });
-      if (req.body.extrasprice)
-        newMenu.extras.extrasprice = req.body.extrasprice
-          .split(',')
-          .map(function(item) {
-            return item.trim();
-          });
-
-      //add menu to menu array
-      restaurantProfile.menu.unshift(newMenu);
-      // save new menu to profile
-      restaurantProfile
-        .save()
-        .then(restaurantProfile => res.json(restaurantProfile.menu));
+      if (!restaurantProfile) {
+        return res.status(404).json('restaurant not found');
+      }
+      // else return that single address
+      else {
+        const menu = restaurantProfile.menu;
+        for (let key in menu) {
+          if (menu[key]._id === id) {
+            return res.status(200).json(menu[key]);
+          } else return res.status(400).json('no menu found');
+        } //end for
+      } //end else
     });
   }
-); // tested
+);
 
 // @route Delete api/restaurants/menu/:menu_id
 // @desc router to delete menu from restaurant's profile
@@ -416,26 +386,6 @@ router.delete(
       .catch(err => res.json(err));
   }
 );
-
-// @route Get api/restaurant/partners/menu/:restaurant_id
-// @desc router to get all menu belonging to a restaurant
-// @access PRIVATE
-router.get(
-  '/partners/menu/all-menu',
-  passport.authenticate('restaurants', { session: false }),
-  (req, res) => {
-    const errors = {};
-    RestaurantProfile.findOne({ restaurant: req.user.id })
-      .then(restaurantProfile => {
-        if (!restaurantProfile) {
-          errors.norestaurantprofile = 'Illegal query. Sign in first';
-          return res.status(404).json(errors);
-        }
-        res.json(restaurantProfile.menu);
-      })
-      .catch(err => res.status(404).json(err));
-  }
-); //tested
 
 // @ router Update api/restaurants-profile/menu/menu_id
 // @desc route to update restaurant profile
