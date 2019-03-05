@@ -60,15 +60,15 @@ router.post(
           restaurant: req.user.id,
           restaurantprofile: restaurantProfile.id
         });
-        newMenu.extras = {};
-        if (req.body.extrasame)
-          newMenu.extras.extrasname = req.body.extrasname
+        // newMenu.extras = {};
+        if (req.body.extrasname)
+          newMenu.extrasname = req.body.extrasname
             .split(',')
             .map(function(item) {
               return item.trim();
             });
         if (req.body.extrasprice)
-          newMenu.extras.extrasprice = req.body.extrasprice
+          newMenu.extrasprice = req.body.extrasprice
             .split(',')
             .map(function(item) {
               return item.trim();
@@ -122,6 +122,77 @@ router.get(
         console.log(err);
         res.json({ msg: 'User not found' });
       });
+  }
+);
+
+router.post(
+  '/update/:id',
+  passport.authenticate('restaurants', { session: false }),
+  upload.single('picture'),
+  (req, res) => {
+    const { errors, isValid } = ValidateMenuInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    const err = { menu: 'Menu or restaurant not found!' };
+    RestaurantProfile.findOne({ restaurant: req.user.id }).then(
+      restaurantProfile => {
+        if (restaurantProfile) {
+          // Update menu
+          const updatedMenu = {
+            menuname: req.body.menuname,
+            category: req.body.category,
+            description: req.body.description,
+            price: req.body.price,
+            picture: req.file.path,
+            deliverytime: req.body.deliverytime,
+            restaurant: req.user.id,
+            restaurantprofile: restaurantProfile.id
+          };
+
+          // if (typeof req.body.picture === 'string')
+          //   updatedMenu.picture = req.body.picture;
+          // else if (req.file.picture) updatedMenu.picture = req.file.path;
+
+          if (req.body.extrasname)
+            updatedMenu.extrasname = req.body.extrasname
+              .split(',')
+              .map(function(item) {
+                return item.trim();
+              });
+          if (req.body.extrasprice)
+            updatedMenu.extrasprice = req.body.extrasprice
+              .split(',')
+              .map(function(item) {
+                return item.trim();
+              });
+          Menu.updateOne(
+            { _id: req.params.id },
+            {
+              $set: {
+                menuname: updatedMenu.menuname,
+                category: updatedMenu.category,
+                description: updatedMenu.description,
+                price: updatedMenu.price,
+                deliverytime: updatedMenu.deliverytime,
+                extrasname: updatedMenu.extrasname,
+                extrasprice: updatedMenu.extrasprice,
+                picture: updatedMenu.picture,
+                restaurant: req.user.id,
+                restaurantprofile: restaurantProfile.id
+              }
+            },
+            { new: true }
+          ).then(menu => {
+            console.log(menu);
+            return res.json(menu);
+          });
+        } else {
+          // return 404 error menu not  found
+          return res.status(404).json(err.menu);
+        }
+      }
+    );
   }
 );
 
