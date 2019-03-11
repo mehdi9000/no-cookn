@@ -338,150 +338,33 @@ router.delete(
   }
 );
 
-router.get(
-  '/partners/menu/:id',
-  //no auth needed
-  (req, res) => {
-    const { id } = req.params; //get address id
-    RestaurantProfile.findOne({
-      address: { $elemMatch: { id } }
-    }).then(restaurantProfile => {
-      if (!restaurantProfile) {
-        return res.status(404).json('restaurant not found');
-      }
-      // else return that single address
-      else {
-        const menu = restaurantProfile.menu;
-        for (let key in menu) {
-          if (menu[key]._id === id) {
-            return res.status(200).json(menu[key]);
-          } else return res.status(400).json('no menu found');
-        } //end for
-      } //end else
-    });
-  }
-);
-
-// @route Delete api/restaurants/menu/:menu_id
-// @desc router to delete menu from restaurant's profile
-// @access PRIVATE
-router.delete(
-  '/partners/menu/:menu_id',
-  passport.authenticate('restaurants', {
-    session: false
-  }),
-  (req, res) => {
-    RestaurantProfile.findOne({
-      restaurant: req.user.id
-    })
-      .then(restaurantProfile => {
-        restaurantProfile.menu.remove({
-          _id: req.params.menu_id
-        });
-        restaurantProfile
-          .save()
-          .then(restaurantProfile => res.json(restaurantProfile.menu))
-          .catch(err => res.json(err));
-      })
-      .catch(err => res.json(err));
-  }
-);
-
-// @ router Update api/restaurants-profile/menu/menu_id
-// @desc route to update restaurant profile
-//@access PRIVATE
-router.post(
-  '/partners/menu/:menu_id',
-  passport.authenticate('restaurants', { session: false }),
-  (req, res) => {
-    //check validation
-    const { errors, isValid } = ValidateMenuInput(req.body);
-
-    if (!isValid) {
-      // Return error with satus 400
-      return res.status(400).json(errors);
-    }
-    // Get fields
-    const updatedMenu = {
-      category: req.body.category,
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price
-    };
-    //error msg
-    const err = { menu: 'Menu or restaurant not found!' };
-    //find restaurant  menu
-    RestaurantProfile.findOne({ restaurant: req.user.id }).then(
-      restaurantProfile => {
-        if (restaurantProfile) {
-          // Update menu
-          RestaurantProfile.update(
-            { 'menu._id': req.params.id },
-            { $set: { 'menu.0.name': updatedMenu.name } },
-            { new: true }
-          ).then(restaurantMenu => res.json(restaurantMenu));
-        } else {
-          // return 404 error menu not  found
-          return res.status(404).json(err.menu);
-        }
-      }
-    );
-  }
-); //not tested
-
-//@route to get single menu by id
-//GET api/restaurant-profile/:restaurant_id/:menu_id
-//access PUBLIC
-router.get(
-  '/partners/menu/:menu_id',
-  //no auth needed
-  (req, res) => {
-    const menu_id = req.params.menu_id; //get menu id
-    RestaurantProfile.findOne({
-      menu: { $elemMatch: { _id: menu_id } }
-    }).then(restaurantProfile => {
-      if (!restaurantProfile) {
-        return res.status(404).json('restaurant not found');
-      }
-      // else return that single menu
-      else {
-        const menu = restaurantProfile.menu;
-        for (let key in menu) {
-          if (menu[key]._id == menu_id) {
-            return res.status(200).json(menu[key]);
-          } else return res.status(400).json('no menu found');
-        } //end for
-      } //end else
-    });
-  }
-);
-
 //@route  POST api/restaurant-profiles/restaurants/partners/pictures
 //@desc   route for restaurant  to add pictures to their profile
 //@access PRIVATE
 router.post(
   '/partners/pictures',
   passport.authenticate('restaurants', { session: false }),
-  upload.single('picture'), //authenticate and verify
+  upload.array('filepond', 5), //authenticate and verify
   (req, res) => {
+    console.log(req.body.files);
     //find restaurant
-    RestaurantProfile.findOne({ restaurant: req.user.id }).then(
-      restaurantProfile => {
-        if (restaurantProfile) {
-          //collect new pictures
-          const newPicture = req.file.path;
-          //add pictures
-          restaurantProfile.pictures.unshift(newPicture);
-          //save profile
-          restaurantProfile
-            .save()
-            .then(restaurantProfile => res.json(restaurantProfile.pictures));
-        } //end if
-        else {
-          return res.status(404).json('profile not found');
-        } //end else
-      }
-    );
+    // RestaurantProfile.findOne({ restaurant: req.user.id }).then(
+    //   restaurantProfile => {
+    //     if (restaurantProfile) {
+    //       //collect new pictures
+    //       const newPicture = req.file.path;
+    //       //add pictures
+    //       restaurantProfile.pictures.unshift(newPicture);
+    //       //save profile
+    //       restaurantProfile
+    //         .save()
+    //         .then(restaurantProfile => res.json(restaurantProfile.pictures));
+    //     } //end if
+    //     else {
+    //       return res.status(404).json('profile not found');
+    //     } //end else
+    //   }
+    // );
   }
 ); // tested
 

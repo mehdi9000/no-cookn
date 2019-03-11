@@ -73,7 +73,6 @@ router.post(
             .map(function(item) {
               return item.trim();
             });
-
         newMenu.save().then(menu => {
           res.json(menu);
         });
@@ -138,6 +137,9 @@ router.post(
     RestaurantProfile.findOne({ restaurant: req.user.id }).then(
       restaurantProfile => {
         if (restaurantProfile) {
+          // if (typeof req.body.picture === 'string')
+          //   updatedMenu.picture = req.body.picture;
+          // else if (req.file.picture) updatedMenu.picture = req.file.path;
           // Update menu
           const updatedMenu = {
             menuname: req.body.menuname,
@@ -149,10 +151,6 @@ router.post(
             restaurant: req.user.id,
             restaurantprofile: restaurantProfile.id
           };
-
-          // if (typeof req.body.picture === 'string')
-          //   updatedMenu.picture = req.body.picture;
-          // else if (req.file.picture) updatedMenu.picture = req.file.path;
 
           if (req.body.extrasname)
             updatedMenu.extrasname = req.body.extrasname
@@ -195,5 +193,32 @@ router.post(
     );
   }
 );
+
+// @route Delete api/restaurants/menu/:menu_id
+// @desc router to delete menu from restaurant's profile
+// @access PRIVATE
+router.delete(
+  '/partners/menu/:menu_id',
+  passport.authenticate('restaurants', {
+    session: false
+  }),
+  (req, res) => {
+    RestaurantProfile.findOne({
+      restaurant: req.user.id
+    })
+      .then(restaurantProfile => {
+        restaurantProfile.menu.remove({
+          _id: req.params.menu_id
+        });
+        restaurantProfile
+          .save()
+          .then(restaurantProfile => res.json(restaurantProfile.menu))
+          .catch(err => res.json(err));
+      })
+      .catch(err => res.json(err));
+  }
+);
+
+//not tested
 
 module.exports = router;

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(function(req, res, next) {
 
 //Import Body Parser Middleware
 app.use(express.urlencoded({ extended: false }));
+// app.use(cors({ allowedHeaders: ['Content-Type', 'Authorization'] }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'mails')));
 app.use('/mails', express.static(path.join(__dirname, 'mails')));
