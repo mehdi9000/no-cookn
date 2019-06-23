@@ -8,7 +8,6 @@ const hogan = require("hogan.js");
 const fs = require("fs");
 const keys = require("../../config/keys");
 
-
 sendgrid.setApiKey(keys.sendGridApi);
 
 const validateRegistrationInput = require("../../validation/register");
