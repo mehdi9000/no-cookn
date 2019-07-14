@@ -1,32 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const passport = require('passport');
 const path = require('path');
-const cors = require('cors');
+const logger = require('morgan');
 
 const app = express();
-
-const users = require('./routes/api/users');
-const profile = require('./routes/api/profile');
-const restaurants = require('./routes/api/restaurants');
-const restaurantsProfile = require('./routes/api/restaurants-profile');
-const menu = require('./routes/api/menu');
-
-const category = require('./routes/api/master/category');
+const routes = require('./routes/index.routes');
 
 //DB CONFIG
 const db = require('./config/keys').mongoURI;
-
-//CORS SET UP
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  );
-  next();
-});
 
 //Import Body Parser Middleware
 app.use(express.urlencoded({ extended: false }));
@@ -41,23 +22,16 @@ app.use(express.static(path.join(__dirname, 'menuImages')));
 app.use('/menuImages', express.static(path.join(__dirname, 'menuImages')));
 //Connect to MongoDB
 mongoose
-  .connect(db, { useNewUrlParser: true, useFindAndModify: true })
+  .connect(db, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+  })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log('err', err));
 
-//Passport Middleware
-app.use(passport.initialize());
-
-//Passport Config
-require('./config/passport')(passport);
-
-//Use Routes
-app.use('/api/users', users);
-app.use('/api/profile', profile);
-app.use('/api/restaurants', restaurants);
-app.use('/api/restaurants-profile', restaurantsProfile);
-app.use('/api/category', category);
-app.use('/api/menu', menu);
+app.use(logger('dev'));
+app.set('trust proxy', 1);
 
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
@@ -67,6 +41,19 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
+app.use('/', routes);
+app.use(function(req, res, next) {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+app.use(function errorHandler(err, req, res, next) {
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.status(err.status || 500).json({ error: res.locals.message });
+});
 
 const port = process.env.PORT || 4001;
 

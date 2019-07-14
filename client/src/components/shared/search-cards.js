@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Logo from '../../assets/lg.jpeg';
+import React, { Component } from "react";
+// import Logo from "../../assets/lg.jpeg";
 
 class SearchCard extends Component {
   render() {
@@ -9,10 +9,10 @@ class SearchCard extends Component {
     console.log(currentTime);
     const { restaurants } = this.props;
 
-    if (window.location.hostname === 'localhost') {
-      logoURL = 'http://' + window.location.hostname + ':4001/';
+    if (window.location.hostname === "localhost") {
+      logoURL = "http://" + window.location.hostname + ":4001/";
     } else {
-      logoURL = 'http://' + window.location.hostname + '/';
+      logoURL = "http://" + window.location.hostname + "/";
     }
     return (
       <div>
@@ -22,7 +22,7 @@ class SearchCard extends Component {
               <div className="card mb-4 box-shadow">
                 <img
                   className="card-img-top"
-                  src={Logo}
+                  src={logoURL}
                   alt="restaurant-logo"
                 />
                 <div className="card-body">
@@ -36,7 +36,7 @@ class SearchCard extends Component {
                     </h6>
 
                     {restaurant.rating === 0 ? (
-                      ''
+                      ""
                     ) : (
                       <h6 className="rating-box">`${restaurant.rating}`</h6>
                     )}
@@ -49,7 +49,7 @@ class SearchCard extends Component {
                     <b className="text-warning"> {restaurant.closesat}</b>
                   </p>
                   <p className="card-text text-muted">
-                    minimum order{' '}
+                    minimum order{" "}
                     <b className="text-danger">{restaurant.minimumorder}</b>
                   </p>
                   <div className="d-flex justify-content-between align-items-center">
