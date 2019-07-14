@@ -182,7 +182,6 @@ router.post(
             },
             { new: true }
           ).then(menu => {
-            console.log(menu);
             return res.json(menu);
           });
         } else {

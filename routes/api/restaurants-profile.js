@@ -346,25 +346,23 @@ router.post(
   passport.authenticate('restaurants', { session: false }),
   upload.array('filepond', 5), //authenticate and verify
   (req, res) => {
-    console.log(req.body.files);
-    //find restaurant
-    // RestaurantProfile.findOne({ restaurant: req.user.id }).then(
-    //   restaurantProfile => {
-    //     if (restaurantProfile) {
-    //       //collect new pictures
-    //       const newPicture = req.file.path;
-    //       //add pictures
-    //       restaurantProfile.pictures.unshift(newPicture);
-    //       //save profile
-    //       restaurantProfile
-    //         .save()
-    //         .then(restaurantProfile => res.json(restaurantProfile.pictures));
-    //     } //end if
-    //     else {
-    //       return res.status(404).json('profile not found');
-    //     } //end else
-    //   }
-    // );
+    console.log(req.files);
+    RestaurantProfile.findOne({ restaurant: req.user.id }).then(
+      restaurantProfile => {
+        if (restaurantProfile) {
+          req.files.forEach(item => {
+            console.log(item.path);
+            restaurantProfile.pictures.unshift(item.path);
+            // save profile
+            restaurantProfile
+              .save()
+              .then(restaurantProfile => res.json(restaurantProfile.pictures));
+          });
+        } else {
+          return res.status(404).json('profile not found');
+        }
+      }
+    );
   }
 ); // tested
 
