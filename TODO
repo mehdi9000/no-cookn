@@ -1,1 +1,23 @@
+Completed Tasks
+✔ Customer Account Creation @done(19-10-15 14:21)
+✔ Customer Profile Management @done(19-10-15 14:21)
+✔ Customer Address Book @done(19-10-15 14:21)
+✔ Restaurant Account Creation @done(19-10-15 14:21)
+✔ Restaurant Profile Management @done(19-10-15 14:21)
+✔ Restaurant Address Book @done(19-10-15 14:21)
+
+
+Tasks To Complete
+☐ Cart Implementation
+☐ Orders Implementation
+☐ Payment Implementation 
+☐ Menu Implementation
+☐ Picture & file upload Management
+☐ Super Admin Implementation
+
+
+Optional
+☐ Unit Tests with Jest or Mocha & Chai
+
+
 
