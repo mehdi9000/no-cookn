@@ -2,12 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const logger = require('morgan');
+require('dotenv').config();
 
 const app = express();
 const routes = require('./routes/index.routes');
 
 //DB CONFIG
-const db = require('./config/keys').mongoURI;
+const db = process.env.MONGO_URI;
 
 //Import Body Parser Middleware
 app.use(express.urlencoded({ extended: false }));
@@ -25,7 +26,8 @@ mongoose
   .connect(db, {
     useNewUrlParser: true,
     useFindAndModify: false,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology: true
   })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log('err', err));

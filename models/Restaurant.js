@@ -19,9 +19,6 @@ const RestaurantSchema = new Schema({
     type: String,
     required: true
   },
-  avatar: {
-    type: String
-  },
   isactive: {
     type: Boolean,
     default: false

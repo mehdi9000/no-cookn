@@ -1,10 +1,9 @@
 //TODO: express validator function
-
-const Profile = require("../models/Profile");
+const Profile = require('../models/Profile');
 // const User = require("../models/User");
 // const Order = require("../models/Order");
 
-const ValidateProfileInput = require("../validation/profile");
+const ValidateProfileInput = require('../validation/profile');
 // const ValidateAddressInput = require("../validation/address");
 
 const ProfileOps = {};
@@ -41,11 +40,11 @@ ProfileOps.GetProfile = async (req, res, next) => {
     const errors = {};
     const { decoded } = res;
     const profile = await Profile.findOne({ user: decoded._id }).populate(
-      "user",
-      ["name", "email"]
+      'user',
+      ['name', 'email']
     );
     if (!profile) {
-      errors.NotFound = "This user has no profile";
+      errors.NotFound = 'This user has no profile';
       return res.status(404).json(errors);
     }
     return res.status(200).json(profile);
