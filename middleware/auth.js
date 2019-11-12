@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const keys = require('../config/keys');
+const jwt = require("jsonwebtoken");
+// const keys = require('../config/keys');
 
 const AuthMiddleware = {};
 
@@ -11,14 +11,14 @@ AuthMiddleware.generateAccessToken = function generateAccessToken(userLoad) {
 };
 
 AuthMiddleware.verifyToken = function verifyToken(req, res, next) {
-  let bearer = req.headers['token'];
+  let bearer = req.headers["token"];
 
-  let token = bearer ? bearer.split(' ')[1] : null;
+  let token = bearer ? bearer.split(" ")[1] : null;
 
-  if (!token) return res.status(401).json({ error: 'Access Denied' });
+  if (!token) return res.status(401).json({ error: "Access Denied" });
 
   function verifyCallBack(error, decode) {
-    if (error) return res.status(401).json({ error: 'Access Denied' });
+    if (error) return res.status(401).json({ error: "Access Denied" });
 
     res.decoded = decode;
 

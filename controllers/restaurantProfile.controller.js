@@ -1,5 +1,5 @@
-const RestaurantProfile = require('../../models/Restaurant-Profile');
-const Restaurant = require('../../models/Restaurant');
+const RestaurantProfile = require("../models/Restaurant-Profile");
+const Restaurant = require("../models/Restaurant");
 
 const RestaurantProfileActions = {};
 
@@ -24,7 +24,7 @@ RestaurantProfileActions.Create = async (req, res, next) => {
     }
     const restaurant = await Restaurant.findById(decoded._id);
     if (!restaurant)
-      return res.status(404).json({ errors: 'No restaurant match' });
+      return res.status(404).json({ errors: "No restaurant match" });
     else {
       const fields = {
         opensat,
@@ -65,14 +65,13 @@ RestaurantProfileActions.Create = async (req, res, next) => {
 RestaurantProfileActions.FetchProfile = async (req, res, next) => {
   try {
     const id = req.params.id;
-    let profile = await RestaurantProfile.findOne({ restaurant: id }).populate(
-      'restaurant',
-      ['name', 'restaurantname', 'email']
-    );
+    let profile = await RestaurantProfile.findOne({
+      restaurant: id
+    }).populate("restaurant", ["name", "restaurantname", "email"]);
     if (!profile)
       return res
         .status(404)
-        .json({ errors: 'No associated profile for requested resource' });
+        .json({ errors: "No associated profile for requested resource" });
     return res.status(200).json(profile);
   } catch (error) {
     next(error);

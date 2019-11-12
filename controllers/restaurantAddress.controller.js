@@ -1,7 +1,7 @@
-const Address = require('../models/restaurantAddress');
-const Profile = require('../models/restaurantProfile');
-const Restaurant = require('../models/restaurant');
-const ValidateAddressInput = require('../validation/address');
+const Address = require("../models/restaurantAddress");
+// const Profile = require("../models/restaurant-Profile");
+// const Restaurant = require("../models/restaurant");
+const ValidateAddressInput = require("../validation/address");
 
 const AddressActions = {};
 
@@ -13,7 +13,7 @@ AddressActions.NewAddress = async (req, res, next) => {
     const { decoded } = res;
     const profile = await Profile.findOne({ Restaurant: decoded._id });
     if (!profile) {
-      errors.NotFound = 'User has no profile';
+      errors.NotFound = "User has no profile";
       return res.status(400).json(errors);
     }
     const address = await new Address({
@@ -50,12 +50,12 @@ AddressActions.FetchAddresses = async (req, res, next) => {
     const { decoded } = res;
     const restaurant = await Restaurant.findOne({ _id: decoded._id });
     if (!restaurant)
-      return res.status(400).json((errors.restaurant = 'Restaurant not found'));
+      return res.status(400).json((errors.restaurant = "Restaurant not found"));
     const profile = await Profile.findOne({ restaurant: restaurant._id });
     if (!profile)
       return res
         .status(400)
-        .json((errors.profile = 'This User has no profile'));
+        .json((errors.profile = "This User has no profile"));
 
     const addresses = await Address.find({ profile: profile._id });
     return res.status(200).json(addresses);
@@ -68,7 +68,7 @@ AddressActions.GetAddressByID = async (req, res, next) => {
   try {
     const { id } = req.params;
     const address = await Address.findById(id);
-    if (!address) return res.status(400).json({ errors: 'Address not Found' });
+    if (!address) return res.status(400).json({ errors: "Address not Found" });
     return res.status(200).json(address);
   } catch (error) {
     next(error);
