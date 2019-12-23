@@ -1,4 +1,4 @@
-const RestaurantProfile = require("../models/Restaurant-Profile");
+const RestaurantProfile = require("../models/restaurantProfile");
 const Restaurant = require("../models/Restaurant");
 
 const RestaurantProfileActions = {};

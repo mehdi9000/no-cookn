@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const RestaurantProfileActions = require("../controllers/restaurantProfile.controller.js");
+const RestaurantProfileActions = require("../controllers/restaurantProfile.controller");
 const verifyToken = require("../middleware/auth").verifyToken;
 const multer = require("multer");
 const path = require("path");
@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.post(
-  "/api/restautant/profile/create",
+  "/api/restaurant/profile/create",
   verifyToken,
   upload.single("logo"),
   RestaurantProfileActions.Create

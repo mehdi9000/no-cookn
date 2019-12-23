@@ -1,6 +1,6 @@
 const Address = require("../models/restaurantAddress");
-// const Profile = require("../models/restaurant-Profile");
-// const Restaurant = require("../models/restaurant");
+const RestaurantProfile = require("../models/restaurantProfile");
+const Restaurant = require("../models/Restaurant");
 const ValidateAddressInput = require("../validation/address");
 
 const AddressActions = {};
@@ -11,7 +11,9 @@ AddressActions.NewAddress = async (req, res, next) => {
     if (!isValid) return res.status(400).json(errors);
     const { address1, address2, state, area, isDefault } = req.body;
     const { decoded } = res;
-    const profile = await Profile.findOne({ Restaurant: decoded._id });
+    const profile = await RestaurantProfile.findOne({
+      Restaurant: decoded._id
+    });
     if (!profile) {
       errors.NotFound = "User has no profile";
       return res.status(400).json(errors);
@@ -51,7 +53,9 @@ AddressActions.FetchAddresses = async (req, res, next) => {
     const restaurant = await Restaurant.findOne({ _id: decoded._id });
     if (!restaurant)
       return res.status(400).json((errors.restaurant = "Restaurant not found"));
-    const profile = await Profile.findOne({ restaurant: restaurant._id });
+    const profile = await RestaurantProfile.findOne({
+      restaurant: restaurant._id
+    });
     if (!profile)
       return res
         .status(400)

@@ -7,7 +7,7 @@ const validateRegistrationInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
 
 const User = require("../models/User");
-const RestaurantProfile = require("../models/Restaurant-Profile");
+const RestaurantProfile = require("../models/restaurantProfile");
 const Restaurant = require("../models/Restaurant");
 
 const WelcomeTemplate = fs.readFileSync("mails/welcome.hjs", "utf-8");
