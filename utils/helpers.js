@@ -1,9 +1,7 @@
 const bcrypt = require("bcryptjs");
 const sendgrid = require("@sendgrid/mail");
-// const keys = require('../config/keys');
 sendgrid.setApiKey(process.env.sendGridApi);
 
-// const axios = require('axios');
 const Helpers = {};
 
 Helpers.HashValue = function HashValue(value) {
