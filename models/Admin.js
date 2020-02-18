@@ -19,10 +19,6 @@ const AdminSchema = new Schema({
     type: String,
     required: true
   },
-  
-  // avatar: {
-  //   type: String
-  // },
  
   passwordresetcode: {
     type: String
